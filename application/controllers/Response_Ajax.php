@@ -1,0 +1,647 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Response_Ajax extends CI_Controller
+{
+    public $function_general;
+    
+    public function __construct() {
+        parent::__construct();
+        
+        $this->load->model("Usuario_model");
+        $this->load->library("Funciones_generales");
+        $this->function_general= new Funciones_generales();
+    }
+    
+    public function agregar_producto()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            $descripcion= $this->input->post("descripcion");
+            $stock= $this->input->post("stock");
+            $punto_critico= $this->input->post("punto_critico");
+            $rubro= $this->input->post("rubro");
+            $unidad_medida= $this->input->post("unidad_medida");
+            $costo= $this->input->post("costo");
+            
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->agregar_producto($descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_producto()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            $id_producto= $this->input->post("id_producto");
+            $descripcion= $this->input->post("descripcion");
+            $stock= $this->input->post("stock");
+            $punto_critico= $this->input->post("punto_critico");
+            $rubro= (int)$this->input->post("rubro");
+            $unidad_medida= (int)$this->input->post("unidad_medida");
+            $rubro2= (int)$this->input->post("rubro2");
+            $unidad_medida2= (int)$this->input->post("unidad_medida2");
+            $costo= $this->input->post("costo");
+            
+            if($rubro2 != 0 && $rubro2!=$rubro)
+            {
+                $rubro=$rubro2;
+            }
+            
+            if($unidad_medida2 != 0 && $unidad_medida2!=$unidad_medida)
+            {
+                $unidad_medida=$unidad_medida2;
+            }
+            
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->editar_producto($id_producto,$descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function agregar_precio_vigente()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            $id_producto= $this->input->post("id_producto");
+            $precio=$this->input->post("precio");
+            $fecha_vigente_desde=$this->input->post("fecha_vigente_desde");
+            
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->agregar_precio_vigente($id_producto,$precio,$fecha_vigente_desde);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_precio_vigente()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            $id= $this->input->post("id");
+            $precio= $this->input->post("precio");
+            $fecha_vigente_desde= $this->input->post("fecha_vigente_desde");
+            
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->editar_precio_vigente($id,$precio,$fecha_vigente_desde);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function eliminar_precio_vigente()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            $id= $this->input->post("id");
+            
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->eliminar_precio_vigente($id);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function eliminar_ubicacion_de_producto()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            $id= $this->input->post("id");
+            
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->eliminar_ubicacion_de_producto($id);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function agregar_ubicacion_a_producto()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            $id_producto= $this->input->post("id_producto");
+            $id_ubicacion= $this->input->post("id_ubicacion");
+                    
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->agregar_ubicacion_a_producto($id_producto,$id_ubicacion);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_rubro()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            $id_rubro= $this->input->post("id_rubro");
+            $descripcion= $this->input->post("descripcion");
+                    
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->editar_rubro($id_rubro,$descripcion);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function agregar_rubro()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            
+            $descripcion= $this->input->post("descripcion");
+                    
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->agregar_rubro($descripcion);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function agregar_ubicacion()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            
+            $descripcion= $this->input->post("descripcion");
+                    
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->agregar_ubicacion($descripcion);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_ubicacion()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            
+            $descripcion= $this->input->post("descripcion");
+            $id_ubicacion= $this->input->post("id_ubicacion");
+            
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->editar_ubicacion($id_ubicacion,$descripcion);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_unidad_de_medida()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            
+            $id= $this->input->post("descripcion");
+            $descripcion= $this->input->post("descripcion");
+            $cantidad= $this->input->post("cantidad");
+            $medida= $this->input->post("unidad_de_medida");
+            
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->editar_unidad_de_medida($id,$descripcion,$cantidad,$medida);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function agregar_unidad_de_medida()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            
+            $descripcion= $this->input->post("descripcion");
+            $cantidad= $this->input->post("cantidad");
+            $medida= $this->input->post("unidad_de_medida");
+            
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->agregar_unidad_de_medida($descripcion,$cantidad,$medida);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function agregar_movimiento_y_detalle()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        {
+            $fecha = $this->input->post("fecha");
+            $tipo_comprobante= $this->input->post("tipo_comprobante");
+            $concepto= $this->input->post("concepto");
+            $usuario= $this->session->userdata("id");
+            $detalle= $this->input->post("detalle");
+            
+            $this->load->model("Stock_productos_model");
+            $respuesta = $this->Stock_productos_model->agregar_movimiento_y_detalle($fecha,$tipo_comprobante,$concepto,$usuario,$detalle);
+        
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function agregar_cliente()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
+        {
+            $dni_cuit_cuil= $this->input->post("dni_cuit_cuil");
+            $razon_social= $this->input->post("razon_social");
+            $nombre= $this->input->post("nombre");
+            $apellido= $this->input->post("apellido");
+            $telefono= $this->input->post("telefono");
+            $correo= $this->input->post("correo");
+            $direccion= $this->input->post("direccion");
+            $contrasenia= $this->input->post("contrasenia");
+            $localidad= $this->input->post("localidad");
+            $tipo_inscripcion= $this->input->post("tipo_inscripcion");
+            $descuento_gral= $this->input->post("descuento_gral");
+            $estado= $this->input->post("estado");
+            $ingresos_brutos= $this->input->post("ingresos_brutos");
+            
+            $this->load->library("Md5");
+            $contrasenia= Md5::cifrar($contrasenia);
+            
+            $this->load->model("Registro_de_clientes_model");
+            $respuesta = $this->Registro_de_clientes_model->agregar_cliente($dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos);
+            
+            echo json_encode($respuesta);
+        }
+    }
+    
+    
+    public function editar_cliente()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
+        {
+            $id= $this->input->post("id");
+            $dni_cuit_cuil= $this->input->post("dni_cuit_cuil");
+            $razon_social= $this->input->post("razon_social");
+            $nombre= $this->input->post("nombre");
+            $apellido= $this->input->post("apellido");
+            $telefono= $this->input->post("telefono");
+            $correo= $this->input->post("correo");
+            $direccion= $this->input->post("direccion");
+            $contrasenia= $this->input->post("contrasenia");
+            $localidad= $this->input->post("localidad");
+            $tipo_inscripcion= $this->input->post("tipo_inscripcion");
+            $descuento_gral= $this->input->post("descuento_gral");
+            $estado= $this->input->post("estado");
+            $localidad2=(int)$this->input->post("localidad2");
+            $tipo_inscripcion2=(int)$this->input->post("tipo_inscripcion2");
+            $estado2=(int)$this->input->post("estado2");
+            $ingresos_brutos= $this->input->post("ingresos_brutos");
+            
+            if($estado2 != 0 && $estado2 != $estado)
+            {
+                $estado=$estado2;
+            }
+            
+            if($localidad2 != 0 && $localidad2 != $localidad)
+            {
+                $localidad=$localidad2;
+            }
+            
+            if($tipo_inscripcion2 != 0 && $tipo_inscripcion2 != $tipo_inscripcion)
+            {
+                $tipo_inscripcion=$tipo_inscripcion2;
+            }
+            
+            
+            $this->load->library("Md5");
+            $contrasenia= Md5::cifrar($contrasenia);
+            
+            $this->load->model("Registro_de_clientes_model");
+            $respuesta = $this->Registro_de_clientes_model->editar_cliente($id,$dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos);
+            
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function get_cliente()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
+        {
+            $this->load->library("Md5");
+            $id= $this->input->post("id");
+            
+            $this->load->model("Registro_de_clientes_model");
+            $respuesta = $this->Registro_de_clientes_model->get_cliente($id);
+            $respuesta["contrasenia"]=Md5::descifrar($respuesta["contrasenia"]);
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function agregar_transportista()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(10))
+        {
+            $transporte= $this->input->post("transporte");
+            $cuit= $this->input->post("cuit");
+            $telefono= $this->input->post("telefono");
+            $direccion= $this->input->post("direccion");
+            $estado= $this->input->post("estado");
+                    
+            $this->load->model("Registro_de_transportistas_model");
+            
+            $respuesta = $this->Registro_de_transportistas_model->agregar_transportista($transporte,$cuit,$telefono,$direccion,$estado);
+    
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_transportista()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(10))
+        {
+            $id= $this->input->post("id");
+            $transporte= $this->input->post("transporte");
+            $cuit= $this->input->post("cuit");
+            $telefono= $this->input->post("telefono");
+            $direccion= $this->input->post("direccion");
+            $estado= $this->input->post("estado");
+                    
+            $this->load->model("Registro_de_transportistas_model");
+            
+            $respuesta = $this->Registro_de_transportistas_model->editar_transportista($id,$transporte,$cuit,$telefono,$direccion,$estado);
+    
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function agregar_chofer()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(10))
+        {
+           
+            $cuit= $this->input->post("cuit");
+            $nombre= $this->input->post("nombre");
+            $apellido= $this->input->post("apellido");
+            $direccion= $this->input->post("direccion");
+            $telefono= $this->input->post("telefono");
+            $localidad= $this->input->post("localidad");
+            $estado= $this->input->post("estado");
+                    
+            $this->load->model("Registro_de_transportistas_model");
+            
+            $respuesta = $this->Registro_de_transportistas_model->agregar_chofer($cuit,$nombre,$apellido,$direccion,$telefono,$localidad,$estado);
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_chofer()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(10))
+        {
+            $id= $this->input->post("id");
+            $cuit= $this->input->post("cuit");
+            $nombre= $this->input->post("nombre");
+            $apellido= $this->input->post("apellido");
+            $direccion= $this->input->post("direccion");
+            $telefono= $this->input->post("telefono");
+            $localidad= $this->input->post("localidad");
+            $localidad2= $this->input->post("localidad2");
+            $estado= $this->input->post("estado");
+            
+            if($localidad2 != 0 && $localidad2 != $localidad)
+            {
+                $localidad= $localidad2;
+            }
+                    
+            $this->load->model("Registro_de_transportistas_model");
+            
+            $respuesta = $this->Registro_de_transportistas_model->editar_chofer($id,$cuit,$nombre,$apellido,$direccion,$telefono,$localidad,$estado);
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function agregar_remito()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(10))
+        {
+            
+            $fecha= $this->input->post("fecha");
+            $cliente= $this->input->post("cliente");
+            $condicion= $this->input->post("condicion");
+            $transporte= $this->input->post("transporte");
+            $chofer= $this->input->post("chofer");
+            $acoplado= $this->input->post("acoplado");
+            $tipo_vehiculo= $this->input->post("tipo_vehiculo");
+            $patente= $this->input->post("patente");
+            $entrega= $this->input->post("entrega");
+            $total_kg= $this->input->post("total_kg");
+            $estado= $this->input->post("estado");
+            $chasis= $this->input->post("chasis");
+            $detalle= $this->input->post("detalle");
+            
+            $this->load->model("Registro_de_transportistas_model");
+            $respuesta = $this->Registro_de_transportistas_model->agregar_remito($fecha,$cliente,$condicion,$transporte,$chofer,$acoplado,$tipo_vehiculo,$patente,$entrega,$total_kg,$estado,$chasis,$detalle);
+                    
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_remito()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(10))
+        {
+            $numero= $this->input->post("numero");
+            $fecha= $this->input->post("fecha");
+            $cliente= $this->input->post("cliente");
+            $condicion= $this->input->post("condicion");
+            $transporte= $this->input->post("transporte");
+            $chofer= $this->input->post("chofer");
+            $acoplado= $this->input->post("acoplado");
+            $tipo_vehiculo= $this->input->post("tipo_vehiculo");
+            $patente= $this->input->post("patente");
+            $entrega= $this->input->post("entrega");
+            $total_kg= $this->input->post("total_kg");
+            $estado= $this->input->post("estado");
+            $chasis= $this->input->post("chasis");
+            $detalle= $this->input->post("detalle");
+            
+            $this->load->model("Registro_de_transportistas_model");
+            $respuesta = $this->Registro_de_transportistas_model->editar_remito($numero,$fecha,$cliente,$condicion,$transporte,$chofer,$acoplado,$tipo_vehiculo,$patente,$entrega,$total_kg,$estado,$chasis,$detalle);
+                    
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function agregar_pedido_y_detalle()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        {
+            $fecha= $this->input->post("fecha");
+            $fecha_entrega= $this->input->post("fecha_entrega");
+            $cliente= $this->input->post("cliente");
+            $estado= $this->input->post("estado");
+            $detalle= $this->input->post("detalle");
+            
+            $this->load->model("Registro_de_pedidos_model");
+            
+            
+            
+            $respuesta = $this->Registro_de_pedidos_model->agregar_pedido_y_detalle($fecha,$fecha_entrega,$cliente,$estado,$detalle);
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_pedido_y_detalle()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        {
+            $numero_pedido= $this->input->post("numero_pedido");
+            $fecha= $this->input->post("fecha");
+            $fecha_entrega= $this->input->post("fecha_entrega");
+            $cliente= $this->input->post("cliente");
+            $estado= $this->input->post("estado");
+            $detalle= $this->input->post("detalle");
+            
+            $this->load->model("Registro_de_pedidos_model");
+            
+            
+            
+            $respuesta = $this->Registro_de_pedidos_model->editar_pedido_y_detalle($numero_pedido,$fecha,$fecha_entrega,$cliente,$estado,$detalle);
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_pedido()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        {
+            $numero= $this->input->post("numero");
+            $fecha= $this->input->post("fecha");
+            $fecha_entrega= $this->input->post("fecha_entrega");
+            $cliente= $this->input->post("cliente");
+            $cliente2= $this->input->post("cliente2");
+            $estado= $this->input->post("estado");
+            
+            if($cliente2 != 0 && $cliente2 != $cliente)
+            {
+                $cliente=$cliente2;
+            }
+            $this->load->model("Registro_de_pedidos_model");
+            
+            $respuesta = $this->Registro_de_pedidos_model->editar_pedido($numero,$fecha,$fecha_entrega,$cliente,$estado);
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_configuracion_empresa()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso(1))
+        {
+            $valor= $this->input->post("valor");
+            $id= $this->input->post("id");
+            
+            $this->load->model("Configuracion_empresa_model");
+            $respuesta = $this->Configuracion_empresa_model->editar_configuracion($id,$valor);
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function get_pedidos_cliente_pendientes()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
+        {
+            $id= $this->input->post("id");
+            $this->load->model("Facturacion_model");
+            $respuesta = $this->Facturacion_model->get_pedidos_cliente_pendientes($id);
+            
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function get_remitos_cliente_pendientes()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
+        {
+            $id= $this->input->post("id");
+            $this->load->model("Facturacion_model");
+            $respuesta = $this->Facturacion_model->get_remitos_cliente_pendientes($id);
+            
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function get_detalle_remito_sin_cobrar()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
+        {
+            $numero_remito= $this->input->post("numero_remito");
+            $this->load->model("Facturacion_model");
+            $respuesta = $this->Facturacion_model->get_detalle_remito_sin_cobrar($numero_remito);
+            
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function get_detalle_pedido_sin_cobrar()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
+        {
+            $numero_pedido= $this->input->post("numero_pedido");
+            $this->load->model("Facturacion_model");
+            $respuesta = $this->Facturacion_model->get_detalle_pedido_sin_cobrar($numero_pedido);
+            
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function crear_factura()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
+        {
+            
+            $punto_venta= $this->input->post("punto_de_venta");
+            $fecha= $this->input->post("fecha");
+            $cliente= $this->input->post("cliente");
+            $remito_o_pedido= $this->input->post("remito_o_pedido");
+            $numero_remito_pedido= $this->input->post("numero_remito_pedido");
+            $tipo_factura= $this->input->post("tipo_factura");
+            $condicion_venta= $this->input->post("condicion_venta");
+            $estado= 1;
+            $detalle= $this->input->post("detalle");
+            $descuento_general= $this->input->post("descuento_general");
+            
+            
+            // CALCULO EL TOTAL POR SEGURIDAD
+            /*
+            $total = 0;
+            
+            foreach($detalle as $value)
+            {
+                $cantidad = (double)$value["cantidad"];
+                $precio = (double)$value["precio"];
+                $descuento = (double)$value["descuento"];
+                
+                $total_registro = $cantidad*$precio;
+                
+                if($descuento != 0)
+                {
+                    $total_registro= $total_registro * ($descuento / 100);
+                }
+                
+                $total+=$total_registro;
+            }
+            
+            if($descuento_general != 0)
+            {
+                $total= $total * ($descuento_general / 100);
+            }
+            
+            $total*= 1.21;
+            //*/
+            
+            $total= $this->input->post("total");
+            
+            $this->load->model("Facturacion_model");
+            $respuesta = $this->Facturacion_model->crear_factura($punto_venta,$fecha,$cliente,$remito_o_pedido,$numero_remito_pedido,$tipo_factura,$condicion_venta,$estado,$total,$detalle);
+            
+            echo json_encode($respuesta);
+        }
+    }
+    
+    
+    
+    
+}
+
