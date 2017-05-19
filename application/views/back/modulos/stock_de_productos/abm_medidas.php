@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Nutrilog</title>
+  <title>Distribuidores</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-yellow-light.min.css">
+  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-red-light.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/plugins/iCheck/flat/blue.css">
   <!-- Morris chart -->
@@ -37,7 +37,7 @@
   <!-- EDICION Bootstrap-->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/bootstrap/css/edicion_bootstrap.css">
 </head>
-<body class="hold-transition skin-yellow-light sidebar-mini">
+<body class="hold-transition skin-red-light sidebar-mini">
 <div class="wrapper">
 
   <?php echo $header?>
@@ -64,7 +64,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <button class="btn btn-warning" onClick="$('#modal_agregar_unidad_de_medida').modal('show');"><i class='fa fa-plus'></i> Agregar Medida</button>
+                    <button class="btn btn-danger" onClick="$('#modal_agregar_unidad_de_medida').modal('show');"><i class='fa fa-plus'></i> Agregar Medida</button>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="tabla_listado" class="table table-bordered table-hover">
@@ -115,7 +115,7 @@
 
 
 <!---->
-<div class="modal modal-warning" id="modal_editar_unidad_de_medida">
+<div class="modal modal-danger" id="modal_editar_unidad_de_medida">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -146,14 +146,14 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="editar_unidad_de_medida()"><i class='fa fa-save'></i> Guardar Cambios</button>
+                    <button class="btn btn-danger" onClick="editar_unidad_de_medida()"><i class='fa fa-save'></i> Guardar Cambios</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
 
-<div class="modal modal-warning" id="modal_agregar_unidad_de_medida">
+<div class="modal modal-danger" id="modal_agregar_unidad_de_medida">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -184,7 +184,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="agregar_unidad_de_medida()"><i class='fa fa-save'></i> Guardar Medida</button>
+                    <button class="btn btn-danger" onClick="agregar_unidad_de_medida()"><i class='fa fa-save'></i> Guardar Medida</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->

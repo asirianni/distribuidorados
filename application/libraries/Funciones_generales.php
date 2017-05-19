@@ -86,7 +86,7 @@ class Funciones_generales
     
     public function get_name_controller_usuario()
     {
-        $tipo_usuario = (int)$this->ci->session->userdata("id");
+        $tipo_usuario = (int)$this->ci->session->userdata("tipo_usuario");
         
         $respuesta = "";
         
@@ -95,10 +95,6 @@ class Funciones_generales
             case 1: $respuesta = "Administrador";
                 break;
             case 2: $respuesta = "Vendedor";
-                break;
-            case 3: $respuesta = "Contador";
-                break;
-            case 4: $respuesta = "Transportista";
                 break;
         }
         
@@ -117,13 +113,8 @@ class Funciones_generales
                 break;
             case 2: $respuesta = "Vendedor";
                 break;
-            case 3: $respuesta = "Contador";
-                break;
-            case 4: $respuesta = "Transportista";
-                break;
         }
         
         return $respuesta;
     }
 }
-

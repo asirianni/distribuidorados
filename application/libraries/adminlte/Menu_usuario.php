@@ -12,10 +12,6 @@ class Menu_usuario
                 break;
             case 2:$html= Menu_usuario::getMenuVendedor();
                 break;
-            case 3:$html= Menu_usuario::getMenuContador();
-                break;
-            case 4:$html= Menu_usuario::getMenuTransportista();
-                break;
         }
         
         return $html;
@@ -39,19 +35,5 @@ class Menu_usuario
         return $html;
     }
     
-    public static function getMenuContador()
-    {
-        $html=
-        "<li><a href='".  base_url()."index.php/Contador'><i class='fa fa-desktop'></i> <span>Escritorio</span></a></li>";
-        
-        return $html;
-    }
-    
-    public static function getMenuTransportista()
-    {
-        $html=
-        "<li><a href='".  base_url()."index.php/Transportista'><i class='fa fa-desktop'></i> <span>Escritorio</span></a></li>";
-        return $html;
-    }
 }
 

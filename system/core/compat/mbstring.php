@@ -62,7 +62,7 @@ if ( ! function_exists('mb_strlen'))
 	/**
 	 * mb_strlen()
 	 *
-	 * WARNING: This function WILL fall-back to strlen()
+	 * danger: This function WILL fall-back to strlen()
 	 * if iconv is not available!
 	 *
 	 * @link	http://php.net/mb_strlen
@@ -89,7 +89,7 @@ if ( ! function_exists('mb_strpos'))
 	/**
 	 * mb_strpos()
 	 *
-	 * WARNING: This function WILL fall-back to strpos()
+	 * danger: This function WILL fall-back to strpos()
 	 * if iconv is not available!
 	 *
 	 * @link	http://php.net/mb_strpos
@@ -118,7 +118,7 @@ if ( ! function_exists('mb_substr'))
 	/**
 	 * mb_substr()
 	 *
-	 * WARNING: This function WILL fall-back to substr()
+	 * danger: This function WILL fall-back to substr()
 	 * if iconv is not available.
 	 *
 	 * @link	http://php.net/mb_substr

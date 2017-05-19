@@ -99,19 +99,19 @@ if ( ! function_exists('password_hash'))
 
 		if ($algo !== 1)
 		{
-			trigger_error('password_hash(): Unknown hashing algorithm: '.(int) $algo, E_USER_WARNING);
+			trigger_error('password_hash(): Unknown hashing algorithm: '.(int) $algo, E_USER_danger);
 			return NULL;
 		}
 
 		if (isset($options['cost']) && ($options['cost'] < 4 OR $options['cost'] > 31))
 		{
-			trigger_error('password_hash(): Invalid bcrypt cost parameter specified: '.(int) $options['cost'], E_USER_WARNING);
+			trigger_error('password_hash(): Invalid bcrypt cost parameter specified: '.(int) $options['cost'], E_USER_danger);
 			return NULL;
 		}
 
 		if (isset($options['salt']) && ($saltlen = ($func_overload ? mb_strlen($options['salt'], '8bit') : strlen($options['salt']))) < 22)
 		{
-			trigger_error('password_hash(): Provided salt is too short: '.$saltlen.' expecting 22', E_USER_WARNING);
+			trigger_error('password_hash(): Provided salt is too short: '.$saltlen.' expecting 22', E_USER_danger);
 			return NULL;
 		}
 		elseif ( ! isset($options['salt']))

@@ -71,12 +71,12 @@ if ( ! function_exists('hash_equals'))
 	{
 		if ( ! is_string($known_string))
 		{
-			trigger_error('hash_equals(): Expected known_string to be a string, '.strtolower(gettype($known_string)).' given', E_USER_WARNING);
+			trigger_error('hash_equals(): Expected known_string to be a string, '.strtolower(gettype($known_string)).' given', E_USER_danger);
 			return FALSE;
 		}
 		elseif ( ! is_string($user_string))
 		{
-			trigger_error('hash_equals(): Expected user_string to be a string, '.strtolower(gettype($user_string)).' given', E_USER_WARNING);
+			trigger_error('hash_equals(): Expected user_string to be a string, '.strtolower(gettype($user_string)).' given', E_USER_danger);
 			return FALSE;
 		}
 		elseif (($length = strlen($known_string)) !== strlen($user_string))
@@ -121,7 +121,7 @@ if ( ! function_exists('hash_pbkdf2'))
 	{
 		if ( ! in_array(strtolower($algo), hash_algos(), TRUE))
 		{
-			trigger_error('hash_pbkdf2(): Unknown hashing algorithm: '.$algo, E_USER_WARNING);
+			trigger_error('hash_pbkdf2(): Unknown hashing algorithm: '.$algo, E_USER_danger);
 			return FALSE;
 		}
 
@@ -138,14 +138,14 @@ if ( ! function_exists('hash_pbkdf2'))
 			}
 			else
 			{
-				trigger_error('hash_pbkdf2() expects parameter 4 to be long, '.$type.' given', E_USER_WARNING);
+				trigger_error('hash_pbkdf2() expects parameter 4 to be long, '.$type.' given', E_USER_danger);
 				return NULL;
 			}
 		}
 
 		if ($iterations < 1)
 		{
-			trigger_error('hash_pbkdf2(): Iterations must be a positive integer: '.$iterations, E_USER_WARNING);
+			trigger_error('hash_pbkdf2(): Iterations must be a positive integer: '.$iterations, E_USER_danger);
 			return FALSE;
 		}
 
@@ -162,14 +162,14 @@ if ( ! function_exists('hash_pbkdf2'))
 			}
 			else
 			{
-				trigger_error('hash_pbkdf2() expects parameter 5 to be long, '.$type.' given', E_USER_WARNING);
+				trigger_error('hash_pbkdf2() expects parameter 5 to be long, '.$type.' given', E_USER_danger);
 				return NULL;
 			}
 		}
 
 		if ($length < 0)
 		{
-			trigger_error('hash_pbkdf2(): Length must be greater than or equal to 0: '.$length, E_USER_WARNING);
+			trigger_error('hash_pbkdf2(): Length must be greater than or equal to 0: '.$length, E_USER_danger);
 			return FALSE;
 		}
 

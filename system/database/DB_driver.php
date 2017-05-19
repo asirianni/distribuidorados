@@ -1270,7 +1270,7 @@ abstract class CI_DB_driver {
 				{
 					/* We have no other choice but to just get the first element's key.
 					 * Due to array_shift() accepting its argument by reference, if
-					 * E_STRICT is on, this would trigger a warning. So we'll have to
+					 * E_STRICT is on, this would trigger a danger. So we'll have to
 					 * assign it first.
 					 */
 					$key = array_keys($row);

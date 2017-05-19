@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Nutrilog</title>
+  <title>Distribuidores</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-yellow-light.min.css">
+  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-red-light.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/plugins/iCheck/flat/blue.css">
   <!-- Morris chart -->
@@ -42,7 +42,7 @@
       }
   </style>
 </head>
-<body class="hold-transition skin-yellow-light sidebar-mini">
+<body class="hold-transition skin-red-light sidebar-mini">
 <div class="wrapper">
 
   <?php echo $header?>
@@ -73,7 +73,7 @@
                 <div class="col-md-12">
                     <button class="btn btn-primary disabled" id="btn_asociar_remito">ASOCIAR<br/>REMITO</button>
                     <button class="btn btn-danger disabled" id="btn_asociar_pedido">ASOCIAR<br/>PEDIDO</button>
-                    <button class="btn btn-warning disabled" id="btn_guardar" onclick="guardar()"><i class="fa fa-save"></i><br/>GUARDAR</button>
+                    <button class="btn btn-danger disabled" id="btn_guardar" onclick="guardar()"><i class="fa fa-save"></i><br/>GUARDAR</button>
                     
                 </div>
             </div>
@@ -168,7 +168,7 @@
             </div>
         </div>
         <div class="col-md-12 fila">
-            <span><strong>DETALLES DE PRODUCTO</strong></span> <button class="btn btn-warning disabled" id='btn_agregar_producto_detalle' onClick="ver_modal_lista_productos()"><i class="fa fa-plus"></i>Agregar</button>
+            <span><strong>DETALLES DE PRODUCTO</strong></span> <button class="btn btn-danger disabled" id='btn_agregar_producto_detalle' onClick="ver_modal_lista_productos()"><i class="fa fa-plus"></i>Agregar</button>
         </div>
         <div class="col-md-12 fila">
             <div class="box">
@@ -227,7 +227,7 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<div class="modal modal-warning" id="modal_agregar_cliente">
+<div class="modal modal-danger" id="modal_agregar_cliente">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -356,7 +356,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="agregar_cliente()"><i class='fa fa-save'></i> Guardar Cliente</button>
+                    <button class="btn btn-danger" onClick="agregar_cliente()"><i class='fa fa-save'></i> Guardar Cliente</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -372,7 +372,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12" style="text-align: right;margin-bottom: 10px;">
-                        <button class="btn btn-warning" onClick="$('#modal_buscar_cliente').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                        <button class="btn btn-danger" onClick="$('#modal_buscar_cliente').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                     </div>
                     <div class="col-md-12">
                         <table id="listado_buscar_clientes" class="table table-bordered table-hover">
@@ -396,7 +396,7 @@
                                             <td>".$value["telefono"]."</td>
                                             <td>".$value["desc_estado"]."</td>
                                             <td>
-                                                <button class='btn btn-warning' data-toggle='tooltip' title='' data-original-title='Seleccionar' onClick='seleccionar_cliente(".$value["id"].",&#34;".$value["dni_cuit_cuil"]."&#34;,&#34;".$value["nombre"]."&#34;,&#34;".$value["apellido"]."&#34;,&#34;".$value["localidad"]."&#34;,&#34;".$value["direccion"]."&#34;,&#34;".$value["ingresos_brutos"]."&#34;,".$value["descuento_gral"].")'><i class='fa fa-plus'></i></button>
+                                                <button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Seleccionar' onClick='seleccionar_cliente(".$value["id"].",&#34;".$value["dni_cuit_cuil"]."&#34;,&#34;".$value["nombre"]."&#34;,&#34;".$value["apellido"]."&#34;,&#34;".$value["localidad"]."&#34;,&#34;".$value["direccion"]."&#34;,&#34;".$value["ingresos_brutos"]."&#34;,".$value["descuento_gral"].")'><i class='fa fa-plus'></i></button>
                                             </td>    
                                         </tr>";
                                     }
@@ -438,7 +438,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="$('#modal_asociar_pedido').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger" onClick="$('#modal_asociar_pedido').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -473,7 +473,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="$('#modal_asociar_remito').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger" onClick="$('#modal_asociar_remito').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -509,7 +509,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="$('#modal_agregar_detalle_remito').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger" onClick="$('#modal_agregar_detalle_remito').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -544,7 +544,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="$('#modal_agregar_detalle_pedido').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger" onClick="$('#modal_agregar_detalle_pedido').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -561,7 +561,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12" style="text-align: right;margin-bottom: 10px;">
-                        <button class="btn btn-warning" onClick="$('#modal_lista_productos').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                        <button class="btn btn-danger" onClick="$('#modal_lista_productos').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                     </div>
                     <div class="col-md-12">
                         <table id="tabla_listado_productos" class="table table-bordered table-hover">
@@ -585,7 +585,7 @@
                                             <td>".$value["stock"]."</td>
                                             <td>$".$value["costo"]."</td>
                                             <td>                                                                                                
-                                                <button class='btn btn-warning' data-toggle='tooltip' title='' data-original-title='Agregar' onClick='agregar_detalle(".$value["id"].",0,&#34;".$value["descripcion"]."&#34;,1,".$value["costo"].")'><i class='fa fa-plus'></i></button>
+                                                <button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Agregar' onClick='agregar_detalle(".$value["id"].",0,&#34;".$value["descripcion"]."&#34;,1,".$value["costo"].")'><i class='fa fa-plus'></i></button>
                                            </td>    
                                         </tr>";
                                     }
@@ -848,7 +848,7 @@
                             cuerpo+="<td>"+data[i]["desc_producto"]+"</td>";
                             cuerpo+="<td>"+data[i]["cantidad"]+"</td>";
                             cuerpo+="<td>"+data[i]["precio"]+"</td>";
-                            cuerpo+="<td><button class='btn btn-warning' onClick='agregar_detalle("+data[i]["cod_producto"]+","+data[i]["codigo"]+",&#34;"+data[i]["desc_producto"]+"&#34;,"+data[i]["cantidad"]+","+data[i]["precio"]+")'>Seleccionar</button></td>";
+                            cuerpo+="<td><button class='btn btn-danger' onClick='agregar_detalle("+data[i]["cod_producto"]+","+data[i]["codigo"]+",&#34;"+data[i]["desc_producto"]+"&#34;,"+data[i]["cantidad"]+","+data[i]["precio"]+")'>Seleccionar</button></td>";
                             cuerpo+="</tr>";
                         }
                         
@@ -898,7 +898,7 @@
                             cuerpo+="<td>"+data[i]["desc_producto"]+"</td>";
                             cuerpo+="<td>"+data[i]["cantidad"]+"</td>";
                             cuerpo+="<td>"+data[i]["precio"]+"</td>";
-                            cuerpo+="<td><button class='btn btn-warning' onClick='agregar_detalle("+data[i]["cod_producto"]+","+data[i]["cod_producto"]+","+0+",&#34;"+data[i]["desc_producto"]+"&#34;,"+data[i]["cantidad"]+","+data[i]["precio"]+")'>Seleccionar</button></td>";
+                            cuerpo+="<td><button class='btn btn-danger' onClick='agregar_detalle("+data[i]["cod_producto"]+","+data[i]["cod_producto"]+","+0+",&#34;"+data[i]["desc_producto"]+"&#34;,"+data[i]["cantidad"]+","+data[i]["precio"]+")'>Seleccionar</button></td>";
                             cuerpo+="</tr>";
                         }
                         
@@ -1129,7 +1129,7 @@
                                cuerpo+="<td>"+data[i]["fecha"]+"</td>";
                                cuerpo+="<td>"+data[i]["fecha_entrega"]+"</td>";
                                cuerpo+="<td>"+data[i]["estado"]+"</td>";
-                               cuerpo+="<td><button class='btn btn-warning' onClick='seleccionar_pedido("+data[i]["numero"]+")'>Seleccionar</button></td>";
+                               cuerpo+="<td><button class='btn btn-danger' onClick='seleccionar_pedido("+data[i]["numero"]+")'>Seleccionar</button></td>";
                                cuerpo+="</tr>";
                            }
 
@@ -1203,7 +1203,7 @@
                                     cuerpo+="<td>"+data[i]["fecha"]+"</td>";
                                     cuerpo+="<td>"+data[i]["chasis"]+"</td>";
                                     cuerpo+="<td>"+data[i]["acoplado"]+"</td>";
-                                    cuerpo+="<td><button class='btn btn-warning' onClick='seleccionar_remito("+data[i]["numero"]+")'>Seleccionar</button></td>";
+                                    cuerpo+="<td><button class='btn btn-danger' onClick='seleccionar_remito("+data[i]["numero"]+")'>Seleccionar</button></td>";
                                     cuerpo+="</tr>";
                                 }
 

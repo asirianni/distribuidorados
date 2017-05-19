@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Nutrilog</title>
+  <title>Distribuidores</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-yellow-light.min.css">
+  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-red-light.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/plugins/iCheck/flat/blue.css">
   <!-- Morris chart -->
@@ -37,7 +37,7 @@
   <!-- EDICION Bootstrap-->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/bootstrap/css/edicion_bootstrap.css">
 </head>
-<body class="hold-transition skin-yellow-light sidebar-mini">
+<body class="hold-transition skin-red-light sidebar-mini">
 <div class="wrapper">
 
   <?php echo $header?>
@@ -64,7 +64,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_pedidos" class="btn btn-warning pull-right" ><i class='fa fa-arrow-left'></i> Volver al listado</a>
+                    <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_pedidos" class="btn btn-danger pull-right" ><i class='fa fa-arrow-left'></i> Volver al listado</a>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <div class="col-md-6">
@@ -134,7 +134,7 @@
                           </table>
                     </div>
                     <div class="col-md-12" style="text-align: center;">
-                        <button class="btn btn-warning" onClick="agregar_pedido_y_detalle()"><i class='fa fa-save'></i> Guardar Pedido</button>
+                        <button class="btn btn-danger" onClick="agregar_pedido_y_detalle()"><i class='fa fa-save'></i> Guardar Pedido</button>
                     </div>
                     <!-- -->
                 </div><!-- /.box-body -->

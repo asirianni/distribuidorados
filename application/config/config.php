@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 |	http://example.com/
 |
-| WARNING: You MUST set this value!
+| danger: You MUST set this value!
 |
 | If it is not set, then CodeIgniter will try guess the protocol and path
 | your installation, but due to security concerns the hostname will be set
@@ -50,7 +50,7 @@ $config['index_page'] = 'index.php';
 | 'QUERY_STRING'   Uses $_SERVER['QUERY_STRING']
 | 'PATH_INFO'      Uses $_SERVER['PATH_INFO']
 |
-| WARNING: If you set this to 'PATH_INFO', URIs will always be URL-decoded!
+| danger: If you set this to 'PATH_INFO', URIs will always be URL-decoded!
 */
 $config['uri_protocol']	= 'REQUEST_URI';
 
@@ -145,7 +145,7 @@ $config['composer_autoload'] = FALSE;
 |
 | This lets you specify which characters are permitted within your URLs.
 | When someone tries to submit a URL with disallowed characters they will
-| get a warning message.
+| get a danger message.
 |
 | As a security measure you are STRONGLY encouraged to restrict URLs to
 | as few characters as possible.  By default only these are allowed: a-z 0-9~%.:_-
@@ -195,7 +195,7 @@ $config['directory_trigger'] = 'd';
 | By default CodeIgniter enables access to the $_GET array.  If for some
 | reason you would like to disable it, set 'allow_get_array' to FALSE.
 |
-| WARNING: This feature is DEPRECATED and currently available only
+| danger: This feature is DEPRECATED and currently available only
 |          for backwards compatibility purposes!
 |
 */
@@ -349,7 +349,7 @@ $config['encryption_key'] = '';
 |	The location to save sessions to, driver dependent.
 |
 |	For the 'files' driver, it's a path to a writable directory.
-|	WARNING: Only absolute paths are supported!
+|	danger: Only absolute paths are supported!
 |
 |	For the 'database' driver, it's a table name.
 |	Please read up the manual for the format with other session drivers.
@@ -360,7 +360,7 @@ $config['encryption_key'] = '';
 |
 |	Whether to match the user's IP address when reading the session data.
 |
-|	WARNING: If you're using the database driver, don't forget to update
+|	danger: If you're using the database driver, don't forget to update
 |	         your session table's PRIMARY KEY when changing this setting.
 |
 | 'sess_time_to_update'
@@ -414,7 +414,7 @@ $config['cookie_httponly'] 	= FALSE;
 | Determines whether to standardize newline characters in input data,
 | meaning to replace \r\n, \r, \n occurrences with the PHP_EOL value.
 |
-| WARNING: This feature is DEPRECATED and currently available only
+| danger: This feature is DEPRECATED and currently available only
 |          for backwards compatibility purposes!
 |
 */
@@ -428,7 +428,7 @@ $config['standardize_newlines'] = FALSE;
 | Determines whether the XSS filter is always active when GET, POST or
 | COOKIE data is encountered
 |
-| WARNING: This feature is DEPRECATED and currently available only
+| danger: This feature is DEPRECATED and currently available only
 |          for backwards compatibility purposes!
 |
 */

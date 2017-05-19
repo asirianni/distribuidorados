@@ -14,7 +14,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_producto()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             $descripcion= $this->input->post("descripcion");
             $stock= $this->input->post("stock");
@@ -32,7 +32,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_producto()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             $id_producto= $this->input->post("id_producto");
             $descripcion= $this->input->post("descripcion");
@@ -63,7 +63,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_precio_vigente()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             $id_producto= $this->input->post("id_producto");
             $precio=$this->input->post("precio");
@@ -78,7 +78,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_precio_vigente()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             $id= $this->input->post("id");
             $precio= $this->input->post("precio");
@@ -93,7 +93,7 @@ class Response_Ajax extends CI_Controller
     
     public function eliminar_precio_vigente()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             $id= $this->input->post("id");
             
@@ -106,7 +106,7 @@ class Response_Ajax extends CI_Controller
     
     public function eliminar_ubicacion_de_producto()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             $id= $this->input->post("id");
             
@@ -119,7 +119,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_ubicacion_a_producto()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             $id_producto= $this->input->post("id_producto");
             $id_ubicacion= $this->input->post("id_ubicacion");
@@ -133,7 +133,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_rubro()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             $id_rubro= $this->input->post("id_rubro");
             $descripcion= $this->input->post("descripcion");
@@ -147,7 +147,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_rubro()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             
             $descripcion= $this->input->post("descripcion");
@@ -161,7 +161,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_ubicacion()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             
             $descripcion= $this->input->post("descripcion");
@@ -175,7 +175,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_ubicacion()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             
             $descripcion= $this->input->post("descripcion");
@@ -190,7 +190,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_unidad_de_medida()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             
             $id= $this->input->post("descripcion");
@@ -207,7 +207,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_unidad_de_medida()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             
             $descripcion= $this->input->post("descripcion");
@@ -223,7 +223,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_movimiento_y_detalle()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
         {
             $fecha = $this->input->post("fecha");
             $tipo_comprobante= $this->input->post("tipo_comprobante");
@@ -240,7 +240,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_cliente()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
         {
             $dni_cuit_cuil= $this->input->post("dni_cuit_cuil");
             $razon_social= $this->input->post("razon_social");
@@ -269,7 +269,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_cliente()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
         {
             $id= $this->input->post("id");
             $dni_cuit_cuil= $this->input->post("dni_cuit_cuil");
@@ -317,7 +317,7 @@ class Response_Ajax extends CI_Controller
     
     public function get_cliente()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
         {
             $this->load->library("Md5");
             $id= $this->input->post("id");
@@ -329,144 +329,9 @@ class Response_Ajax extends CI_Controller
         }
     }
     
-    public function agregar_transportista()
-    {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(10))
-        {
-            $transporte= $this->input->post("transporte");
-            $cuit= $this->input->post("cuit");
-            $telefono= $this->input->post("telefono");
-            $direccion= $this->input->post("direccion");
-            $estado= $this->input->post("estado");
-                    
-            $this->load->model("Registro_de_transportistas_model");
-            
-            $respuesta = $this->Registro_de_transportistas_model->agregar_transportista($transporte,$cuit,$telefono,$direccion,$estado);
-    
-            echo json_encode($respuesta);
-        }
-    }
-    
-    public function editar_transportista()
-    {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(10))
-        {
-            $id= $this->input->post("id");
-            $transporte= $this->input->post("transporte");
-            $cuit= $this->input->post("cuit");
-            $telefono= $this->input->post("telefono");
-            $direccion= $this->input->post("direccion");
-            $estado= $this->input->post("estado");
-                    
-            $this->load->model("Registro_de_transportistas_model");
-            
-            $respuesta = $this->Registro_de_transportistas_model->editar_transportista($id,$transporte,$cuit,$telefono,$direccion,$estado);
-    
-            echo json_encode($respuesta);
-        }
-    }
-    
-    public function agregar_chofer()
-    {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(10))
-        {
-           
-            $cuit= $this->input->post("cuit");
-            $nombre= $this->input->post("nombre");
-            $apellido= $this->input->post("apellido");
-            $direccion= $this->input->post("direccion");
-            $telefono= $this->input->post("telefono");
-            $localidad= $this->input->post("localidad");
-            $estado= $this->input->post("estado");
-                    
-            $this->load->model("Registro_de_transportistas_model");
-            
-            $respuesta = $this->Registro_de_transportistas_model->agregar_chofer($cuit,$nombre,$apellido,$direccion,$telefono,$localidad,$estado);
-            echo json_encode($respuesta);
-        }
-    }
-    
-    public function editar_chofer()
-    {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(10))
-        {
-            $id= $this->input->post("id");
-            $cuit= $this->input->post("cuit");
-            $nombre= $this->input->post("nombre");
-            $apellido= $this->input->post("apellido");
-            $direccion= $this->input->post("direccion");
-            $telefono= $this->input->post("telefono");
-            $localidad= $this->input->post("localidad");
-            $localidad2= $this->input->post("localidad2");
-            $estado= $this->input->post("estado");
-            
-            if($localidad2 != 0 && $localidad2 != $localidad)
-            {
-                $localidad= $localidad2;
-            }
-                    
-            $this->load->model("Registro_de_transportistas_model");
-            
-            $respuesta = $this->Registro_de_transportistas_model->editar_chofer($id,$cuit,$nombre,$apellido,$direccion,$telefono,$localidad,$estado);
-            echo json_encode($respuesta);
-        }
-    }
-    
-    public function agregar_remito()
-    {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(10))
-        {
-            
-            $fecha= $this->input->post("fecha");
-            $cliente= $this->input->post("cliente");
-            $condicion= $this->input->post("condicion");
-            $transporte= $this->input->post("transporte");
-            $chofer= $this->input->post("chofer");
-            $acoplado= $this->input->post("acoplado");
-            $tipo_vehiculo= $this->input->post("tipo_vehiculo");
-            $patente= $this->input->post("patente");
-            $entrega= $this->input->post("entrega");
-            $total_kg= $this->input->post("total_kg");
-            $estado= $this->input->post("estado");
-            $chasis= $this->input->post("chasis");
-            $detalle= $this->input->post("detalle");
-            
-            $this->load->model("Registro_de_transportistas_model");
-            $respuesta = $this->Registro_de_transportistas_model->agregar_remito($fecha,$cliente,$condicion,$transporte,$chofer,$acoplado,$tipo_vehiculo,$patente,$entrega,$total_kg,$estado,$chasis,$detalle);
-                    
-            echo json_encode($respuesta);
-        }
-    }
-    
-    public function editar_remito()
-    {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(10))
-        {
-            $numero= $this->input->post("numero");
-            $fecha= $this->input->post("fecha");
-            $cliente= $this->input->post("cliente");
-            $condicion= $this->input->post("condicion");
-            $transporte= $this->input->post("transporte");
-            $chofer= $this->input->post("chofer");
-            $acoplado= $this->input->post("acoplado");
-            $tipo_vehiculo= $this->input->post("tipo_vehiculo");
-            $patente= $this->input->post("patente");
-            $entrega= $this->input->post("entrega");
-            $total_kg= $this->input->post("total_kg");
-            $estado= $this->input->post("estado");
-            $chasis= $this->input->post("chasis");
-            $detalle= $this->input->post("detalle");
-            
-            $this->load->model("Registro_de_transportistas_model");
-            $respuesta = $this->Registro_de_transportistas_model->editar_remito($numero,$fecha,$cliente,$condicion,$transporte,$chofer,$acoplado,$tipo_vehiculo,$patente,$entrega,$total_kg,$estado,$chasis,$detalle);
-                    
-            echo json_encode($respuesta);
-        }
-    }
-    
     public function agregar_pedido_y_detalle()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
         {
             $fecha= $this->input->post("fecha");
             $fecha_entrega= $this->input->post("fecha_entrega");
@@ -485,7 +350,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_pedido_y_detalle()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
         {
             $numero_pedido= $this->input->post("numero_pedido");
             $fecha= $this->input->post("fecha");
@@ -505,7 +370,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_pedido()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
         {
             $numero= $this->input->post("numero");
             $fecha= $this->input->post("fecha");

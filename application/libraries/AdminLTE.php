@@ -175,9 +175,11 @@ class AdminLTE extends Config
             
             switch($id_modulo)
             {
-                case 1:
+                case 2: $html.="<li><a href='".base_url()."index.php/".$controller_user."/registro_de_clientes'><i class='fa fa-users'></i> <span>Registro de Clientes</span></a></li>"; 
                     break;
-                case 2:
+                
+                
+                case 3:
                     $html.="<li class='treeview'>
                                 <a href='#'>
                                   <i class='fa fa-cube'></i> <span>Productos</span>
@@ -196,40 +198,19 @@ class AdminLTE extends Config
                              </li>";
                     break;
                 
-                case 3: $html.="<li><a href='".base_url()."index.php/".$controller_user."/registro_de_pedidos'><i class='fa fa-edit'></i> <span>Pedidos</span></a></li>";
+                case 4: $html.="<li><a href='".base_url()."index.php/".$controller_user."/registro_de_pedidos'><i class='fa fa-edit'></i> <span>Pedidos</span></a></li>";
                      break;
-                case 4: $html.="<li><a href='".base_url()."index.php/".$controller_user."/registro_de_clientes'><i class='fa fa-users'></i> <span>Registro de Clientes</span></a></li>"; 
-                    break;
+                
                 case 5: $html.="<li><a href='".base_url()."index.php/".$controller_user."/facturacion'><i class='fa fa-calculator'></i> <span>Facturacion</span></a></li>"; 
                     break;
-                case 6: $html.="<li><a href='".base_url()."index.php/".$controller_user."/stock_de_productos_movimientos'><i class='fa fa-bars'></i> <span>Movimientos Generales</span></a></li>"; 
+                
+                case 6: $html.="<li><a href='".base_url()."index.php/".$controller_user."'><i class='fa fa-bars'></i> <span>Estados de cuenta</span></a></li>"; 
                     break;
-                case 7: $html.="<li><a href='".base_url()."index.php/".$controller_user."/reporte_de_ventas'><i class='fa fa-bar-chart'></i> <span>Reporte de Ventas</span></a></li>"; 
+                case 7: $html.="<li><a href='".base_url()."index.php/".$controller_user."'><i class='fa fa-bar-chart'></i> <span>Compras</span></a></li>"; 
                     break;
-                case 8: $html.="<li><a href='".base_url()."index.php/".$controller_user."/reporte_de_cobros'><i class='fa fa-book'></i> <span>Reporte de Cobros</span></a></li>"; 
-                    break;
-                case 9: $html.="<li><a href='".base_url()."index.php/".$controller_user."/registro_de_proveedores'><i class='fa fa-shopping-cart'></i> <span>Registro de Proveedores</span></a></li>"; 
-                    break;
-                case 10:
-                     $html.="<li class='treeview'>
-                                <a href='#'>
-                                  <i class='fa fa-truck'></i> <span>Registro de Transportistas</span>
-                                  <span class='pull-right-container'>
-                                    <i class='fa fa-angle-left pull-right'></i>
-                                  </span>
-                                </a>
-                                <ul class='treeview-menu'>
-                                    <li><a href='".base_url()."index.php/".$controller_user."/registro_de_transportistas'><i class='fa fa-circle-o'></i>Transporte</a></li>
-                                    <li><a href='".base_url()."index.php/".$controller_user."/abm_choferes'><i class='fa fa-circle-o'></i>Choferes</a></li>
-                                    <li><a href='".base_url()."index.php/".$controller_user."/abm_remitos'><i class='fa fa-circle-o'></i>Remitos</a></li>
-                                </ul>
-                             </li>";
+                case 8: $html.="<li><a href='".base_url()."index.php/".$controller_user."'><i class='fa fa-book'></i> <span>Reportes</span></a></li>"; 
                     break;
                 
-                case 11: $html.="<li><a href='".base_url()."index.php/".$controller_user."/gestor_de_precios'><i class='fa fa-dollar'></i> <span>Gestor de Precios</span></a></li>"; 
-                    break;
-                case 12: $html.="<li><a href='".base_url()."index.php/".$controller_user."/reporte_de_valores'><i class='fa fa-book'></i> <span>Reporte de valores</span></a></li>"; 
-                    break;
             }
         }
         return $html;

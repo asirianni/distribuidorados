@@ -2,7 +2,7 @@
 
 class Header_usuario
 {
-    private static $texto_header="NUTRILOG";
+    private static $texto_header="Distribuidores";
     private static $permitir_foto_perfil= true;
     
     public static function getHeader($tipo_usuario,$nombre,$apellido,$fecha_registro,$foto_perfil)
@@ -76,7 +76,7 @@ class Header_usuario
                   <li class='dropdown notifications-menu'>
                     <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
                       <i class='fa fa-bell-o'></i>
-                      <span class='label label-warning'>10</span>
+                      <span class='label label-danger'>10</span>
                     </a>
                     <ul class='dropdown-menu'>
                       <li class='header'>You have 10 notifications</li>
@@ -239,7 +239,7 @@ class Header_usuario
                   <li class='dropdown notifications-menu'>
                     <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
                       <i class='fa fa-bell-o'></i>
-                      <span class='label label-warning'>10</span>
+                      <span class='label label-danger'>10</span>
                     </a>
                     <ul class='dropdown-menu'>
                       <li class='header'>You have 10 notifications</li>
@@ -402,7 +402,7 @@ class Header_usuario
                   <li class='dropdown notifications-menu'>
                     <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
                       <i class='fa fa-bell-o'></i>
-                      <span class='label label-warning'>10</span>
+                      <span class='label label-danger'>10</span>
                     </a>
                     <ul class='dropdown-menu'>
                       <li class='header'>You have 10 notifications</li>
@@ -565,7 +565,7 @@ class Header_usuario
                   <li class='dropdown notifications-menu'>
                     <a href='#' class='dropdown-toggle' data-toggle='dropdown'>
                       <i class='fa fa-bell-o'></i>
-                      <span class='label label-warning'>10</span>
+                      <span class='label label-danger'>10</span>
                     </a>
                     <ul class='dropdown-menu'>
                       <li class='header'>You have 10 notifications</li>

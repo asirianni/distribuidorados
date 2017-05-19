@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Nutrilog</title>
+  <title>Distribuidores</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-yellow-light.min.css">
+  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-red-light.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/plugins/iCheck/flat/blue.css">
   <!-- Morris chart -->
@@ -32,7 +32,7 @@
     echo $css;
   ?>
 </head>
-<body class="hold-transition skin-yellow-light sidebar-mini">
+<body class="hold-transition skin-red-light sidebar-mini">
 <div class="wrapper">
 
   <?php echo $header?>
@@ -152,7 +152,7 @@
                             <p style="font-size: 16px;font-weight: bold;color: #F00;" id="mensaje_error_editar"></p>
                         </div>
                         <div class="col-md-12" style="text-align:center;margin-top: 20px;">
-                            <input type="button" class="btn btn-warning" value="Guardar Cambios" onClick="guardar_cambios()"/>
+                            <input type="button" class="btn btn-danger" value="Guardar Cambios" onClick="guardar_cambios()"/>
                         </div>
                     </form>
                 </div><!-- /.box-body -->

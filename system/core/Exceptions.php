@@ -62,15 +62,15 @@ class CI_Exceptions {
 	 */
 	public $levels = array(
 		E_ERROR			=>	'Error',
-		E_WARNING		=>	'Warning',
+		E_danger		=>	'danger',
 		E_PARSE			=>	'Parsing Error',
 		E_NOTICE		=>	'Notice',
 		E_CORE_ERROR		=>	'Core Error',
-		E_CORE_WARNING		=>	'Core Warning',
+		E_CORE_danger		=>	'Core danger',
 		E_COMPILE_ERROR		=>	'Compile Error',
-		E_COMPILE_WARNING	=>	'Compile Warning',
+		E_COMPILE_danger	=>	'Compile danger',
 		E_USER_ERROR		=>	'User Error',
-		E_USER_WARNING		=>	'User Warning',
+		E_USER_danger		=>	'User danger',
 		E_USER_NOTICE		=>	'User Notice',
 		E_STRICT		=>	'Runtime Notice'
 	);

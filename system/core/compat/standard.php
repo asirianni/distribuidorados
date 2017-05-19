@@ -81,7 +81,7 @@ if ( ! function_exists('array_column'))
 			}
 			else
 			{
-				trigger_error('array_column(): The column key should be either a string or an integer', E_USER_WARNING);
+				trigger_error('array_column(): The column key should be either a string or an integer', E_USER_danger);
 				return FALSE;
 			}
 		}
@@ -98,7 +98,7 @@ if ( ! function_exists('array_column'))
 			}
 			else
 			{
-				trigger_error('array_column(): The index key should be either a string or an integer', E_USER_WARNING);
+				trigger_error('array_column(): The index key should be either a string or an integer', E_USER_danger);
 				return FALSE;
 			}
 		}
@@ -161,19 +161,19 @@ if ( ! function_exists('hex2bin'))
 			}
 			else
 			{
-				trigger_error('hex2bin() expects parameter 1 to be string, '.$type.' given', E_USER_WARNING);
+				trigger_error('hex2bin() expects parameter 1 to be string, '.$type.' given', E_USER_danger);
 				return NULL;
 			}
 		}
 
 		if (strlen($data) % 2 !== 0)
 		{
-			trigger_error('Hexadecimal input string must have an even length', E_USER_WARNING);
+			trigger_error('Hexadecimal input string must have an even length', E_USER_danger);
 			return FALSE;
 		}
 		elseif ( ! preg_match('/^[0-9a-f]*$/i', $data))
 		{
-			trigger_error('Input string must be hexadecimal string', E_USER_WARNING);
+			trigger_error('Input string must be hexadecimal string', E_USER_danger);
 			return FALSE;
 		}
 

@@ -6,7 +6,7 @@
     
     // HEADER
     
-    //public $texto_header = "NUTRILOG";
+    //public $texto_header = "Distribuidores";
     
     // BUSQUEDA
     public $permitir_busqueda= false;

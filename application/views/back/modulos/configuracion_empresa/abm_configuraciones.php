@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Nutrilog</title>
+  <title>Distribuidores</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-yellow-light.min.css">
+  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-red-light.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/plugins/iCheck/flat/blue.css">
   <!-- Morris chart -->
@@ -37,7 +37,7 @@
   <!-- EDICION Bootstrap-->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/bootstrap/css/edicion_bootstrap.css">
 </head>
-<body class="hold-transition skin-yellow-light sidebar-mini">
+<body class="hold-transition skin-red-light sidebar-mini">
 <div class="wrapper">
 
   <?php echo $header?>
@@ -48,7 +48,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Configuraciones Nutrilog
+        Configuraciones Distribuidores
         <!--<small>Control panel</small>-->
       </h1>
       <ol class="breadcrumb">
@@ -108,7 +108,7 @@
 
 
 <!---->
-<div class="modal modal-warning" id="modal_editar_configuracion">
+<div class="modal modal-danger" id="modal_editar_configuracion">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -134,7 +134,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="editar_configuracion()"><i class='fa fa-save'></i> Guardar Cambios</button>
+                    <button class="btn btn-danger" onClick="editar_configuracion()"><i class='fa fa-save'></i> Guardar Cambios</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->

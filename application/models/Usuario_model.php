@@ -108,7 +108,7 @@ class Usuario_model extends CI_Model
     
     public function get_modulos_usuario($id)
     {
-        $r = $this->db->query("SELECT modulos_usuarios.id_usuario,modulos_usuarios.id_usuario,modulos_usuarios.id_modulo,modulos.modulo as desc_modulo FROM modulos_usuarios INNER JOIN modulos on modulos.id = modulos_usuarios.id_modulo where modulos_usuarios.id_usuario = $id");
+        $r = $this->db->query("SELECT modulos_usuarios.id_usuario,modulos_usuarios.id_usuario,modulos_usuarios.id_modulo,modulos.modulo as desc_modulo FROM modulos_usuarios INNER JOIN modulos on modulos.id = modulos_usuarios.id_modulo where modulos_usuarios.id_usuario = $id order by modulos.id");
         return $r->result_array();
     }
     

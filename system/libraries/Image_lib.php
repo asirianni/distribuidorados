@@ -400,7 +400,7 @@ class CI_Image_lib {
 		 * @see	https://github.com/bcit-ci/CodeIgniter/issues/4967
 		 * @see	https://bugs.php.net/bug.php?id=72404
 		 */
-		ini_set('gd.jpeg_ignore_warning', 1);
+		ini_set('gd.jpeg_ignore_danger', 1);
 
 		log_message('info', 'Image Lib Class Initialized');
 	}
@@ -1766,7 +1766,7 @@ class CI_Image_lib {
 		if ( ! extension_loaded('gd'))
 		{
 			/* As it is stated in the PHP manual, dl() is not always available
-			 * and even if so - it could generate an E_WARNING message on failure
+			 * and even if so - it could generate an E_danger message on failure
 			 */
 			return (function_exists('dl') && @dl('gd.so'));
 		}

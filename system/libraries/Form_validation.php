@@ -752,7 +752,7 @@ class CI_Form_validation {
 				// Users can use any native PHP function call that has one param.
 				if (function_exists($rule))
 				{
-					// Native PHP functions issue warnings if you pass them more parameters than they use
+					// Native PHP functions issue dangers if you pass them more parameters than they use
 					$result = ($param !== FALSE) ? $rule($postdata, $param) : $rule($postdata);
 
 					if ($_in_array === TRUE)

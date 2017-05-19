@@ -115,11 +115,11 @@ class Menu_Config
                       <a href='javascript:void(0)'>
                         <h4 class='control-sidebar-subheading'>
                           Laravel Integration
-                          <span class='label label-warning pull-right'>50%</span>
+                          <span class='label label-danger pull-right'>50%</span>
                         </h4>
 
                         <div class='progress progress-xxs'>
-                          <div class='progress-bar progress-bar-warning' style='width: 50%'></div>
+                          <div class='progress-bar progress-bar-danger' style='width: 50%'></div>
                         </div>
                       </a>
                     </li>
@@ -313,11 +313,11 @@ class Menu_Config
                       <a href='javascript:void(0)'>
                         <h4 class='control-sidebar-subheading'>
                           Laravel Integration
-                          <span class='label label-warning pull-right'>50%</span>
+                          <span class='label label-danger pull-right'>50%</span>
                         </h4>
 
                         <div class='progress progress-xxs'>
-                          <div class='progress-bar progress-bar-warning' style='width: 50%'></div>
+                          <div class='progress-bar progress-bar-danger' style='width: 50%'></div>
                         </div>
                       </a>
                     </li>
@@ -511,11 +511,11 @@ class Menu_Config
                       <a href='javascript:void(0)'>
                         <h4 class='control-sidebar-subheading'>
                           Laravel Integration
-                          <span class='label label-warning pull-right'>50%</span>
+                          <span class='label label-danger pull-right'>50%</span>
                         </h4>
 
                         <div class='progress progress-xxs'>
-                          <div class='progress-bar progress-bar-warning' style='width: 50%'></div>
+                          <div class='progress-bar progress-bar-danger' style='width: 50%'></div>
                         </div>
                       </a>
                     </li>
@@ -709,11 +709,11 @@ class Menu_Config
                       <a href='javascript:void(0)'>
                         <h4 class='control-sidebar-subheading'>
                           Laravel Integration
-                          <span class='label label-warning pull-right'>50%</span>
+                          <span class='label label-danger pull-right'>50%</span>
                         </h4>
 
                         <div class='progress progress-xxs'>
-                          <div class='progress-bar progress-bar-warning' style='width: 50%'></div>
+                          <div class='progress-bar progress-bar-danger' style='width: 50%'></div>
                         </div>
                       </a>
                     </li>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Nutrilog</title>
+  <title>Distribuidores</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-yellow-light.min.css">
+  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-red-light.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/plugins/iCheck/flat/blue.css">
   <!-- Morris chart -->
@@ -37,7 +37,7 @@
   <!-- EDICION Bootstrap-->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/bootstrap/css/edicion_bootstrap.css">
 </head>
-<body class="hold-transition skin-yellow-light sidebar-mini">
+<body class="hold-transition skin-red-light sidebar-mini">
 <div class="wrapper">
 
   <?php echo $header?>
@@ -64,7 +64,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <button class="btn btn-warning" onClick="$('#modal_agregar_usuario').modal('show');"><i class='fa fa-plus'></i> Agregar Usuario</button>
+                    <button class="btn btn-danger" onClick="$('#modal_agregar_usuario').modal('show');"><i class='fa fa-plus'></i> Agregar Usuario</button>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="example2" class="table table-bordered table-hover">
@@ -88,7 +88,7 @@
                             <td>".$value["desc_tipo"]."</td>
                             <td>
                                 <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_usuario(".$value["id"].")'><i class='fa fa-edit'></i></button>
-                                <a href='".base_url()."index.php/Administrador/administrar_modulos_de_usuario/".$value["id"]."' class='btn btn-warning' data-toggle='tooltip' title='' data-original-title='Modulos' onClick='adm_modulos_usuario(".$value["id"].")'><i class='fa fa-cubes'></i></a>
+                                <a href='".base_url()."index.php/Administrador/administrar_modulos_de_usuario/".$value["id"]."' class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Modulos' onClick='adm_modulos_usuario(".$value["id"].")'><i class='fa fa-cubes'></i></a>
                             </td>
                         </tr>";
                       }?>
@@ -112,7 +112,7 @@
 <!-- ./wrapper -->
 
 <!-- MODALES DE ABM USUARIOS-->
-<div class="modal modal-warning" id="modal_agregar_usuario">
+<div class="modal modal-danger" id="modal_agregar_usuario">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -207,7 +207,7 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-<div class="modal modal-warning" id="modal_editar_usuario">
+<div class="modal modal-danger" id="modal_editar_usuario">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

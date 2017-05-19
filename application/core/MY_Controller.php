@@ -129,7 +129,7 @@ class MY_Controller extends CI_Controller
     
     public function stock_de_productos_listado()
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(2);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
         
         if($permiso)
         {
@@ -159,7 +159,7 @@ class MY_Controller extends CI_Controller
     
     public function precios_vigentes_de_producto($id_producto = null)
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(2);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
         
         if($permiso && $id_producto != null)
         {
@@ -190,7 +190,7 @@ class MY_Controller extends CI_Controller
     
     public function ubicaciones_de_producto($id_producto = null)
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(2);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
         
         if($permiso && $id_producto != null)
         {
@@ -222,7 +222,7 @@ class MY_Controller extends CI_Controller
     
     public function stock_de_productos_rubros()
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(2);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
         
         if($permiso)
         {
@@ -248,7 +248,7 @@ class MY_Controller extends CI_Controller
     
     public function stock_de_productos_ubicaciones()
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(2);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
         
         if($permiso)
         {
@@ -274,7 +274,7 @@ class MY_Controller extends CI_Controller
     
     public function stock_de_productos_medidas()
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(2);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
         
         if($permiso)
         {
@@ -300,7 +300,7 @@ class MY_Controller extends CI_Controller
     
     public function stock_de_productos_movimientos()
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(2);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
         
         if($permiso)
         {
@@ -351,7 +351,7 @@ class MY_Controller extends CI_Controller
     
     public function stock_de_productos_consultar()
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(2);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
         
         if($this->input->post())
         {
@@ -403,7 +403,7 @@ class MY_Controller extends CI_Controller
     
     public function stock_de_productos_movimientos_agregar()
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(2);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
         
         if($permiso)
         {
@@ -440,7 +440,7 @@ class MY_Controller extends CI_Controller
     // COMIENZO MODULO DE CLIENTES
     public function registro_de_clientes()
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(4);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(2);
         
         if($permiso)
         {
@@ -474,7 +474,7 @@ class MY_Controller extends CI_Controller
     
     public function imprimir_listado_clientes()
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(4);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(2);
         
         if($permiso)
         {
@@ -538,7 +538,7 @@ class MY_Controller extends CI_Controller
     
     public function registro_de_pedidos()
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(4);
         
         if($permiso)
         {
@@ -570,7 +570,7 @@ class MY_Controller extends CI_Controller
     
     public function registro_de_pedidos_agregar()
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(4);
         
         if($permiso)
         {
@@ -603,7 +603,7 @@ class MY_Controller extends CI_Controller
     
     public function registro_de_pedidos_editar($numero_pedido = null)
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(4);
         
         if($permiso && $numero_pedido != null)
         {
@@ -680,400 +680,7 @@ class MY_Controller extends CI_Controller
         }
     }
     
-    public function movimientos_generales()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(6);
-        
-        if($permiso)
-        {
-            $output["css"]="";
-            $output["js"]="";
-            $output["menu"]=$this->adminlte->getMenu();
-            $output["header"]=$this->adminlte->getHeader();
-            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
-            $output["footer"]=$this->adminlte->getFooter();
-            $this->load->view("back/modulos/stock_de_productos",$output);
-        }
-        else
-        {
-            redirect($this->funciones_generales->redireccionar_usuario());
-        }
-    }
     
-    public function reporte_de_ventas()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(7);
-        
-        if($permiso)
-        {
-            $output["css"]="";
-            $output["js"]="";
-            $output["menu"]=$this->adminlte->getMenu();
-            $output["header"]=$this->adminlte->getHeader();
-            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
-            $output["footer"]=$this->adminlte->getFooter();
-            $this->load->view("back/modulos/stock_de_productos",$output);
-        }
-        else
-        {
-            redirect($this->funciones_generales->redireccionar_usuario());
-        }
-    }
-    
-    public function reporte_de_cobros()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
-        
-        if($permiso)
-        {
-            $output["css"]="";
-            $output["js"]="";
-            $output["menu"]=$this->adminlte->getMenu();
-            $output["header"]=$this->adminlte->getHeader();
-            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
-            $output["footer"]=$this->adminlte->getFooter();
-            $this->load->view("back/modulos/stock_de_productos",$output);
-        }
-        else
-        {
-            redirect($this->funciones_generales->redireccionar_usuario());
-        }
-    }
-    
-    public function registro_de_proveedores()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(9);
-        
-        if($permiso)
-        {
-            $output["css"]="";
-            $output["js"]="";
-            $output["menu"]=$this->adminlte->getMenu();
-            $output["header"]=$this->adminlte->getHeader();
-            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
-            $output["footer"]=$this->adminlte->getFooter();
-            $this->load->view("back/modulos/stock_de_productos",$output);
-        }
-        else
-        {
-            redirect($this->funciones_generales->redireccionar_usuario());
-        }
-    }
-    
-    // COMIENZO MODULO DE TRANSPORTISTAS
-    
-    public function registro_de_transportistas()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(10);
-        
-        if($permiso)
-        {
-            $this->load->model("Registro_de_transportistas_model");
-            
-            $output["css"]=$this->adminlte->get_css_datatables();
-            $output["css"].=$this->adminlte->get_css_select2();
-            $output["js"]=$this->adminlte->get_js_datatables();
-            $output["js"].=$this->adminlte->get_js_select2();
-            $output["menu"]=$this->adminlte->getMenu();
-            $output["header"]=$this->adminlte->getHeader();
-            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
-            $output["footer"]=$this->adminlte->getFooter();
-            
-            $output["listado_transportistas"]= $this->Registro_de_transportistas_model->get_listado_transportistas_no_suspendidos();
-            $output["controller_usuario"]=$this->controller_usuario;
-            
-            $this->load->view("back/modulos/registro_de_transportistas/abm_transportistas",$output);
-        }
-        else
-        {
-            redirect($this->funciones_generales->redireccionar_usuario());
-        }
-    }
-    
-    public function abm_choferes()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(10);
-        
-        if($permiso)
-        {
-            $this->load->model("Registro_de_transportistas_model");
-            $this->load->model("Localidades_model");
-            
-            $output["css"]=$this->adminlte->get_css_datatables();
-            $output["css"].=$this->adminlte->get_css_select2();
-            $output["js"]=$this->adminlte->get_js_datatables();
-            $output["js"].=$this->adminlte->get_js_select2();
-            $output["menu"]=$this->adminlte->getMenu();
-            $output["header"]=$this->adminlte->getHeader();
-            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
-            $output["footer"]=$this->adminlte->getFooter();
-            
-            $output["listado_choferes"]= $this->Registro_de_transportistas_model->get_choferes_no_suspendidos();
-            $output["controller_usuario"]=$this->controller_usuario;
-            $output["listado_localidades"]= $this->Localidades_model->get_localidades();
-            
-            $this->load->view("back/modulos/registro_de_transportistas/abm_choferes",$output);
-        }
-        else
-        {
-            redirect($this->funciones_generales->redireccionar_usuario());
-        }
-    }
-    
-    public function abm_remitos()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(10);
-        
-        if($permiso)
-        {
-            $this->load->model("Registro_de_transportistas_model");
-            
-            $output["css"]=$this->adminlte->get_css_datatables();
-            $output["css"].=$this->adminlte->get_css_select2();
-            $output["css"].=$this->adminlte->get_css_datetimepicker();
-            $output["js"]=$this->adminlte->get_js_datatables();
-            $output["js"].=$this->adminlte->get_js_select2();
-            $output["js"].=$this->adminlte->get_js_datetimepicker();
-            $output["menu"]=$this->adminlte->getMenu();
-            $output["header"]=$this->adminlte->getHeader();
-            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
-            $output["footer"]=$this->adminlte->getFooter();
-            
-            $output["listado_remitos"]= $this->Registro_de_transportistas_model->get_listado_remitos_no_cancelados();
-            $output["controller_usuario"]=$this->controller_usuario;
-            $output["lista_transportistas"]=$this->Registro_de_transportistas_model->get_listado_transportistas();
-            $output["lista_choferes"]=$this->Registro_de_transportistas_model->get_choferes();
-            $output["lista_tipos_vehiculos"]=$this->Registro_de_transportistas_model->get_tipos_vehiculos();
-            $output["leyenda_lista"]="LISTADO PENDIENTE";
-            
-            $output["desde_consultar"]=null;
-            $output["hasta_consultar"]=null;
-            $output["transporte_consultar"]=null;
-            $output["chofer_consultar"]=null;
-            $output["tipo_vehiculo_consultar"]=null;
-            $output["estado_consultar"]=null;
-            
-            $this->load->view("back/modulos/registro_de_transportistas/abm_remitos",$output);
-        }
-        else
-        {
-            redirect($this->funciones_generales->redireccionar_usuario());
-        }
-    }
-    
-    public function exportar_remitos_a_excel()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(10);
-        
-        if($permiso)
-        {
-            header("Content-type: application/vnd.ms-excel; name='excel'");
-            header("Content-Disposition: filename=ficheroExcel.xls");
-            header("Pragma: no-cache");
-            header("Expires: 0");
-
-            echo $_POST['datos_a_enviar'];
-        }
-        else
-        {
-            redirect($this->funciones_generales->redireccionar_usuario());
-        }
-    }
-    
-    public function consultar_remitos()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(10);
-        
-        if($permiso && $this->input->post())
-        {
-            $this->load->model("Registro_de_transportistas_model");
-            
-            
-            $desde_consultar=$this->input->post("desde_consultar");
-            $hasta_consultar=$this->input->post("hasta_consultar");
-            $transporte_consultar=$this->input->post("transporte_consultar");
-            $chofer_consultar=$this->input->post("chofer_consultar");
-            $tipo_vehiculo_consultar=$this->input->post("tipo_vehiculo_consultar");
-            $estado_consultar=$this->input->post("estado_consultar");
-            
-            
-            
-            $output["css"]=$this->adminlte->get_css_datatables();
-            $output["css"].=$this->adminlte->get_css_select2();
-            $output["css"].=$this->adminlte->get_css_datetimepicker();
-            $output["js"]=$this->adminlte->get_js_datatables();
-            $output["js"].=$this->adminlte->get_js_select2();
-            $output["js"].=$this->adminlte->get_js_datetimepicker();
-            $output["menu"]=$this->adminlte->getMenu();
-            $output["header"]=$this->adminlte->getHeader();
-            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
-            $output["footer"]=$this->adminlte->getFooter();
-            
-            $output["listado_remitos"]= $this->Registro_de_transportistas_model->get_listado_consulta_remitos($desde_consultar,$hasta_consultar,$transporte_consultar,$chofer_consultar,$tipo_vehiculo_consultar,$estado_consultar);
-            $output["controller_usuario"]=$this->controller_usuario;
-            $output["lista_transportistas"]=$this->Registro_de_transportistas_model->get_listado_transportistas();
-            $output["lista_choferes"]=$this->Registro_de_transportistas_model->get_choferes();
-            $output["lista_tipos_vehiculos"]=$this->Registro_de_transportistas_model->get_tipos_vehiculos();
-            
-            $output["desde_consultar"]=$desde_consultar;
-            $output["hasta_consultar"]=$hasta_consultar;
-            $output["transporte_consultar"]=$transporte_consultar;
-            $output["chofer_consultar"]=$chofer_consultar;
-            $output["tipo_vehiculo_consultar"]=$tipo_vehiculo_consultar;
-            $output["estado_consultar"]=$estado_consultar;
-            $output["leyenda_lista"]="REMITOS DESDE $desde_consultar HASTA $hasta_consultar";
-            
-            $this->load->view("back/modulos/registro_de_transportistas/abm_remitos",$output);
-        }
-        else
-        {
-            redirect($this->controller_usuario."/abm_remitos");
-        }
-    }
-    
-    public function imprimir_lista_remitos()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(10);
-        
-        if($permiso && $this->input->post())
-        {
-            $this->load->model("Registro_de_transportistas_model");
-            
-            $output["listado_remitos"]=null;
-            
-            $desde_consultar=$this->input->post("desde_imprimir");
-            $hasta_consultar=$this->input->post("hasta_imprimir");
-            $transporte_consultar=$this->input->post("transporte_imprimir");
-            $chofer_consultar=$this->input->post("chofer_imprimir");
-            $tipo_vehiculo_consultar=$this->input->post("tipo_vehiculo_imprimir");
-            $estado_consultar=$this->input->post("estado_imprimir");
-            
-            if($desde_consultar == "")
-            {
-                 $output["listado_remitos"]= $this->Registro_de_transportistas_model->get_listado_remitos_no_cancelados();
-            
-            }
-            else
-            {
-              $output["listado_remitos"]= $this->Registro_de_transportistas_model->get_listado_consulta_remitos($desde_consultar,$hasta_consultar,$transporte_consultar,$chofer_consultar,$tipo_vehiculo_consultar,$estado_consultar);
-            }
-            
-            $this->load->view("back/modulos/registro_de_transportistas/impresor-remitos",$output);
-        }
-        else
-        {
-            redirect($this->controller_usuario."/abm_remitos");
-        }
-    }
-    
-    public function agregar_remito()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(10);
-        
-        if($permiso)
-        {
-            $this->load->model("Registro_de_transportistas_model");
-            $this->load->model("Registro_de_clientes_model");
-            $this->load->model("Stock_productos_model");
-            
-            $output["css"]=$this->adminlte->get_css_datatables();
-            $output["css"].=$this->adminlte->get_css_select2();
-            $output["css"].=$this->adminlte->get_css_datetimepicker();
-            $output["js"]=$this->adminlte->get_js_datatables();
-            $output["js"].=$this->adminlte->get_js_select2();
-            $output["js"].=$this->adminlte->get_js_datetimepicker();
-            $output["menu"]=$this->adminlte->getMenu();
-            $output["header"]=$this->adminlte->getHeader();
-            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
-            $output["footer"]=$this->adminlte->getFooter();
-            
-            $output["controller_usuario"]=$this->controller_usuario;
-            $output["lista_clientes"]=$this->Registro_de_clientes_model->get_clientes_no_suspendidos();
-            $output["lista_transportistas"]=$this->Registro_de_transportistas_model->get_listado_transportistas();
-            $output["lista_choferes"]=$this->Registro_de_transportistas_model->get_choferes();
-            $output["lista_tipos_vehiculos"]=$this->Registro_de_transportistas_model->get_tipos_vehiculos();
-            $output["proximo_remito"]= $this->Registro_de_transportistas_model->get_numero_proximo_remito();
-            $output["condiciones_de_venta"]= $this->Registro_de_transportistas_model->get_condiciones_de_venta();
-            $output["listado_productos"]=$this->Stock_productos_model->get_listado_productos();
-            
-            $this->load->view("back/modulos/registro_de_transportistas/agregar_remito",$output);
-        }
-        else
-        {
-            redirect($this->funciones_generales->redireccionar_usuario());
-        }
-    }
-    
-    public function imprimir_remito($numero_remito = null)
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(10);
-        
-        if($permiso && $numero_remito != null)
-        {
-            $this->load->model("Registro_de_transportistas_model");
-            $this->load->model("Configuracion_empresa_model");
-            
-            $output["detalle_remito"]= $this->Registro_de_transportistas_model->get_detalle_remito($numero_remito);
-            $output["remito"]= $this->Registro_de_transportistas_model->get_remito($numero_remito);
-            $output["logo"]=$this->Configuracion_empresa_model->get_configuracion(3);
-            $output["tipo_de_inscripcion"]=$this->Configuracion_empresa_model->get_configuracion(4);
-            $output["cuit"]=$this->Configuracion_empresa_model->get_configuracion(1);
-            $output["ingresos_brutos"]=$this->Configuracion_empresa_model->get_configuracion(2);
-            $output["inicio_actividad"]=$this->Configuracion_empresa_model->get_configuracion(5);
-            $output["cliente"]=$this->Registro_de_transportistas_model->get_cliente($output["remito"]["cliente"]);
-           
-           
-            $this->load->view("back/modulos/registro_de_transportistas/impresor-remito",$output);
-        }
-        else 
-        {
-            redirect($this->funciones_generales->redireccionar_usuario());
-        }
-    }
-    
-    public function editar_remito($numero_remito = null)
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(10);
-        
-        if($permiso && $numero_remito != null)
-        {
-            $this->load->model("Registro_de_transportistas_model");
-            $this->load->model("Registro_de_clientes_model");
-            $this->load->model("Stock_productos_model");
-            
-            $output["css"]=$this->adminlte->get_css_datatables();
-            $output["css"].=$this->adminlte->get_css_select2();
-            $output["css"].=$this->adminlte->get_css_datetimepicker();
-            $output["js"]=$this->adminlte->get_js_datatables();
-            $output["js"].=$this->adminlte->get_js_select2();
-            $output["js"].=$this->adminlte->get_js_datetimepicker();
-            $output["menu"]=$this->adminlte->getMenu();
-            $output["header"]=$this->adminlte->getHeader();
-            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
-            $output["footer"]=$this->adminlte->getFooter();
-            
-            $output["controller_usuario"]=$this->controller_usuario;
-            $output["lista_clientes"]=$this->Registro_de_clientes_model->get_clientes_no_suspendidos();
-            $output["lista_transportistas"]=$this->Registro_de_transportistas_model->get_listado_transportistas();
-            $output["lista_choferes"]=$this->Registro_de_transportistas_model->get_choferes();
-            $output["lista_tipos_vehiculos"]=$this->Registro_de_transportistas_model->get_tipos_vehiculos();
-            $output["proximo_remito"]= $this->Registro_de_transportistas_model->get_numero_proximo_remito();
-            $output["listado_productos"]=$this->Stock_productos_model->get_listado_productos();
-            $output["detalle_remito"]= $this->Registro_de_transportistas_model->get_detalle_remito($numero_remito);
-            $output["remito"]= $this->Registro_de_transportistas_model->get_remito($numero_remito);
-            $output["condiciones_de_venta"]= $this->Registro_de_transportistas_model->get_condiciones_de_venta();
-            $output["numero_remito"]=$numero_remito;
-            
-            $this->load->view("back/modulos/registro_de_transportistas/editar_remito",$output);
-        }
-        else
-        {
-            redirect($this->controller_usuario."/abm_remitos");
-        }
-    }
-    
-    
-    // FIN MODULO REGISTRO DE TRANSPORTISTAS
     
     public function abm_configuracion_empresa()
     {
@@ -1095,46 +702,6 @@ class MY_Controller extends CI_Controller
             $output["configuraciones"]= $this->Configuracion_empresa_model->get_configuraciones();
             
             $this->load->view("back/modulos/configuracion_empresa/abm_configuraciones",$output);
-        }
-        else
-        {
-            redirect($this->funciones_generales->redireccionar_usuario());
-        }
-    }
-    
-    public function gestor_de_precios()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(11);
-        
-        if($permiso)
-        {
-            $output["css"]="";
-            $output["js"]="";
-            $output["menu"]=$this->adminlte->getMenu();
-            $output["header"]=$this->adminlte->getHeader();
-            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
-            $output["footer"]=$this->adminlte->getFooter();
-            $this->load->view("back/modulos/stock_de_productos",$output);
-        }
-        else
-        {
-            redirect($this->funciones_generales->redireccionar_usuario());
-        }
-    }
-    
-    public function reporte_de_valores()
-    {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(12);
-        
-        if($permiso)
-        {
-            $output["css"]="";
-            $output["js"]="";
-            $output["menu"]=$this->adminlte->getMenu();
-            $output["header"]=$this->adminlte->getHeader();
-            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
-            $output["footer"]=$this->adminlte->getFooter();
-            $this->load->view("back/modulos/stock_de_productos",$output);
         }
         else
         {

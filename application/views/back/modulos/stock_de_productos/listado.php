@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Nutrilog</title>
+  <title>Distribuidores</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-yellow-light.min.css">
+  <link rel="stylesheet" href="<?php echo base_url()?>recursos/dist/css/skins/skin-red-light.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/plugins/iCheck/flat/blue.css">
   <!-- Morris chart -->
@@ -36,7 +36,7 @@
     echo $css;
   ?>
 </head>
-<body class="hold-transition skin-yellow-light sidebar-mini">
+<body class="hold-transition skin-red-light sidebar-mini">
 <div class="wrapper">
 
   <?php echo $header?>
@@ -63,7 +63,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <button class="btn btn-warning" onClick="$('#modal_agregar_producto').modal('show');"><i class='fa fa-plus'></i> Agregar Producto</button>
+                    <button class="btn btn-danger" onClick="$('#modal_agregar_producto').modal('show');"><i class='fa fa-plus'></i> Agregar Producto</button>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="tabla_listado" class="table table-bordered table-hover">
@@ -120,7 +120,7 @@
 <!-- ./wrapper -->
 
 <!-- MODALES DE ABM PRODUCTOS-->
-<div class="modal modal-warning" id="modal_agregar_producto">
+<div class="modal modal-danger" id="modal_agregar_producto">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -183,14 +183,14 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="agregar_producto()"><i class='fa fa-save'></i> Guardar Producto</button>
+                    <button class="btn btn-danger" onClick="agregar_producto()"><i class='fa fa-save'></i> Guardar Producto</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
 
-<div class="modal modal-warning" id="modal_editar_producto">
+<div class="modal modal-danger" id="modal_editar_producto">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -284,7 +284,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="editar_producto()"><i class='fa fa-save'></i> Guardar Cambios</button>
+                    <button class="btn btn-danger" onClick="editar_producto()"><i class='fa fa-save'></i> Guardar Cambios</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -330,7 +330,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="location.href='<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/stock_de_productos_listado'">Cerrar</button>
+                    <button class="btn btn-danger" onClick="location.href='<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/stock_de_productos_listado'">Cerrar</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
