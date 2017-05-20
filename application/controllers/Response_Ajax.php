@@ -21,10 +21,20 @@ class Response_Ajax extends CI_Controller
             $punto_critico= $this->input->post("punto_critico");
             $rubro= $this->input->post("rubro");
             $unidad_medida= $this->input->post("unidad_medida");
-            $costo= $this->input->post("costo");
+            $costo= (float)$this->input->post("costo");
+            
+            $margen_1= (float)$this->input->post("margen_1_agregar");
+            $margen_2= (float)$this->input->post("margen_2_agregar");
+            $margen_3= (float)$this->input->post("margen_3_agregar");
+            $margen_4= (float)$this->input->post("margen_4_agregar");
+               
+            $lista_1 = $margen_1*$costo;
+            $lista_2 = $margen_2*$costo;
+            $lista_3 = $margen_3*$costo;
+            $lista_4 = $margen_4*$costo;
             
             $this->load->model("Stock_productos_model");
-            $respuesta = $this->Stock_productos_model->agregar_producto($descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo);
+            $respuesta = $this->Stock_productos_model->agregar_producto($descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4);
         
             echo json_encode($respuesta);
         }
@@ -42,7 +52,17 @@ class Response_Ajax extends CI_Controller
             $unidad_medida= (int)$this->input->post("unidad_medida");
             $rubro2= (int)$this->input->post("rubro2");
             $unidad_medida2= (int)$this->input->post("unidad_medida2");
-            $costo= $this->input->post("costo");
+            $costo= (float)$this->input->post("costo");
+            
+            $margen_1= (float)$this->input->post("margen_1");
+            $margen_2= (float)$this->input->post("margen_2");
+            $margen_3= (float)$this->input->post("margen_3");
+            $margen_4= (float)$this->input->post("margen_4");
+               
+            $lista_1 = $margen_1*$costo;
+            $lista_2 = $margen_2*$costo;
+            $lista_3 = $margen_3*$costo;
+            $lista_4 = $margen_4*$costo;
             
             if($rubro2 != 0 && $rubro2!=$rubro)
             {
@@ -55,7 +75,7 @@ class Response_Ajax extends CI_Controller
             }
             
             $this->load->model("Stock_productos_model");
-            $respuesta = $this->Stock_productos_model->editar_producto($id_producto,$descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo);
+            $respuesta = $this->Stock_productos_model->editar_producto($id_producto,$descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4);
         
             echo json_encode($respuesta);
         }

@@ -72,10 +72,14 @@
                         <th>Codigo</th>
                         <th>Descripcion</th>
                         <th>Costo</th>
-                        <th>Stock</th>
+                        <th>List 1</th>
+                        <th>List 2</th>
+                        <th>List 3</th>
+                        <th>List 4</th>
+                        <!--<th>Stock</th>
                         <th>Punto Critico</th>
                         <th>Rubro</th>
-                        <th>Unidad de medida</th>
+                        <th>Unidad de medida</th>-->
                         <th>Controles</th>
                       </tr>
                     </thead>
@@ -88,12 +92,16 @@
                                     <td>".$value["id"]."</td>
                                     <td>".$value["descripcion"]."</td>
                                     <td>$".$value["costo"]."</td>
-                                    <td>".$value["stock"]."</td>
+                                    <td>$".$value["lista_1"]."</td>
+                                    <td>$".$value["lista_2"]."</td>
+                                    <td>$".$value["lista_3"]."</td>
+                                    <td>$".$value["lista_4"]."</td>
+                                    <!--<td>".$value["stock"]."</td>
                                     <td>".$value["punto_critico"]."</td>
                                     <td>".$value["desc_rubro"]."</td>
-                                   <td>".$value["medida_desc"]."</td>
+                                   <td>".$value["medida_desc"]."</td>-->
                                     <td>
-                                        <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_producto(".$value["id"].",&#34;".$value["descripcion"]."&#34;,".$value["stock"].",".$value["punto_critico"].",".$value["rubro"].",".$value["unidad_medida"].",".$value["costo"].")'><i class='fa fa-edit'></i></button>
+                                        <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_producto(".$value["id"].",&#34;".$value["descripcion"]."&#34;,".$value["stock"].",".$value["punto_critico"].",".$value["rubro"].",".$value["unidad_medida"].",".$value["costo"].",".$value["margen_1"].",".$value["lista_1"].",".$value["margen_2"].",".$value["lista_2"].",".$value["margen_3"].",".$value["lista_3"].",".$value["margen_4"].",".$value["lista_4"].")'><i class='fa fa-edit'></i></button>
                                         <a href='".base_url()."index.php/".$controller_usuario."/precios_vigentes_de_producto/".$value["id"]."' class='btn btn-primary' data-toggle='tooltip' title='' data-original-title='Precios vigentes'><i class='fa fa-dollar'></i></a>
                                         <a href='".base_url()."index.php/".$controller_usuario."/ubicaciones_de_producto/".$value["id"]."' class='btn btn-default' data-toggle='tooltip' title='' data-original-title='Ubicaciones'><i class='fa fa-send-o'></i></a>
                                     </td>    
@@ -134,24 +142,6 @@
                         <input class="form-control" type="text" id="descripcion_agregar_producto" name="descripcion_agregar_producto" value=""/>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="costo_agregar_producto">Costo</label>
-                        <input class="form-control" type="text" id="costo_agregar_producto" name="costo_agregar_producto" value=""/>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="stock_agregar_producto">Stock</label>
-                        <input class="form-control" type="text" id="stock_agregar_producto" name="stock_agregar_producto" value=""/>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="punto_critico_agregar_producto">Punto Critico</label>
-                        <input class="form-control" type="text" id="punto_critico_agregar_producto" name="punto_critico_agregar_producto" value=""/>
-                    </div>
-                </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="rubro_agregar_producto">Rubro</label>
@@ -176,6 +166,73 @@
                             }
                         ?>
                         </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="stock_agregar_producto">Stock</label>
+                        <input class="form-control" type="text" id="stock_agregar_producto" name="stock_agregar_producto" value=""/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="punto_critico_agregar_producto">Punto Critico</label>
+                        <input class="form-control" type="text" id="punto_critico_agregar_producto" name="punto_critico_agregar_producto" value=""/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="costo_agregar_producto">Costo</label>
+                        <input class="form-control" type="number" step="0.5" id="costo_agregar_producto" name="costo_agregar_producto" value="0" onchange="cambio_valor_agregar()"/>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="margen_1_agregar">Margen 1</label>
+                        <input class="form-control" type="number" step="0.5" id="margen_1_agregar" name="margen_1_agregar" value="0" onchange="cambio_valor_agregar()"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lista_1_agregar">Lista 1</label>
+                        <input class="form-control" type="text" id="lista_1_agregar" name="lista_1_agregar" value="0" disabled/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="margen_2_agregar">Margen 2</label>
+                        <input class="form-control" type="number" step="0.5" id="margen_2_agregar" name="margen_2_agregar" value="0" onchange="cambio_valor_agregar()"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lista_2_agregar">Lista 2</label>
+                        <input class="form-control" type="text" id="lista_2_agregar" name="lista_2_agregar" value="0" disabled/>
+                    </div>
+                </div>
+                 <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="margen_3_agregar">Margen 3</label>
+                        <input class="form-control" type="number" step="0.5" id="margen_3_agregar" name="margen_3_agregar" value="0" onchange="cambio_valor_agregar()"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lista_3_agregar">Lista 3</label>
+                        <input class="form-control" type="text" id="lista_3_agregar" name="lista_3_agregar" value="0" disabled/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="margen_4_agregar">Margen 4</label>
+                        <input class="form-control" type="number" step="0.5" id="margen_4_agregar" name="margen_4_agregar" value="0" onchange="cambio_valor_agregar()"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lista_4_agregar">Lista 4</label>
+                        <input class="form-control" type="text" id="lista_4_agregar" name="lista_4_agregar" value="0" disabled/>
                     </div>
                 </div>
                 
@@ -203,24 +260,6 @@
                     <div class="form-group">
                         <label for="descripcion_editar_producto">Descripcion</label>
                         <input class="form-control" type="text" id="descripcion_editar_producto" name="descripcion_editar_producto" value=""/>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="costo_editar_producto">Costo</label>
-                        <input class="form-control" type="text" id="costo_editar_producto" name="costo_editar_producto" value=""/>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="stock_editar_producto">Stock</label>
-                        <input class="form-control" type="text" id="stock_editar_producto" name="stock_editar_producto" value=""/>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="punto_critico_editar_producto">Punto Critico</label>
-                        <input class="form-control" type="text" id="punto_critico_editar_producto" name="punto_critico_editar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -276,6 +315,74 @@
                             }
                         ?>
                         </select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="stock_editar_producto">Stock</label>
+                        <input class="form-control" type="text" id="stock_editar_producto" name="stock_editar_producto" value=""/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="punto_critico_editar_producto">Punto Critico</label>
+                        <input class="form-control" type="text" id="punto_critico_editar_producto" name="punto_critico_editar_producto" value=""/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="costo_editar_producto">Costo</label>
+                        <input class="form-control" type="text" id="costo_editar_producto" name="costo_editar_producto" value=""/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="margen_1_editar">Margen 1</label>
+                        <input class="form-control" type="number" step="0.5" id="margen_1_editar" name="margen_1_editar" value="0" onchange="cambio_valor_editar()"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lista_1_editar">Lista 1</label>
+                        <input class="form-control" type="text" id="lista_1_editar" name="lista_1_editar" value="0" disabled/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="margen_2_editar">Margen 2</label>
+                        <input class="form-control" type="number" step="0.5" id="margen_2_editar" name="margen_2_editar" value="0" onchange="cambio_valor_editar()"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lista_2_editar">Lista 2</label>
+                        <input class="form-control" type="text" id="lista_2_editar" name="lista_2_editar" value="0" disabled/>
+                    </div>
+                </div>
+                 <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="margen_3_editar">Margen 3</label>
+                        <input class="form-control" type="number" step="0.5" id="margen_3_editar" name="margen_3_editar" value="0" onchange="cambio_valor_editar()"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lista_3_editar">Lista 3</label>
+                        <input class="form-control" type="text" id="lista_3_editar" name="lista_3_editar" value="0" disabled/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="margen_4_editar">Margen 4</label>
+                        <input class="form-control" type="number" step="0.5" id="margen_4_editar" name="margen_4_editar" value="0" onchange="cambio_valor_editar()"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lista_4_editar">Lista 4</label>
+                        <input class="form-control" type="text" id="lista_4_editar" name="lista_4_editar" value="0" disabled/>
                     </div>
                 </div>
                 
@@ -383,7 +490,108 @@
 ?>
 
 <script>
-    function modal_editar_producto(id,descripcion,stock,punto_critico,rubro,unidad_medida,costo)
+    
+    function cambio_valor_agregar()
+    {
+        var costo = parseFloat($("#costo_agregar_producto").val());
+        var margen_1_agregar = parseFloat($("#margen_1_agregar").val());
+        var margen_2_agregar = parseFloat($("#margen_2_agregar").val());
+        var margen_3_agregar = parseFloat($("#margen_3_agregar").val());
+        var margen_4_agregar = parseFloat($("#margen_4_agregar").val());
+        
+        if(isNaN(costo))
+        {
+            costo=0;
+            $("#costo_agregar_producto").val(0);
+        };
+        
+        if(isNaN(margen_1_agregar))
+        {
+            margen_1_agregar=0;
+            $("#margen_1_agregar").val(0);
+        };
+        
+        if(isNaN(margen_2_agregar))
+        {
+            margen_2_agregar=0;
+            $("#margen_2_agregar").val(0);
+        };
+        
+        if(isNaN(margen_3_agregar))
+        {
+            margen_3_agregar=0;
+            $("#margen_3_agregar").val(0);
+        };
+        
+        if(isNaN(margen_4_agregar))
+        {
+            margen_4_agregar=0;
+            $("#margen_4_agregar").val(0);
+        };
+        
+        var lista_1_agregar = costo*margen_1_agregar;
+        var lista_2_agregar = costo*margen_2_agregar;
+        var lista_3_agregar = costo*margen_3_agregar;
+        var lista_4_agregar = costo*margen_4_agregar;
+        
+        $("#lista_1_agregar").val(lista_1_agregar);
+        $("#lista_2_agregar").val(lista_2_agregar);
+        $("#lista_3_agregar").val(lista_3_agregar);
+        $("#lista_4_agregar").val(lista_4_agregar);
+        
+    }
+    
+    function cambio_valor_editar()
+    {
+        var costo = parseFloat($("#costo_editar_producto").val());
+        var margen_1_editar = parseFloat($("#margen_1_editar").val());
+        var margen_2_editar = parseFloat($("#margen_2_editar").val());
+        var margen_3_editar = parseFloat($("#margen_3_editar").val());
+        var margen_4_editar = parseFloat($("#margen_4_editar").val());
+        
+        if(isNaN(costo))
+        {
+            costo=0;
+            $("#costo_editar_producto").val(0);
+        };
+        
+        if(isNaN(margen_1_editar))
+        {
+            margen_1_editar=0;
+            $("#margen_1_editar").val(0);
+        };
+        
+        if(isNaN(margen_2_editar))
+        {
+            margen_2_editar=0;
+            $("#margen_2_editar").val(0);
+        };
+        
+        if(isNaN(margen_3_editar))
+        {
+            margen_3_editar=0;
+            $("#margen_3_editar").val(0);
+        };
+        
+        if(isNaN(margen_4_editar))
+        {
+            margen_4_editar=0;
+            $("#margen_4_editar").val(0);
+        };
+        
+        var lista_1_editar = costo*margen_1_editar;
+        var lista_2_editar = costo*margen_2_editar;
+        var lista_3_editar = costo*margen_3_editar;
+        var lista_4_editar = costo*margen_4_editar;
+        
+        $("#lista_1_editar").val(lista_1_editar);
+        $("#lista_2_editar").val(lista_2_editar);
+        $("#lista_3_editar").val(lista_3_editar);
+        $("#lista_4_editar").val(lista_4_editar);
+        
+    }
+    
+    function modal_editar_producto(id,descripcion,stock,punto_critico,rubro,unidad_medida,costo,margen_1,lista_1,margen_2,lista_2,margen_3,lista_3,margen_4,lista_4)
     {
         $("#titulo_modal_editar_producto").text(descripcion);
         $("#id_producto_a_editar").val(id);
@@ -393,6 +601,15 @@
         $("#rubro_editar_producto").val(rubro);
         $("#unidad_medida_editar_producto").val(unidad_medida);
         $("#costo_editar_producto").val(costo);
+        
+        $("#margen_1_editar").val(margen_1);
+        $("#lista_1_editar").val(lista_1);
+        $("#margen_2_editar").val(margen_2);
+        $("#lista_2_editar").val(lista_2);
+        $("#margen_3_editar").val(margen_3);
+        $("#lista_3_editar").val(lista_3);
+        $("#margen_4_editar").val(margen_4);
+        $("#lista_4_editar").val(lista_4);
         
         $("#modal_editar_producto").modal("show");
     }
@@ -408,6 +625,10 @@
         var unidad_medida= parseInt($("#unidad_medida_editar_producto").val());
         var unidad_medida2= parseInt($("#unidad2_medida_editar_producto").val());
         var costo = parseFloat($("#costo_editar_producto").val());
+        var margen_1_editar = parseFloat($("#margen_1_editar").val());
+        var margen_2_editar = parseFloat($("#margen_2_editar").val());
+        var margen_3_editar = parseFloat($("#margen_3_editar").val());
+        var margen_4_editar = parseFloat($("#margen_4_editar").val());
         
         if(descripcion != "" && stock != "" && !isNaN(stock)  && 
            punto_critico != "" && !isNaN(punto_critico) 
@@ -417,7 +638,7 @@
             $.ajax({
                 url: "<?php echo base_url()?>index.php/Response_Ajax/editar_producto",
                 type: "POST",
-                data:{id_producto:id_producto,descripcion:descripcion,stock:stock,punto_critico:punto_critico,rubro:rubro,unidad_medida:unidad_medida,rubro2:rubro2,unidad_medida2:unidad_medida2,costo:costo},
+                data:{id_producto:id_producto,descripcion:descripcion,stock:stock,punto_critico:punto_critico,rubro:rubro,unidad_medida:unidad_medida,rubro2:rubro2,unidad_medida2:unidad_medida2,costo:costo,margen_1:margen_1_editar,margen_2:margen_2_editar,margen_3:margen_3_editar,margen_4:margen_4_editar},
                 success: function(data)
                 {
                     data= JSON.parse(data);
@@ -478,6 +699,10 @@
         var rubro= parseInt($("#rubro_agregar_producto").val());
         var unidad_medida= parseInt($("#unidad_medida_agregar_producto").val());
         var costo = parseFloat($("#costo_agregar_producto").val());
+        var margen_1_agregar = parseFloat($("#margen_1_agregar").val());
+        var margen_2_agregar = parseFloat($("#margen_2_agregar").val());
+        var margen_3_agregar = parseFloat($("#margen_3_agregar").val());
+        var margen_4_agregar = parseFloat($("#margen_4_agregar").val());
         
         if(descripcion != "" && stock != "" && !isNaN(stock) &&
            punto_critico != "" && !isNaN(punto_critico) 
@@ -486,7 +711,7 @@
             $.ajax({
                 url: "<?php echo base_url()?>index.php/Response_Ajax/agregar_producto",
                 type: "POST",
-                data:{descripcion:descripcion,stock:stock,punto_critico:punto_critico,rubro:rubro,unidad_medida:unidad_medida,costo:costo},
+                data:{descripcion:descripcion,stock:stock,punto_critico:punto_critico,rubro:rubro,unidad_medida:unidad_medida,costo:costo,margen_1_agregar:margen_1_agregar,margen_2_agregar:margen_2_agregar,margen_3_agregar:margen_3_agregar,margen_4_agregar:margen_4_agregar},
                 success: function(data)
                 {
                     data= JSON.parse(data);
