@@ -8,7 +8,7 @@ class Registro_de_clientes_model extends CI_Model
     
     public function get_clientes_no_suspendidos()
     {
-        $r = $this->db->query("select cliente.id,cliente.dni_cuit_cuil,cliente.ingresos_brutos,cliente.nombre,cliente.apellido,cliente.razon_social,cliente.telefono,cliente.correo,cliente.direccion,cliente.localidad,cliente.descuento_gral,cliente.tipo_inscripcion, estado_cliente.estado as desc_estado, localidades.localidad as desc_localidad, provincias.id as id_provincia, provincias.provincia as desc_provincia,tipo_inscripcion.inscripcion as desc_inscripcion from cliente INNER JOIN localidades on localidades.codigo = cliente.localidad INNER JOIN provincias on provincias.id = localidades.id_provincia INNER JOIN estado_cliente on estado_cliente.id = cliente.estado INNER JOIN tipo_inscripcion on tipo_inscripcion.id = cliente.tipo_inscripcion where cliente.estado <> 3 ");
+        $r = $this->db->query("select cliente.id,cliente.dni_cuit_cuil,cliente.ingresos_brutos,cliente.nombre,cliente.apellido,cliente.razon_social,cliente.lista,cliente.telefono,cliente.correo,cliente.direccion,cliente.localidad,cliente.descuento_gral,cliente.tipo_inscripcion, estado_cliente.estado as desc_estado, localidades.localidad as desc_localidad, provincias.id as id_provincia, provincias.provincia as desc_provincia,tipo_inscripcion.inscripcion as desc_inscripcion from cliente INNER JOIN localidades on localidades.codigo = cliente.localidad INNER JOIN provincias on provincias.id = localidades.id_provincia INNER JOIN estado_cliente on estado_cliente.id = cliente.estado INNER JOIN tipo_inscripcion on tipo_inscripcion.id = cliente.tipo_inscripcion where cliente.estado <> 3 ");
         return $r->result_array();
     }
     
@@ -26,7 +26,7 @@ class Registro_de_clientes_model extends CI_Model
         return $r->row_array();
     }
     
-    public function agregar_cliente($dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos)
+    public function agregar_cliente($dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos,$lista)
     {
         $datos = Array(
             "dni_cuit_cuil"=>$dni_cuit_cuil,
@@ -42,6 +42,7 @@ class Registro_de_clientes_model extends CI_Model
             "descuento_gral"=>$descuento_gral,
             "estado"=>$estado,
             "ingresos_brutos"=>$ingresos_brutos,
+            "lista"=>$lista,
         );
         
         $respuesta = $this->db->insert("cliente",$datos);
@@ -55,7 +56,7 @@ class Registro_de_clientes_model extends CI_Model
         
     }
     
-    public function editar_cliente($id,$dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos)
+    public function editar_cliente($id,$dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos,$lista)
     {
         $datos = Array(
             "dni_cuit_cuil"=>$dni_cuit_cuil,
@@ -71,6 +72,7 @@ class Registro_de_clientes_model extends CI_Model
             "descuento_gral"=>$descuento_gral,
             "estado"=>$estado,
             "ingresos_brutos"=>$ingresos_brutos,
+            "lista"=>$lista,
         );
         
         $this->db->where("id",$id);

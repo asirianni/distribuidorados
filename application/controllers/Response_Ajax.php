@@ -275,12 +275,13 @@ class Response_Ajax extends CI_Controller
             $descuento_gral= $this->input->post("descuento_gral");
             $estado= $this->input->post("estado");
             $ingresos_brutos= $this->input->post("ingresos_brutos");
+            $lista= $this->input->post("lista");
             
             $this->load->library("Md5");
             $contrasenia= Md5::cifrar($contrasenia);
             
             $this->load->model("Registro_de_clientes_model");
-            $respuesta = $this->Registro_de_clientes_model->agregar_cliente($dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos);
+            $respuesta = $this->Registro_de_clientes_model->agregar_cliente($dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos,$lista);
             
             echo json_encode($respuesta);
         }
@@ -308,6 +309,7 @@ class Response_Ajax extends CI_Controller
             $tipo_inscripcion2=(int)$this->input->post("tipo_inscripcion2");
             $estado2=(int)$this->input->post("estado2");
             $ingresos_brutos= $this->input->post("ingresos_brutos");
+            $lista= $this->input->post("lista");
             
             if($estado2 != 0 && $estado2 != $estado)
             {
@@ -329,7 +331,7 @@ class Response_Ajax extends CI_Controller
             $contrasenia= Md5::cifrar($contrasenia);
             
             $this->load->model("Registro_de_clientes_model");
-            $respuesta = $this->Registro_de_clientes_model->editar_cliente($id,$dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos);
+            $respuesta = $this->Registro_de_clientes_model->editar_cliente($id,$dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos,$lista);
             
             echo json_encode($respuesta);
         }

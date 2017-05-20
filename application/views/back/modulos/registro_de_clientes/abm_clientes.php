@@ -93,6 +93,7 @@
                       <tr>
                         <th>CUIL-DNI-CUIT</th>
                         <th>RAZON SOCIAL</th>
+                        <th>LISTA</th>
                         <th>LOCALIDAD</th>
                         <th>TELEFONO</th>
                         <th>TIPO INSCRIPCION</th>
@@ -108,6 +109,7 @@
                                 "<tr>
                                     <td>".$value["dni_cuit_cuil"]."</td>
                                     <td>".$value["razon_social"]."</td>
+                                    <td>".$value["lista"]."</td>
                                     <td>".$value["desc_localidad"]."</td>
                                     <td>".$value["telefono"]."</td>
                                     <td>".$value["desc_inscripcion"]."</td>
@@ -176,16 +178,27 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="telefono_editar_cliente">Telefono: </label>
                             <input class="form-control" type="text" id="telefono_editar_cliente" name="telefono_editar_cliente" value=""/>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="correo_editar_cliente">Correo: </label>
                             <input class="form-control" type="text" id="correo_editar_cliente" name="correo_editar_cliente" value=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="lista_editar_cliente">Lista: </label>
+                            <select class="form-control" id="lista_editar_cliente" name="lista_editar_cliente">
+                                <option value="lista_1">lista_1</option>
+                                <option value="lista_2">lista_2</option>
+                                <option value="lista_3">lista_3</option>
+                                <option value="lista_4">lista_4</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -354,16 +367,27 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="telefono_agregar_cliente">Telefono: </label>
                             <input class="form-control" type="text" id="telefono_agregar_cliente" name="telefono_agregar_cliente" value=""/>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="correo_agregar_cliente">Correo: </label>
                             <input class="form-control" type="text" id="correo_agregar_cliente" name="correo_agregar_cliente" value=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="lista_agregar_cliente">Lista: </label>
+                            <select class="form-control" id="lista_agregar_cliente" name="lista_agregar_cliente">
+                                <option value="lista_1">lista_1</option>
+                                <option value="lista_2">lista_2</option>
+                                <option value="lista_3">lista_3</option>
+                                <option value="lista_4">lista_4</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -527,6 +551,7 @@
                 $("#estado_editar_cliente").val(data["estado"]);
                 $("#descuento_gral_editar_cliente").val(data["descuento_gral"]);
                 $("#ingresos_brutos_editar_cliente").val(data["ingresos_brutos"]);
+                $("#lista_editar_cliente").val(data["lista"]);
                 $("#modal_editar_cliente").modal("show");
             },
             error: function(event){alert(event.responseText);
@@ -552,7 +577,8 @@
         var estado = parseInt($("#estado_editar_cliente").val());
         var estado2 = parseInt($("#estado2_editar_cliente").val());
         var descuento_gral=$("#descuento_gral_editar_cliente").val();
-        var ingresos_brutos = $("#ingresos_brutos_editar_cliente").val()
+        var ingresos_brutos = $("#ingresos_brutos_editar_cliente").val();
+        var lista = $("#lista_editar_cliente").val()
         
         
         
@@ -585,13 +611,14 @@
                     estado2:estado2,
                     descuento_gral:descuento_gral,
                     ingresos_brutos:ingresos_brutos,
+                    lista:lista
                     
                 },
                 success: function(data)
                 {
                     data= JSON.parse(data);
                     
-                    if(data > 0)
+                    if(data)
                     {
                         location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_clientes";
                     }
@@ -626,6 +653,7 @@
         var estado = parseInt($("#estado_agregar_cliente").val());
         var descuento_gral= $("#descuento_gral_agregar_cliente").val();
         var ingresos_brutos = $("#ingresos_brutos_agregar_cliente").val();
+        var lista = $("#lista_agregar_cliente").val();
         
         if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) &&
              razon_social != "" && ingresos_brutos != "" && nombre != "" && apellido != "" &&
@@ -652,12 +680,14 @@
                     estado:estado,
                     descuento_gral:descuento_gral,
                     ingresos_brutos:ingresos_brutos,
+                    lista:lista
                 },
                 success: function(data)
                 {
+                    
                     data= JSON.parse(data);
                     
-                    if(data > 0)
+                    if(data)
                     {
                         location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_clientes";
                     }

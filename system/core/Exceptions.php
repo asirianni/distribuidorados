@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
@@ -62,15 +62,15 @@ class CI_Exceptions {
 	 */
 	public $levels = array(
 		E_ERROR			=>	'Error',
-		E_danger		=>	'danger',
+		E_WARNING		=>	'Warning',
 		E_PARSE			=>	'Parsing Error',
 		E_NOTICE		=>	'Notice',
 		E_CORE_ERROR		=>	'Core Error',
-		E_CORE_danger		=>	'Core danger',
+		E_CORE_WARNING		=>	'Core Warning',
 		E_COMPILE_ERROR		=>	'Compile Error',
-		E_COMPILE_danger	=>	'Compile danger',
+		E_COMPILE_WARNING	=>	'Compile Warning',
 		E_USER_ERROR		=>	'User Error',
-		E_USER_danger		=>	'User danger',
+		E_USER_WARNING		=>	'User Warning',
 		E_USER_NOTICE		=>	'User Notice',
 		E_STRICT		=>	'Runtime Notice'
 	);
@@ -207,6 +207,7 @@ class CI_Exceptions {
 		}
 		else
 		{
+			set_status_header(500);
 			$templates_path .= 'html'.DIRECTORY_SEPARATOR;
 		}
 
