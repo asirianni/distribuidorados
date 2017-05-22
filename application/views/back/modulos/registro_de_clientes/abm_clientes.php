@@ -79,7 +79,7 @@
                 <div class="box-header">
                     <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/generar_excel_clientes" method="post" target="_blank" id="FormularioExportacion">
                     
-                    <button class="btn btn-danger" onClick="$('#modal_agregar_cliente').modal('show');"><i class='fa fa-plus'></i> Agregar Cliente</button>
+                    <button class="btn btn-danger" onClick="$('#modal_agregar_cliente').modal('show');return false;"><i class='fa fa-plus'></i> Agregar Cliente</button>
                     <p class="pull-right">
                         <button id="btn_exportar_excel" type="button" class="btn btn-success botonExcel" onClick="exportar_excel()" ><i class="fa fa-file-excel-o"></i> Exportar</button>&nbsp;&nbsp;
                         <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/imprimir_listado_clientes" target="_blank" class="btn btn-danger"><i class="fa  fa-print"></i> Imprimir</a>

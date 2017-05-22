@@ -201,12 +201,34 @@ class AdminLTE extends Config
                 case 4: $html.="<li><a href='".base_url()."index.php/".$controller_user."/registro_de_pedidos'><i class='fa fa-edit'></i> <span>Pedidos</span></a></li>";
                      break;
                 
-                case 5: $html.="<li><a href='".base_url()."index.php/".$controller_user."/facturacion'><i class='fa fa-calculator'></i> <span>Facturacion</span></a></li>"; 
+                case 5: $html.="<li class='treeview'>
+                                <a href='#'>
+                                  <i class='fa fa-calculator'></i> <span>Facturacion</span>
+                                  <span class='pull-right-container'>
+                                    <i class='fa fa-angle-left pull-right'></i>
+                                  </span>
+                                </a>
+                                <ul class='treeview-menu'>
+                                  <li><a href='".base_url()."index.php/".$controller_user."/caja'><i class='fa fa-circle-o'></i>Caja diaria</a></li>
+                                  <li><a href='".base_url()."index.php/".$controller_user."/facturacion'><i class='fa fa-circle-o'></i>Facturacion</a></li>
+                                </ul>
+                             </li>";
                     break;
                 
                 case 6: $html.="<li><a href='".base_url()."index.php/".$controller_user."'><i class='fa fa-bars'></i> <span>Estados de cuenta</span></a></li>"; 
                     break;
-                case 7: $html.="<li><a href='".base_url()."index.php/".$controller_user."'><i class='fa fa-bar-chart'></i> <span>Compras</span></a></li>"; 
+                case 7: $html.="<li class='treeview'>
+                                <a href='#'>
+                                  <i class='fa fa-bar-chart'></i> <span>Compras</span>
+                                  <span class='pull-right-container'>
+                                    <i class='fa fa-angle-left pull-right'></i>
+                                  </span>
+                                </a>
+                                <ul class='treeview-menu'>
+                                  <li><a href='".base_url()."index.php/".$controller_user."/abm_proveedores'><i class='fa fa-circle-o'></i>Proveedores</a></li>
+                                  <li><a href='".base_url()."index.php/".$controller_user."/factura_compra'><i class='fa fa-circle-o'></i>Factura compra</a></li>
+                                </ul>
+                             </li>";
                     break;
                 case 8: $html.="<li><a href='".base_url()."index.php/".$controller_user."'><i class='fa fa-book'></i> <span>Reportes</span></a></li>"; 
                     break;

@@ -199,7 +199,7 @@
                                             <td id='id_producto_".$value["id"]."'>".$value["id"]."</td>
                                             <td>".$value["descripcion"]."</td>
                                             <td>".$value["stock"]."</td>
-                                            <td><input type='number'  step='0.5' id='costo_producto_".$value["id"]."' value='".$value["costo"]."'/></td>
+                                            <td><input type='number'  step='0.5' id='costo_producto_".$value["id"]."' value='".$value["precio"]."'/></td>
                                             <td><input type='number' step='0.5' id='cantidad_producto_".$value["id"]."' value='0'/></td>
                                              <td>
                                                 <select class='form-control' id='estado_producto_detalle_".$value["id"]."'>

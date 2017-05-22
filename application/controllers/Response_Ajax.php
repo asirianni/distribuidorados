@@ -425,7 +425,7 @@ class Response_Ajax extends CI_Controller
         }
     }
     
-    public function get_pedidos_cliente_pendientes()
+   public function get_pedidos_cliente_pendientes()
     {
         if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
         {
@@ -490,45 +490,75 @@ class Response_Ajax extends CI_Controller
             $descuento_general= $this->input->post("descuento_general");
             
             
-            // CALCULO EL TOTAL POR SEGURIDAD
-            /*
-            $total = 0;
-            
-            foreach($detalle as $value)
-            {
-                $cantidad = (double)$value["cantidad"];
-                $precio = (double)$value["precio"];
-                $descuento = (double)$value["descuento"];
-                
-                $total_registro = $cantidad*$precio;
-                
-                if($descuento != 0)
-                {
-                    $total_registro= $total_registro * ($descuento / 100);
-                }
-                
-                $total+=$total_registro;
-            }
-            
-            if($descuento_general != 0)
-            {
-                $total= $total * ($descuento_general / 100);
-            }
-            
-            $total*= 1.21;
-            //*/
-            
             $total= $this->input->post("total");
             
             $this->load->model("Facturacion_model");
-            $respuesta = $this->Facturacion_model->crear_factura($punto_venta,$fecha,$cliente,$remito_o_pedido,$numero_remito_pedido,$tipo_factura,$condicion_venta,$estado,$total,$detalle);
+            $respuesta = $this->Facturacion_model->crear_factura($punto_venta,$fecha,$cliente,$remito_o_pedido,$numero_remito_pedido,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle);
             
             echo json_encode($respuesta);
         }
     }
     
+    public function get_listado_productos_segun_usuario()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
+        {
+            $this->load->model("Registro_de_clientes_model");
+            $this->load->model("Registro_de_pedidos_model");
+            
+            $cliente = $this->Registro_de_clientes_model->get_cliente($this->input->post("cliente"));
+            
+            $lista = $cliente["lista"];
+            
+            $respuesta= $this->Registro_de_pedidos_model->get_listado_productos_segun_lista($lista);
+            
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function eliminar_movimiento()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
+        {
+            $this->load->model("Movimiento_caja_model");
+            $this->load->model("Caja_model");
+            $codigo_mov = $this->input->post("codigo");
+            $movimiento = $this->Movimiento_caja_model->getMovimientoComprobante($codigo_mov);
+            
+            $this->Movimiento_caja_model->eliminar_movimiento($codigo_mov);
+            $this->Movimiento_caja_model->eliminar_detalle_caja($codigo_mov);
+            
+            $caja = $this->Caja_model->obtener_caja(Date("Y-m-d"));
+            
+            $entradas = $caja["entradas"];
+            $salidas = $caja["salidas"];
+            $saldo = $caja["saldo"];
+            
+            if ($movimiento["tipo_mov"] == "e")
+            {
+                $entradas = (float)$entradas - (float)$movimiento["importe"];
+                $saldo = (float)$saldo - (float)$movimiento["importe"];
+            }
+            else
+            {
+                $salidas = (float)$salidas - (float)$movimiento["importe"];
+                $saldo = (float)$saldo + (float)$movimiento["importe"];
+            }
+                
+            $this->Caja_model->actualizar_caja($entradas,$salidas,$saldo,"a");
+        }
+    }  
     
     
-    
+    public function baja_proveedor()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(7))
+        {
+            $id= $this->input->post("id");
+            $this->load->model("Compras_model");
+            $respuesta = $this->Compras_model->baja_proveedor($id);
+            echo json_encode($respuesta);
+        }
+    }
 }
 

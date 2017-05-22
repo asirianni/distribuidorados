@@ -102,10 +102,16 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <p style="color:#f00;font-weight: bold;font-size: 17px;" id="mensaje_error_siguiente"></p>
+                    </div>
+                    <div class="col-md-12" style="text-align:center;">
+                        <button class="btn btn-danger" onClick="cargar_productos()" id="btn_cargar_productos"><i class="fa  fa-sort-amount-asc"></i> Cargar Productos</button>
+                    </div>
                     
                     <!-- TABLA DE PEDIDO DETALLE -->
-                    <div class="col-md-12" style="margin-top: 10px;">
-                        <table id="tabla_listado" class="table table-bordered table-hover">
+                    <div class="col-md-12" style="margin-top: 10px;display: none;" id="contenedor_tabla_productos">
+                        <table id="tabla_listado" class="table table-bordered table-hover" >
                             <thead>
                               <tr>
                                 <th>Codigo</th>
@@ -116,26 +122,15 @@
 
                               </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                    foreach($listado_productos as $value)
-                                    {
-                                        echo 
-                                        "<tr>
-                                            <td id='id_producto_".$value["id"]."'>".$value["id"]."</td>
-                                            <td>".$value["descripcion"]."</td>
-                                            <td>".$value["stock"]."</td>
-                                            <td><input type='number'  step='0.5' id='costo_producto_".$value["id"]."' value='".$value["costo"]."'/></td>
-                                            <td><input type='number' step='0.5' id='cantidad_producto_".$value["id"]."' value='0'/></td>
-                                        </tr>";
-                                    }
-                                ?>  
+                            <tbody id="cuerpo_tabla_listado">
+                                
                             </tbody>
                           </table>
+                        <div class="col-md-12" style="text-align: center;">
+                            <button class="btn btn-danger" onClick="agregar_pedido_y_detalle()"><i class='fa fa-save'></i> Guardar Pedido</button>
+                        </div>
                     </div>
-                    <div class="col-md-12" style="text-align: center;">
-                        <button class="btn btn-danger" onClick="agregar_pedido_y_detalle()"><i class='fa fa-save'></i> Guardar Pedido</button>
-                    </div>
+                    
                     <!-- -->
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
@@ -199,6 +194,85 @@
   ?>
 
 <script>
+    
+    var productos_cargados = false;
+    
+    function cargar_productos()
+    {
+        if(productos_cargados == false)
+        {
+            var fecha = $("#fecha_agregar_pedido").val();
+            var fecha_entrega = $("#fecha_entrega_agregar_pedido").val();
+            var cliente = $("#cliente_agregar_pedido").val();
+            
+            if(fecha == ""){activar_error("fecha_agregar_pedido");}
+            else{desactivar_error("fecha_agregar_pedido");};
+
+            if(fecha_entrega == ""){activar_error("fecha_entrega_agregar_pedido");}
+            else{desactivar_error("fecha_entrega_agregar_pedido");};
+
+            if(fecha != "" && fecha_entrega != "")
+            {
+                $.ajax({
+                    url: "<?php echo base_url()?>index.php/Response_Ajax/get_listado_productos_segun_usuario",
+                    type: "POST",
+                    data:{
+                        cliente:cliente,
+                    },
+                    success: function(data)
+                    {
+                       data= JSON.parse(data);
+                       
+                       if(data)
+                       {
+                           var html = "";
+                           
+                            for(var i=0; i < data.length;i++)
+                            {
+                               html+="<tr>";
+                               html+="<td id='id_producto_"+data[i]["id"]+"'>"+data[i]["id"]+"</td>";
+                               html+="<td>"+data[i]["descripcion"]+"</td>";
+                               html+="<td>"+data[i]["stock"]+"</td>";
+                               html+="<td><input type='number'  step='0.5' id='costo_producto_"+data[i]["id"]+"' value='"+data[i]["precio"]+"'/></td>";
+                               html+="<td><input type='number' step='0.5' id='cantidad_producto_"+data[i]["id"]+"' value='0'/></td>";
+                               html+="</tr>";
+                            }    
+                           
+                           
+                            $("#fecha_agregar_pedido").attr("disabled","");
+                            $("#fecha_entrega_agregar_pedido").attr("disabled","");
+                            $("#estado_agregar_pedido").attr("disabled","");
+                            $("#cliente_agregar_pedido").attr("disabled","");
+                            $("#btn_cargar_productos").text("Reiniciar");
+                            
+                            $("#cuerpo_tabla_listado").html(html);
+                            productos_cargados=true;
+                            
+                            
+
+                             $('#tabla_listado').DataTable({
+                                "paging": true,
+                                "lengthChange": true,
+                                "searching": true,
+                                "ordering": true,
+                                "info": true,
+                                "autoWidth": true
+                             });
+
+                             $("#contenedor_tabla_productos").css("display","block"); 
+                       }
+                    },
+                    error: function(event){alert(event.responseText);
+                    },
+                });
+            }
+        }
+        else
+        {
+           location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_pedidos_agregar"; 
+        }
+        
+    }
     
     function agregar_pedido_y_detalle()
     {
@@ -303,18 +377,6 @@
     
     // FIN
     
-    $(function () {
-        $('#tabla_listado').DataTable({
-          "paging": true,
-          "lengthChange": true,
-          "searching": true,
-          "ordering": true,
-          "info": true,
-          "autoWidth": true
-        });
-        
-      
-      });
       
     $(".select2").select2();
     

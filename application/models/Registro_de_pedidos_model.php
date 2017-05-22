@@ -110,7 +110,17 @@ class Registro_de_pedidos_model extends CI_Model
     
     public function get_listado_productos_faltantes($numero_pedido)
     {
-        $r = $this->db->query("select productos.id,productos.descripcion,productos.costo,productos.rubro,productos.stock,productos.punto_critico,productos.unidad_medida,rubros.descripcion as desc_rubro,unidad_medida.descripcion as medida_desc from productos INNER JOIN rubros on rubros.id = productos.rubro INNER JOIN unidad_medida on unidad_medida.id = productos.unidad_medida where productos.id not in (SELECT productos.id FROM pedido_detalle INNER JOIN productos on productos.id = pedido_detalle.cod_producto where num_pedido= $numero_pedido)");
+        $lista = $this->db->query("SELECT cliente.lista from cliente INNER JOIN pedidos on pedidos.cliente = cliente.id where pedidos.numero = $numero_pedido");
+        $lista = $lista->row_array();
+        $lista= $lista["lista"];
+        
+        $r = $this->db->query("select productos.id,productos.descripcion,productos.costo,productos.rubro,productos.stock,productos.punto_critico,productos.unidad_medida,productos.$lista as precio, rubros.descripcion as desc_rubro,unidad_medida.descripcion as medida_desc from productos INNER JOIN rubros on rubros.id = productos.rubro INNER JOIN unidad_medida on unidad_medida.id = productos.unidad_medida where productos.id not in (SELECT productos.id FROM pedido_detalle INNER JOIN productos on productos.id = pedido_detalle.cod_producto where num_pedido= $numero_pedido)");
+        return $r->result_array();
+    }
+    
+    public function get_listado_productos_segun_lista($lista)
+    {
+        $r = $this->db->query("select productos.id,productos.descripcion,productos.costo,productos.margen_1,productos.$lista as precio,productos.rubro,productos.stock,productos.punto_critico,productos.unidad_medida,rubros.descripcion as desc_rubro,unidad_medida.descripcion as medida_desc from productos INNER JOIN rubros on rubros.id = productos.rubro INNER JOIN unidad_medida on unidad_medida.id = productos.unidad_medida ");
         return $r->result_array();
     }
     

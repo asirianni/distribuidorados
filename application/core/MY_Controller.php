@@ -638,6 +638,7 @@ class MY_Controller extends CI_Controller
     
     // FIN MODULO REGISTRO DE PEDIDOS
     
+    // COMIENDO MODULO FACTURACION
     public function facturacion()
     {
         $permiso= $this->funciones_generales->dar_permiso_a_modulo(5);
@@ -670,7 +671,7 @@ class MY_Controller extends CI_Controller
             $output["puntos_de_venta"]=$this->Facturacion_model->get_puntos_de_venta();
             $output["tipos_factura"]=$this->Facturacion_model->get_tipos_factura();
             $output["numero_proximo"]=$this->Facturacion_model->get_proximo_numero_factura();
-            $output["listado_productos"]=$this->Stock_productos_model->get_listado_productos();
+            $output["controller_usuario"]=$this->controller_usuario;
             
             $this->load->view("back/modulos/facturacion/facturacion",$output);
         }
@@ -680,8 +681,251 @@ class MY_Controller extends CI_Controller
         }
     }
     
+    public function imprimir_factura()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(5);
+        $numero_factura = (int)$this->input->post("numero");
+        
+        if($permiso && $numero_factura != 0)
+        {
+            $this->load->model("Facturacion_model");
+            $this->load->model("Configuracion_empresa_model");
+            
+            $output["logo"]=$this->Configuracion_empresa_model->get_configuracion(3);
+            $output["factura"]=$this->Facturacion_model->get_factura($numero_factura);
+            $output["detalle_factura"]=$this->Facturacion_model->get_detalle_factura($numero_factura);
+            $output["tipo_de_inscripcion"]=$this->Configuracion_empresa_model->get_configuracion(4);
+            $output["cuit"]=$this->Configuracion_empresa_model->get_configuracion(1);
+            $output["ingresos_brutos"]=$this->Configuracion_empresa_model->get_configuracion(2);
+            $output["inicio_actividad"]=$this->Configuracion_empresa_model->get_configuracion(5);
+            
+            
+            $this->load->view("back/modulos/facturacion/imprimir-factura",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
     
+    public function caja($fecha = null)
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(5);
+        
+        if($permiso)
+        {
+            $this->load->helper("form");
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["css"].=$this->adminlte->get_css_datetimepicker();
+            $output["js"]=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["js"].=$this->adminlte->get_js_datetimepicker();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            $output["controller_usuario"]=$this->controller_usuario;
+            
+            $this->load->model("Caja_model");
+            $this->load->model("Movimiento_caja_model");
+
+            if($fecha == null)
+            {
+                $fecha = "".Date("Y-m-d");
+            }
+
+            $caja = $this->Caja_model->obtener_caja($fecha);
+            
+            if(!$caja)
+            {
+                $this->Caja_model->abrir_caja();
+                $caja = $this->Caja_model->obtener_caja($fecha);
+            }
+            
+            $entradas = $caja["entradas"];
+            $salidas = $caja["salidas"];
+            $total = $caja["saldo"];
+
+            $listado_entradas = $this->Caja_model->obtener_listado_entradas($fecha);
+            $listado_salidas = $this->Caja_model->obtener_listado_salidas($fecha);
+
+            
+            $output["entradas"]=$entradas;
+            $output["salidas"]=$salidas;
+            $output["total"]=$total;
+            $output["listado_entradas"]=$listado_entradas;
+            $output["listado_salidas"]=$listado_salidas;
+            $output["fecha"]=$fecha;
+                        
+            
+            $this->load->view('back/modulos/facturacion/caja', $output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
     
+    public function registrar_movimiento()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(5);
+        
+        if($permiso)
+        {
+            $this->load->model("Caja_model");
+            $numero= $this->Caja_model->obtener_ultimo_movimiento();
+            $fecha=date('Y-m-d');
+            $concepto= $pedido= $this->input->post("concepto");
+            $importe= $this->input->post("importe");
+            $detalle= $this->input->post("detalle");
+            $empleado=$this->session->userdata('id');
+
+            $caja = $this->Caja_model->obtener_caja(Date("Y-m-d"));
+            
+            if($caja)
+            {
+                $entradas = $caja["entradas"];
+                $salidas = $caja["salidas"];
+                $saldo = $caja["saldo"];
+
+                if($concepto == "e")
+                {
+                   $entradas = (float)$entradas + (float)$importe;
+                   $saldo = (float)$saldo + (float)$importe;
+                }
+                else
+                {
+                   $salidas = (float)$salidas + (float)$importe;
+                   $saldo = (float)$saldo - (float)$importe;
+                }
+
+                $this->Caja_model->actualizar_caja($entradas,$salidas,$saldo,"a");
+            }
+            else 
+            {
+                $this->Caja_model->abrir_caja();
+                $caja = $this->Caja_model->obtener_caja(Date("Y-m-d"));
+
+                $entradas = $caja["entradas"];
+                $salidas = $caja["salidas"];
+                $saldo = $caja["saldo"];
+
+                if($concepto == "e")
+                {
+                   $entradas = (float)$entradas + (float)$importe;
+                   $saldo = (float)$saldo + (float)$importe;
+                }
+                else
+                {
+                   $salidas = (float)$salidas + (float)$importe;
+                   $saldo = (float)$saldo - (float)$importe;
+                }
+
+                $this->Caja_model->actualizar_caja($entradas,$salidas,$saldo,"a");
+            }
+
+            $this->Caja_model->registrar_movimiento_caja($numero, $fecha, $concepto, $importe, $detalle, $empleado,7,$concepto);
+            redirect($this->controller_usuario."/caja");
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    public function imprimir_datos_movimiento_caja($comprobante)
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(5);
+        
+        if($permiso)
+        {
+            $output["css"]="";
+            $output["js"]="";
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            $output["controller_usuario"]=$this->controller_usuario;
+
+            $this->load->model("Caja_model");
+
+            $output["comprobante"] = $this->Caja_model->getDatosDeMovimiento($comprobante);
+            $this->load->view("back/modulos/facturacion/imprimir_datos_movimiento_caja",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    public function ver_factura($numero = null)
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(5);
+        
+        if($permiso)
+        {
+            $this->load->model("Orden_trabajo_model");
+            $this->load->model("Factura_model");
+            $this->load->model("Cliente_model");
+            
+            $this->load->model("Factura_model");
+
+            $factura = $this->Factura_model->getFacturaPorNumero($numero);
+            $salida["factura"] = $factura;
+            $salida["detalles"]= $this->Orden_trabajo_model->getDetallesDeOT($factura["ot"]);
+            $salida["cliente"] = $this->Cliente_model->getCliente($factura["cliente"]);
+
+            $this->load->view("back/ver_factura",$salida);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    // FIN MODULO FACTURACION
+    
+    // COMIENZO MODULO COMPRAS
+    
+    public function abm_proveedores()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(7);
+        
+        if($permiso)
+        {
+            $this->load->model("Registro_de_pedidos_model");
+            $this->load->model("Registro_de_clientes_model");
+            
+            $this->load->model("Compras_model");
+            
+            
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["css"].=$this->adminlte->get_css_datetimepicker();
+            $output["js"]=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["js"].=$this->adminlte->get_js_datetimepicker();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            
+            
+            $output["listado_proveedores"]=$this->Compras_model->get_proveedores();
+            
+            $output["listado_pedidos"]=$this->Registro_de_pedidos_model->get_listado_pedidos();
+            $output["controller_usuario"]=$this->controller_usuario;
+            $output["lista_clientes"]=$this->Registro_de_clientes_model->get_clientes_no_suspendidos();
+            $this->load->view("back/modulos/compras/abm_proveedores",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    // FIN MODULO COMPRAS
     public function abm_configuracion_empresa()
     {
         $permiso= $this->funciones_generales->dar_permiso(1);
