@@ -64,11 +64,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Facturacion
+        Factura de Compra
         <!--<small>Control panel</small>-->
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-calculator"></i> Facturacion</a></li>
+        <li><a href="#"><i class="fa fa-bar-chart"></i> Compras</a></li>
         <!--<li class="active">Dashboard</li>-->
       </ol>
     </section>
@@ -134,34 +134,34 @@
            <div class="col-md-12 marco">
                 <div class="col-md-12 fila">
                     <div class="col-md-4">
-                         <label>Cliente Seleccionado</label>
-                         <select type="text" class="form-control"  id="cliente_seleccionado" disabled>
+                         <label>Proveedor Seleccionado</label>
+                         <select type="text" class="form-control"  id="proveedor_seleccionado" disabled>
                              <option value="0">Ninguno</option>
                              <?php
-                                 foreach($listado_clientes as $value)
+                                 foreach($listado_proveedores as $value)
                                  {
-                                     echo "<option value='".$value["id"]."'>".$value["dni_cuit_cuil"]." - ".$value["nombre"]." ".$value["apellido"]."</option>";
+                                     echo "<option value='".$value["id"]."'>".$value["cuil"]." - ".$value["razon_social"]."</option>";
                                  }
                              ?> 
                          </select>
                     </div>
                     <div class="col-md-2">
                         <label></label>
-                        <button class="btn btn-primary form-control disabled" id="btn_buscar_cliente" onClick="abrir_modal_buscar_cliente()"><i class="fa fa-search"></i> Buscar</button>
+                        <button class="btn btn-primary form-control disabled" id="btn_buscar_proveedor" onClick="abrir_modal_buscar_proveedor()"><i class="fa fa-search"></i> Buscar</button>
                     </div>
                     <div class="col-md-2">
                         <label></label>
-                        <button class="btn btn-primary form-control disabled" id="btn_nuevo_cliente" onClick="abrir_modal_nuevo_cliente()"><i class="fa  fa-user-plus"></i>Nuevo</button>
+                        <button class="btn btn-primary form-control disabled" id="btn_nuevo_proveedor" onClick="abrir_modal_nuevo_proveedor()"><i class="fa  fa-user-plus"></i>Nuevo</button>
                     </div>
                     <div class="col-md-4">
                          <label>Direccion</label>
-                         <input type="text" class="form-control"  id="direccion" value="Seleccione cliente" disabled>
+                         <input type="text" class="form-control"  id="direccion" value="Seleccione proveedor" disabled>
                      </div>
                     <div style="margin-top: 10px;">&nbsp;</div>
                     <div class="col-md-4">
                          <label>Localidad</label>
                          <select class="form-control" id="localidad" name="localidad" disabled>
-                             <option value="0">Seleccione cliente</option>
+                             <option value="0">Seleccione proveedor</option>
                              <?php 
                                  foreach($listado_localidades as $value)
                                  {
@@ -172,11 +172,11 @@
                     </div>
                     <div class="col-md-4">
                          <label>Cuit</label>
-                         <input type="text" class="form-control"  id="cuit" value="Seleccione cliente" disabled>
+                         <input type="text" class="form-control"  id="cuil" value="Seleccione proveedor" disabled>
                      </div>
                      <div class="col-md-4">
                          <label>Ingresos Brutos</label>
-                         <input type="text" class="form-control"  id="ingresos_brutos" value="Seleccione cliente" disabled>
+                         <input type="text" class="form-control"  id="ingresos_brutos" value="Seleccione proveedor" disabled>
                      </div>
                  </div>
             </div>
@@ -185,7 +185,7 @@
         <div class="col-md-12">
             <div class="col-md-12 marco">
                 <div class="col-md-12 fila">
-                    <span><strong>DETALLES DE PRODUCTO</strong></span> <button class="btn btn-warning disabled" id='btn_agregar_producto_detalle' onClick="ver_modal_lista_productos()"><i class="fa fa-plus"></i>Agregar</button>
+                    <span><strong>DETALLES DE PRODUCTO</strong></span> <button class="btn btn-danger disabled" id='btn_agregar_producto_detalle' onClick="ver_modal_lista_productos()"><i class="fa fa-plus"></i>Agregar</button>
                 </div>
                 <div class="col-md-12 fila">
                     <div class="box">
@@ -218,17 +218,13 @@
             <div class="col-md-offset-6 col-md-6">
                 <div class="marco" style="font-size: 18px;">
                     <p>SUB-TOTAL: $<span id='subtotal'>0</span></p>
-                    <p>DESC. GRAL: <input type="number"  class=""  id="descuento_general" value="Seleccione cliente" onChange='generar_html_tabla_listado()' disabled> -$<span id="pesos_de_descuento">0</span></p>
+                    <p>DESC. GRAL: <input type="number"  class=""  id="descuento_general" value="Seleccione proveedor" onChange='generar_html_tabla_listado()' disabled> -$<span id="pesos_de_descuento">0</span></p>
                     <!--<p>IMPUESTOS: $<span id='impuestos'>0</span></p>-->
                     <p>TOTAL: $<span id='total'>0</span></p>
                     <label>CONDICION DE VENTA:</label>
                     <select id="condicion_de_venta">
-                        <?php 
-                            foreach($condiciones_de_venta as $value)
-                            {
-                                echo "<option value='".$value["id"]."'>".$value["condicion"]."</option>";
-                            }
-                        ?>
+                        <option value="1">Contado</option>
+                        <option value="2">Cuenta Corriente</option>
                     </select>
                 </div>
             </div>
@@ -248,131 +244,73 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<div class="modal modal-warning" id="modal_agregar_cliente">
+<div class="modal modal-danger" id="modal_agregar_proveedor">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Agregar cliente:</h4>
+                <h4 class="modal-title">Agregar un proveedor:</h4>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="dni_cuit_cuil_agregar_cliente">Dni - Cuit - Cuil: </label>
-                            <input class="form-control" type="number" id="dni_cuit_cuil_agregar_cliente" name="dni_cuit_cuil_agregar_cliente" value=""/>
-                        </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="razon_social_agregar_proveedor">Razon social: </label>
+                        <input class="form-control" type="text" id="razon_social_agregar_proveedor"/>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="razon_social_agregar_cliente">Razon Social: </label>
-                            <input class="form-control" type="text" id="razon_social_agregar_cliente" name="razon_social_agregar_cliente" value=""/>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="nombre_agregar_cliente">Nombre: </label>
-                            <input class="form-control" type="text" id="nombre_agregar_cliente" name="nombre_agregar_cliente" value=""/>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="apellido_agregar_cliente">Apellido: </label>
-                            <input class="form-control" type="text" id="apellido_agregar_cliente" name="apellido_agregar_cliente" value=""/>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="telefono_agregar_cliente">Telefono: </label>
-                            <input class="form-control" type="number" id="telefono_agregar_cliente" name="telefono_agregar_cliente" value=""/>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="correo_agregar_cliente">Correo: </label>
-                            <input class="form-control" type="text" id="correo_agregar_cliente" name="correo_agregar_cliente" value=""/>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="direccion_agregar_cliente">Direccion: </label>
-                            <input class="form-control" type="text" id="direccion_agregar_cliente" name="direccion_agregar_cliente" value=""/>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="descuento_gral_agregar_cliente">Descuento General</label>
-                            <select class="form-control" id="descuento_gral_agregar_cliente" name="descuento_gral_agregar_cliente">
-                            <?php 
-                                foreach($listado_de_descuentos as $value)
-                                {
-                                    echo "<option value='".$value["valores"]."'>".$value["valores"]."</option>";
-                                }
-                            ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="ingresos_brutos_agregar_cliente">Ing. Brutos: </label>
-                            <input type="text" class="form-control" id="ingresos_brutos_agregar_cliente" name="ingresos_brutos_agregar_cliente">
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="localidad_agregar_cliente">Localidad: </label>
-                            <select class="form-control  select2" style="width: 100% !important;" id="localidad_agregar_cliente" name="localidad_agregar_cliente">
-                                
-                                <?php
-                                    foreach($listado_localidades as $value)
-                                    {
-                                        echo "<option value='".$value["codigo"]."'>".$value["localidad"]." - ".$value["desc_provincia"]."</option>";
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="tipo_inscripcion_agregar_cliente">Tipo Inscripcion: </label>
-                            <select class="form-control select2" style="width: 100% !important;" id="tipo_inscripcion_agregar_cliente" name="tipo_inscripcion_agregar_cliente">
-                                <?php
-                                    foreach($lista_tipos_inscripciones as $value)
-                                    {
-                                        echo "<option value='".$value["id"]."'>".$value["inscripcion"]."</option>";
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="estado_agregar_cliente">Estado</label>
-                            <select class="form-control select2" style="width: 100% !important;" id="estado_agregar_cliente" name="estado_agregar_cliente">
-                                <?php
-                                    foreach($lista_estados_cliente as $value)
-                                    {
-                                        if($value["estado"] == "operativo")
-                                        {
-                                            echo "<option value='".$value["id"]."' selected>".$value["estado"]."</option>";
-                                        }
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <p id="mensaje_error_agregar_cliente" style="font-weight: bold;color: #f00;font-size: 15px;"></p>
-                    </div>
-                    <div class="clearfix"></div>
-                    
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="telefono_agregar_proveedor">Telefono: </label>
+                        <input class="form-control" type="text" id="telefono_agregar_proveedor"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="correo_agregar_proveedor">Correo: </label>
+                        <input class="form-control" type="text" id="correo_agregar_proveedor"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="direccion_agregar_proveedor">Direccion: </label>
+                        <input class="form-control " type="text" id="direccion_agregar_proveedor"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="cuil_agregar_proveedor">cuil: </label>
+                        <input class="form-control " type="text" id="cuil_agregar_proveedor"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ingresos_brutos_agregar_proveedor">Ingresos Brutos: </label>
+                        <input class="form-control" type="text" id="ingresos_brutos_agregar_proveedor"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Localidad</label>
+                    <select class="form-control select2" style="width: 100%;" id="localidad_agregar_proveedor">
+                        <?php 
+                            foreach($listado_localidades as $value)
+                            {
+                                echo "<option value='".$value["codigo"]."'>".$value["localidad"]." - ".$value["desc_provincia"]."</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fecha_alta_agregar_proveedor">Fecha de alta: </label>
+                        <input class="form-control datetimepicker" type="text" id="fecha_alta_agregar_proveedor" value="<?php echo Date("Y-m-d")?>"/>
+                    </div>
+                </div>
+                
+                <div class="clearfix"></div>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="agregar_cliente()"><i class='fa fa-save'></i> Guardar Cliente</button>
+                    <button class="btn btn-danger" onClick="agregar_proveedor()"><i class="fa fa-save"></i></i> Guardar Proveedor</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -380,41 +318,43 @@
 </div>
 
 
-<div class="modal modal-default" id="modal_buscar_cliente">
+<div class="modal modal-default" id="modal_buscar_proveedor">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>
-                    Seleccione un cliente
-                    <button class="btn btn-warning pull-right" onClick="$('#modal_buscar_cliente').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    Seleccione un proveedor
+                    <button class="btn btn-danger pull-right" onClick="$('#modal_buscar_proveedor').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                     
                 </h3>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="listado_buscar_clientes" class="table table-bordered table-hover">
+                        <table id="listado_buscar_proveedor" class="table table-bordered table-hover">
                             <thead>
                               <tr>
                                 <th>CUIL-DNI-CUIT</th>
                                 <th>RAZON SOCIAL</th>
                                 <th>TELEFONO</th>
-                                <th>ESTADO</th>
+                                <th style="display: none;">CORREO</th>
+                                <th>DIRECCION</th>
                                 <th></th>
                               </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                    foreach($listado_clientes as $value)
+                                    foreach($listado_proveedores as $value)
                                     {
                                         echo 
                                         "<tr>
-                                            <td>".$value["dni_cuit_cuil"]."</td>
+                                            <td>".$value["cuil"]."</td>
                                             <td>".$value["razon_social"]."</td>
                                             <td>".$value["telefono"]."</td>
-                                            <td>".$value["desc_estado"]."</td>
-                                            <td>
-                                                <button class='btn btn-warning' data-toggle='tooltip' title='' data-original-title='Seleccionar' onClick='seleccionar_cliente(".$value["id"].",&#34;".$value["dni_cuit_cuil"]."&#34;,&#34;".$value["nombre"]."&#34;,&#34;".$value["apellido"]."&#34;,&#34;".$value["localidad"]."&#34;,&#34;".$value["direccion"]."&#34;,&#34;".$value["ingresos_brutos"]."&#34;,".$value["descuento_gral"].")'><i class='fa fa-plus'></i></button>
+                                            <td style='display: none;'>".$value["correo"]."</td>
+                                            <td>".$value["direccion"]."</td>
+                                            <td>                                                                                                       
+                                                <button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Seleccionar' onClick='seleccionar_proveedor(".$value["id"].",&#34;".$value["razon_social"]."&#34;,".$value["telefono"].",&#34;".$value["correo"]."&#34;,&#34;".$value["direccion"]."&#34;,".$value["cuil"].",&#34;".$value["fecha_alta"]."&#34;,&#34;".$value["ingresos_brutos"]."&#34;,".$value["localidad"].")'><i class='fa fa-plus'></i></button>
                                             </td>    
                                         </tr>";
                                     }
@@ -434,14 +374,14 @@
             <div class="modal-header">
                 <h3>
                     Seleccionar Pedido
-                    <button class="btn btn-warning pull-right" onClick="$('#modal_asociar_pedido').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger pull-right" onClick="$('#modal_asociar_pedido').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                 
                 </h3>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="lista_pedidos_cliente" class="table table-bordered table-hover">
+                        <table id="lista_pedidos_proveedor" class="table table-bordered table-hover">
                             <thead>
                               <tr>
                                 <th>Numero</th>
@@ -451,7 +391,7 @@
                                 <th></th>
                               </tr>
                             </thead>
-                            <tbody id="cuerpo_tabla_lista_pedidos_cliente">
+                            <tbody id="cuerpo_tabla_lista_pedidos_proveedor">
                                
                             </tbody>
                           </table>
@@ -470,14 +410,14 @@
             <div class="modal-header">
                 <h3>
                     Seleccionar Remito
-                    <button class="btn btn-warning pull-right" onClick="$('#modal_asociar_remito').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger pull-right" onClick="$('#modal_asociar_remito').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                
                 </h3>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="lista_remitos_cliente" class="table table-bordered table-hover">
+                        <table id="lista_remitos_proveedor" class="table table-bordered table-hover">
                             <thead>
                               <tr>
                                 <th>Numero</th>
@@ -487,7 +427,7 @@
                                 <th></th>
                               </tr>
                             </thead>
-                            <tbody id="cuerpo_tabla_lista_remitos_cliente">
+                            <tbody id="cuerpo_tabla_lista_remitos_proveedor">
                                
                             </tbody>
                           </table>
@@ -510,7 +450,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="tabla_lista_detalles_remitos_cliente" class="table table-bordered table-hover">
+                        <table id="tabla_lista_detalles_remitos_proveedor" class="table table-bordered table-hover">
                             <thead>
                               <tr>
                                 <th>Codigo</th>
@@ -520,7 +460,7 @@
                                 <th></th>
                               </tr>
                             </thead>
-                            <tbody id="cuerpo_tabla_lista_detalles_remitos_cliente">
+                            <tbody id="cuerpo_tabla_lista_detalles_remitos_proveedor">
                                
                             </tbody>
                           </table>
@@ -529,7 +469,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="$('#modal_agregar_detalle_remito').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger" onClick="$('#modal_agregar_detalle_remito').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -545,7 +485,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="tabla_lista_detalles_pedidos_cliente" class="table table-bordered table-hover">
+                        <table id="tabla_lista_detalles_pedidos_proveedor" class="table table-bordered table-hover">
                             <thead>
                               <tr>
                                 <th>Codigo</th>
@@ -555,7 +495,7 @@
                                 <th></th>
                               </tr>
                             </thead>
-                            <tbody id="cuerpo_tabla_lista_detalles_pedidos_cliente">
+                            <tbody id="cuerpo_tabla_lista_detalles_pedidos_proveedor">
                                
                             </tbody>
                           </table>
@@ -564,7 +504,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="$('#modal_agregar_detalle_pedido').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger" onClick="$('#modal_agregar_detalle_pedido').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -578,7 +518,7 @@
             <div class="modal-header">
                 <h3>
                     Agrege un producto 
-                    <button class="btn btn-warning pull-right" onClick="$('#modal_lista_productos').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger pull-right" onClick="$('#modal_lista_productos').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                 </h3>
             </div>
             <div class="modal-body">
@@ -606,7 +546,7 @@
 </div>
 
 
-<div class="modal modal-warning" id="modal_imprimir_factura">
+<div class="modal modal-danger" id="modal_imprimir_factura">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -630,7 +570,7 @@
 </div>
 
 
-<div class="modal modal-warning" id="modal_guardar_factura">
+<div class="modal modal-danger" id="modal_guardar_factura">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -747,13 +687,13 @@
             var tipo_factura = parseInt($("#tipo_factura").val());
             var punto_de_venta = parseInt($("#punto_de_venta").val());
             var fecha = $("#fecha").val();
-            var cliente = parseInt($("#cliente_seleccionado").val());
+            var proveedor = parseInt($("#proveedor_seleccionado").val());
             var condicion_venta = $("#condicion_de_venta").val();
             var detalle = arreglo_detalles;
             var remito_o_pedido= asociado;
             var descuento_general = $("#descuento_general").val();
             
-            if(tipo_factura != 0 && fecha != "" && cliente != 0 && detalle)
+            if(tipo_factura != 0 && fecha != "" && proveedor != 0 && detalle)
             {
                 $.ajax({
                     url: "<?php echo base_url()?>index.php/Response_Ajax/crear_factura",
@@ -762,7 +702,7 @@
                         tipo_factura:tipo_factura,
                         punto_de_venta:punto_de_venta,
                         fecha:fecha,
-                        cliente:cliente,
+                        proveedor:proveedor,
                         condicion_venta:condicion_venta,
                         remito_o_pedido:remito_o_pedido,
                         numero_remito_pedido:numero_remito_pedido,
@@ -800,8 +740,8 @@
                 if(fecha==""){activar_error("fecha");}
                 else{desactivar_error("fecha");}
                 
-                if(cliente==0){activar_error("cliente_seleccionado");}
-                else{desactivar_error("cliente_seleccionado");}
+                if(proveedor==0){activar_error("proveedor_seleccionado");}
+                else{desactivar_error("proveedor_seleccionado");}
                 
                 if(!detalle)
                 {
@@ -830,18 +770,18 @@
     function cambio_tipo_factura()
     {
         var tipo_factura = $("#tipo_factura").val();
-        var id_cliente = parseInt($("#cliente_seleccionado").val());
+        var id_proveedor = parseInt($("#proveedor_seleccionado").val());
         
         
         if(tipo_factura != 0)
         {
             $("#punto_de_venta").removeAttr("disabled");
             $("#fecha").removeAttr("disabled");
-            $("#btn_buscar_cliente").removeClass("disabled");
-            $("#btn_nuevo_cliente").removeClass("disabled");
+            $("#btn_buscar_proveedor").removeClass("disabled");
+            $("#btn_nuevo_proveedor").removeClass("disabled");
             
             
-            if(id_cliente != 0)
+            if(id_proveedor != 0)
             {
                 $("#btn_agregar_producto_detalle").removeClass("disabled");
                 $("#btn_guardar").removeClass("disabled");
@@ -857,10 +797,10 @@
             
             $("#punto_de_venta").attr("disabled","");
             $("#fecha").attr("disabled","");
-            $("#btn_buscar_cliente").addClass("disabled");
-            $("#btn_nuevo_cliente").addClass("disabled");
+            $("#btn_buscar_proveedor").addClass("disabled");
+            $("#btn_nuevo_proveedor").addClass("disabled");
             
-            if(id_cliente == 0)
+            if(id_proveedor == 0)
             {
                 $("#btn_agregar_producto_detalle").addClass("disabled");
                 $("#btn_guardar").addClass("disabled");
@@ -875,9 +815,9 @@
     
     function ver_modal_lista_productos()
     {
-        var id_cliente = parseInt($("#cliente_seleccionado").val());
+        var id_proveedor = parseInt($("#proveedor_seleccionado").val());
         
-        if(id_cliente != 0)
+        if(id_proveedor != 0)
         {
             if(carga_listado_de_productos == true)
             {
@@ -890,12 +830,12 @@
         }
     }
     
-    function cargar_listado_productos(cliente)
+    function cargar_listado_productos(proveedor)
     {
         $.ajax({
             url: "<?php echo base_url()?>index.php/Response_Ajax/get_listado_productos_segun_usuario",
             type: "POST",
-            data:{cliente:cliente},
+            data:{proveedor:proveedor},
             success: function(data)
             {
                 data= JSON.parse(data);
@@ -912,7 +852,7 @@
                         html+="<td>"+data[i]["stock"]+"</td>";
                         html+="<td>$"+data[i]["precio"]+"</td>";
                         html+="<td>";                                                                                              
-                            html+="<button class='btn btn-warning' data-toggle='tooltip' title='' data-original-title='Agregar' onClick='agregar_detalle("+data[i]["id"]+",0,&#34;"+data[i]["descripcion"]+"&#34;,1,"+data[i]["precio"]+")'><i class='fa fa-plus'></i></button>";
+                            html+="<button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Agregar' onClick='agregar_detalle("+data[i]["id"]+",0,&#34;"+data[i]["descripcion"]+"&#34;,1,"+data[i]["precio"]+")'><i class='fa fa-plus'></i></button>";
                         html+="</td>";
                         html+="</tr>";
 
@@ -937,43 +877,43 @@
         }); 
     }
     
-    function abrir_modal_buscar_cliente()
+    function abrir_modal_buscar_proveedor()
     {
         var tipo_factura = parseInt($("#tipo_factura").val());
         
         if(tipo_factura)
         {
-            $('#modal_buscar_cliente').modal('show');
+            $('#modal_buscar_proveedor').modal('show');
         }
     }
     
     function abrir_modal_guardar()
     {
         var tipo_factura = parseInt($("#tipo_factura").val());
-        var id_cliente = parseInt($("#cliente_seleccionado").val());
+        var id_proveedor = parseInt($("#proveedor_seleccionado").val());
         
-        if(tipo_factura && id_cliente)
+        if(tipo_factura && id_proveedor)
         {
             $('#modal_imprimir_factura').modal('show');
         }
     }
     
-    function abrir_modal_nuevo_cliente()
+    function abrir_modal_nuevo_proveedor()
     {
         var tipo_factura = parseInt($("#tipo_factura").val());
         
         if(tipo_factura)
         {
-            $('#modal_agregar_cliente').modal('show');
+            $('#modal_agregar_proveedor').modal('show');
         }
         
     }
     
     function ver_tabla_detalles()
     {
-       var id_cliente = parseInt($("#cliente_seleccionado").val());
+       var id_proveedor = parseInt($("#proveedor_seleccionado").val());
        
-        if(id_cliente != 0 && tabla_detalle_cargado == false)
+        if(id_proveedor != 0 && tabla_detalle_cargado == false)
         {
            if(tipo_detalle == "pedido")
            {
@@ -1021,15 +961,15 @@
                             cuerpo+="<td>"+data[i]["desc_producto"]+"</td>";
                             cuerpo+="<td>"+data[i]["cantidad"]+"</td>";
                             cuerpo+="<td>"+data[i]["precio"]+"</td>";
-                            cuerpo+="<td><button class='btn btn-warning' onClick='agregar_detalle("+data[i]["cod_producto"]+","+data[i]["codigo"]+",&#34;"+data[i]["desc_producto"]+"&#34;,"+data[i]["cantidad"]+","+data[i]["precio"]+")'>Seleccionar</button></td>";
+                            cuerpo+="<td><button class='btn btn-danger' onClick='agregar_detalle("+data[i]["cod_producto"]+","+data[i]["codigo"]+",&#34;"+data[i]["desc_producto"]+"&#34;,"+data[i]["cantidad"]+","+data[i]["precio"]+")'>Seleccionar</button></td>";
                             cuerpo+="</tr>";
                         }
                         
 
-                        $("#cuerpo_tabla_lista_detalles_remitos_cliente").html(cuerpo);
+                        $("#cuerpo_tabla_lista_detalles_remitos_proveedor").html(cuerpo);
                         tabla_detalle_cargado=true;
                         
-                        $('#tabla_lista_detalles_remitos_cliente').DataTable({
+                        $('#tabla_lista_detalles_remitos_proveedor').DataTable({
                              "paging": true,
                              "lengthChange": true,
                              "searching": true,
@@ -1071,14 +1011,14 @@
                             cuerpo+="<td>"+data[i]["desc_producto"]+"</td>";
                             cuerpo+="<td>"+data[i]["cantidad"]+"</td>";
                             cuerpo+="<td>"+data[i]["precio"]+"</td>";
-                            cuerpo+="<td><button class='btn btn-warning' onClick='agregar_detalle("+data[i]["cod_producto"]+","+data[i]["codigo"]+",&#34;"+data[i]["desc_producto"]+"&#34;,"+data[i]["cantidad"]+","+data[i]["precio"]+")'>Seleccionar</button></td>";
+                            cuerpo+="<td><button class='btn btn-danger' onClick='agregar_detalle("+data[i]["cod_producto"]+","+data[i]["codigo"]+",&#34;"+data[i]["desc_producto"]+"&#34;,"+data[i]["cantidad"]+","+data[i]["precio"]+")'>Seleccionar</button></td>";
                             cuerpo+="</tr>";
                         }
                         
 
-                        $("#cuerpo_tabla_lista_detalles_pedidos_cliente").html(cuerpo);
+                        $("#cuerpo_tabla_lista_detalles_pedidos_proveedor").html(cuerpo);
                         tabla_detalle_cargado=true;
-                        $('#tabla_lista_detalles_pedidos_cliente').DataTable({
+                        $('#tabla_lista_detalles_pedidos_proveedor').DataTable({
                              "paging": true,
                              "lengthChange": true,
                              "searching": true,
@@ -1303,14 +1243,14 @@
     $("#btn_asociar_pedido").click(function(){
         if(numero_remito_pedido == 0)
         {
-            var id_cliente = parseInt($("#cliente_seleccionado").val());
+            var id_proveedor = parseInt($("#proveedor_seleccionado").val());
 
-            if(id_cliente != 0 && asociado =="" && pedidos_cargados==false)
+            if(id_proveedor != 0 && asociado =="" && pedidos_cargados==false)
             {
                 $.ajax({
-                    url: "<?php echo base_url()?>index.php/Response_Ajax/get_pedidos_cliente_pendientes",
+                    url: "<?php echo base_url()?>index.php/Response_Ajax/get_pedidos_proveedor_pendientes",
                     type: "POST",
-                    data:{id:id_cliente},
+                    data:{id:id_proveedor},
                     success: function(data)
                     {
                         data= JSON.parse(data);
@@ -1326,14 +1266,14 @@
                                cuerpo+="<td>"+data[i]["fecha"]+"</td>";
                                cuerpo+="<td>"+data[i]["fecha_entrega"]+"</td>";
                                cuerpo+="<td>"+data[i]["estado"]+"</td>";
-                               cuerpo+="<td><button class='btn btn-warning' onClick='seleccionar_pedido("+data[i]["numero"]+")'>Seleccionar</button></td>";
+                               cuerpo+="<td><button class='btn btn-danger' onClick='seleccionar_pedido("+data[i]["numero"]+")'>Seleccionar</button></td>";
                                cuerpo+="</tr>";
                            }
 
 
-                            $("#cuerpo_tabla_lista_pedidos_cliente").html(cuerpo);
+                            $("#cuerpo_tabla_lista_pedidos_proveedor").html(cuerpo);
 
-                            $('#lista_pedidos_cliente').DataTable({
+                            $('#lista_pedidos_proveedor').DataTable({
                                 "paging": true,
                                 "lengthChange": true,
                                 "searching": true,
@@ -1357,7 +1297,7 @@
             }
             else
             {
-                if(id_cliente == 0){/*alert("seleccione cliente");*/}
+                if(id_proveedor == 0){/*alert("seleccione proveedor");*/}
                 else if(asociado == "pedido")
                 {
                     $("#modal_asociar_pedido").modal("show");
@@ -1381,15 +1321,15 @@
     
         if(numero_remito_pedido == 0)
         {
-            var id_cliente = parseInt($("#cliente_seleccionado").val());
+            var id_proveedor = parseInt($("#proveedor_seleccionado").val());
 
-            if(id_cliente != 0  && asociado =="" && remitos_cargados == false)
+            if(id_proveedor != 0  && asociado =="" && remitos_cargados == false)
             {
                 
                 $.ajax({
-                    url: "<?php echo base_url()?>index.php/Response_Ajax/get_remitos_cliente_pendientes",
+                    url: "<?php echo base_url()?>index.php/Response_Ajax/get_remitos_proveedor_pendientes",
                     type: "POST",
-                    data:{id:id_cliente},
+                    data:{id:id_proveedor},
                     success: function(data)
                     {
                         data= JSON.parse(data);
@@ -1405,14 +1345,14 @@
                                     cuerpo+="<td>"+data[i]["fecha"]+"</td>";
                                     cuerpo+="<td>"+data[i]["chasis"]+"</td>";
                                     cuerpo+="<td>"+data[i]["acoplado"]+"</td>";
-                                    cuerpo+="<td><button class='btn btn-warning' onClick='seleccionar_remito("+data[i]["numero"]+")'>Seleccionar</button></td>";
+                                    cuerpo+="<td><button class='btn btn-danger' onClick='seleccionar_remito("+data[i]["numero"]+")'>Seleccionar</button></td>";
                                     cuerpo+="</tr>";
                                 }
 
 
-                                 $("#cuerpo_tabla_lista_remitos_cliente").html(cuerpo);
+                                 $("#cuerpo_tabla_lista_remitos_proveedor").html(cuerpo);
 
-                                 $('#lista_remitos_cliente').DataTable({
+                                 $('#lista_remitos_proveedor').DataTable({
                                      "paging": true,
                                      "lengthChange": true,
                                      "searching": true,
@@ -1436,7 +1376,7 @@
             }
             else
             {
-                if(id_cliente == 0){/*alert("seleccione cliente");*/}
+                if(id_proveedor == 0){/*alert("seleccione proveedor");*/}
                 else if(asociado == "remito")
                 {
                     ver_tabla_detalles();
@@ -1455,53 +1395,52 @@
         }
     });
     
-    function seleccionar_cliente(id,dni_cuit_cuil,nombre,apellido,localidad,direccion,ingresos_brutos,descuento_general)
+    function seleccionar_proveedor(id,razon_social,telefono,correo,direccion,cuil,fecha_alta,ingresos_brutos,localidad)
     {
         arreglo_detalles= new Array();
         
-        var html = $("#cliente_seleccionado").html();
+        //var html = $("#proveedor_seleccionado").html();
         
-        var option = "<option value='"+id+"'>"+dni_cuit_cuil+" - "+nombre+" "+apellido+"</option>";
+        var option = "<option value='"+id+"'>"+cuil+" - "+razon_social+"</option>";
         
-        html+= option;
+        //html+= option;
         
-        $("#cliente_seleccionado").html(html);
+        $("#proveedor_seleccionado").html(option);
         
-        $("#cliente_seleccionado").val(id);
+        $("#proveedor_seleccionado").val(id);
         
         $("#btn_asociar_remito").removeClass("disabled");
         $("#btn_asociar_pedido").removeClass("disabled");
            
-        $("#localidad").val(localidad);
+        
         $("#direccion").val(direccion);
-        $("#cuit").val(dni_cuit_cuil);
-        $("#descuento_general").val(descuento_general);
+        $("#cuil").val(cuil);
         $("#descuento_general").removeAttr("disabled");
         $("#ingresos_brutos").val(ingresos_brutos);
-        
+        $("#localidad").val(localidad);
         $("#btn_agregar_producto_detalle").removeClass("disabled");
-        $("#modal_buscar_cliente").modal("hide");
+        $("#modal_buscar_proveedor").modal("hide");
         
-        cargar_listado_productos(id);
-        generar_html_tabla_listado();
+        //cargar_listado_productos(id);
+        //generar_html_tabla_listado();
     }
     
-    function agregar_cliente()
+    function agregar_proveedor()
     {
-        var dni_cuit_cuil = parseInt($("#dni_cuit_cuil_agregar_cliente").val());
-        var razon_social = $("#razon_social_agregar_cliente").val();
-        var nombre = $("#nombre_agregar_cliente").val();
-        var apellido = $("#apellido_agregar_cliente").val();
-        var telefono = parseInt($("#telefono_agregar_cliente").val());
-        var correo = $("#correo_agregar_cliente").val();
-        var direccion = $("#direccion_agregar_cliente").val();
-        var localidad = parseInt($("#localidad_agregar_cliente").val());
-        var tipo_inscripcion = parseInt($("#tipo_inscripcion_agregar_cliente").val());
-        var estado = parseInt($("#estado_agregar_cliente").val());
-        var descuento_gral= $("#descuento_gral_agregar_cliente").val();
-        var ingresos_brutos = $("#ingresos_brutos_agregar_cliente").val();
+        var dni_cuil_cuil = parseInt($("#dni_cuil_cuil_agregar_proveedor").val());
+        var razon_social = $("#razon_social_agregar_proveedor").val();
+        var nombre = $("#nombre_agregar_proveedor").val();
+        var apellido = $("#apellido_agregar_proveedor").val();
+        var telefono = parseInt($("#telefono_agregar_proveedor").val());
+        var correo = $("#correo_agregar_proveedor").val();
+        var direccion = $("#direccion_agregar_proveedor").val();
+        var localidad = parseInt($("#localidad_agregar_proveedor").val());
+        var tipo_inscripcion = parseInt($("#tipo_inscripcion_agregar_proveedor").val());
+        var estado = parseInt($("#estado_agregar_proveedor").val());
+        var descuento_gral= $("#descuento_gral_agregar_proveedor").val();
+        var ingresos_brutos = $("#ingresos_brutos_agregar_proveedor").val();
         
-        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) &&
+        if  (dni_cuil_cuil != "" && !isNaN(dni_cuil_cuil) &&
              razon_social != "" && ingresos_brutos != "" && nombre != "" && apellido != "" &&
              telefono != "" && !isNaN(telefono) && correo != "" && validarEmail(correo) &&
              direccion !="" && localidad != "" && !isNaN(localidad) && localidad != 0 &&
@@ -1509,11 +1448,11 @@
             )
         {
             $.ajax({
-                url: "<?php echo base_url()?>index.php/Response_Ajax/agregar_cliente",
+                url: "<?php echo base_url()?>index.php/Response_Ajax/agregar_proveedor",
                 type: "POST",
                 data:
                 {
-                    dni_cuit_cuil:dni_cuit_cuil,
+                    dni_cuil_cuil:dni_cuil_cuil,
                     razon_social:razon_social,
                     nombre:nombre,
                     apellido:apellido,
@@ -1534,26 +1473,26 @@
                     if(data)
                     {
                         
-                        var html = $("#cliente_seleccionado").html();
+                        var html = $("#proveedor_seleccionado").html();
         
-                        var option = "<option value='"+data["id"]+"'>"+dni_cuit_cuil+" - "+nombre+" "+apellido+"</option>";
+                        var option = "<option value='"+data["id"]+"'>"+dni_cuil_cuil+" - "+nombre+" "+apellido+"</option>";
 
                         html+= option;
                         
                         $("#localidad").val(localidad);
                         $("#direccion").val(direccion);
-                        $("#cuit").val(dni_cuit_cuil);
+                        $("#cuil").val(dni_cuil_cuil);
                         $("#descuento_general").val(descuento_gral);
                         $("#descuento_general").removeAttr("disabled");
                         $("#ingresos_brutos").val(parseFloat(ingresos_brutos));
                         
-                        $("#cliente_seleccionado").html(html);
+                        $("#proveedor_seleccionado").html(html);
 
-                        $("#cliente_seleccionado").val(data["id"]);
+                        $("#proveedor_seleccionado").val(data["id"]);
                         $("#btn_agregar_producto_detalle").removeClass("disabled");
-                        $("#modal_agregar_cliente").modal("hide");
+                        $("#modal_agregar_proveedor").modal("hide");
                         
-                        seleccionar_cliente(data["id"],dni_cuit_cuil,nombre,apellido,localidad,direccion,ingresos_brutos,descuento_gral);
+                        seleccionar_proveedor(data["id"],dni_cuil_cuil,nombre,apellido,localidad,direccion,ingresos_brutos,descuento_gral);
                     }
                     else
                     {
@@ -1567,61 +1506,61 @@
         else
         {
             gestiona_errores_agregar();
-            $("#mensaje_error_agregar_cliente").text("Por favor complete todos los campos");
+            $("#mensaje_error_agregar_proveedor").text("Por favor complete todos los campos");
         }
     }
     
     function gestiona_errores_agregar()
     {
         
-        var razon_social = $("#razon_social_agregar_cliente").val();
-        var nombre = $("#nombre_agregar_cliente").val();
-        var apellido = $("#apellido_agregar_cliente").val();
-        var telefono = $("#telefono_agregar_cliente").val();
-        var correo = $("#correo_agregar_cliente").val();
-        var direccion = $("#direccion_agregar_cliente").val();
-        var ingresos_brutos = $("#ingresos_brutos_agregar_cliente").val();
+        var razon_social = $("#razon_social_agregar_proveedor").val();
+        var nombre = $("#nombre_agregar_proveedor").val();
+        var apellido = $("#apellido_agregar_proveedor").val();
+        var telefono = $("#telefono_agregar_proveedor").val();
+        var correo = $("#correo_agregar_proveedor").val();
+        var direccion = $("#direccion_agregar_proveedor").val();
+        var ingresos_brutos = $("#ingresos_brutos_agregar_proveedor").val();
         
-        var localidad = parseInt($("#localidad_agregar_cliente").val());
-        var tipo_inscripcion = parseInt($("#tipo_inscripcion_agregar_cliente").val());
-        var estado = parseInt($("#estado_agregar_cliente").val());
-        var dni_cuit_cuil = parseInt($("#dni_cuit_cuil_agregar_cliente").val());
+        var localidad = parseInt($("#localidad_agregar_proveedor").val());
+        var tipo_inscripcion = parseInt($("#tipo_inscripcion_agregar_proveedor").val());
+        var estado = parseInt($("#estado_agregar_proveedor").val());
+        var dni_cuil_cuil = parseInt($("#dni_cuil_cuil_agregar_proveedor").val());
         
-        if(razon_social==""){activar_error("razon_social_agregar_cliente");}
-        else{desactivar_error("razon_social_agregar_cliente");}
+        if(razon_social==""){activar_error("razon_social_agregar_proveedor");}
+        else{desactivar_error("razon_social_agregar_proveedor");}
         
-        if(ingresos_brutos==""){activar_error("ingresos_brutos_agregar_cliente");}
-        else{desactivar_error("ingresos_brutos_agregar_cliente");}
+        if(ingresos_brutos==""){activar_error("ingresos_brutos_agregar_proveedor");}
+        else{desactivar_error("ingresos_brutos_agregar_proveedor");}
         
-        if(nombre==""){activar_error("nombre_agregar_cliente");}
-        else{desactivar_error("nombre_agregar_cliente");}
+        if(nombre==""){activar_error("nombre_agregar_proveedor");}
+        else{desactivar_error("nombre_agregar_proveedor");}
         
-        if(apellido==""){activar_error("apellido_agregar_cliente");}
-        else{desactivar_error("apellido_agregar_cliente");}
+        if(apellido==""){activar_error("apellido_agregar_proveedor");}
+        else{desactivar_error("apellido_agregar_proveedor");}
         
-        if(telefono==""){activar_error("telefono_agregar_cliente");}
-        else{desactivar_error("telefono_agregar_cliente");}
+        if(telefono==""){activar_error("telefono_agregar_proveedor");}
+        else{desactivar_error("telefono_agregar_proveedor");}
         
-        if(correo=="" || !validarEmail(correo)){activar_error("correo_agregar_cliente");}
-        else{desactivar_error("correo_agregar_cliente");}
+        if(correo=="" || !validarEmail(correo)){activar_error("correo_agregar_proveedor");}
+        else{desactivar_error("correo_agregar_proveedor");}
         
-        if(direccion==""){activar_error("direccion_agregar_cliente");}
-        else{desactivar_error("direccion_agregar_cliente");}
-        
-        
+        if(direccion==""){activar_error("direccion_agregar_proveedor");}
+        else{desactivar_error("direccion_agregar_proveedor");}
         
         
-        if(localidad=="" || isNaN(localidad) || localidad == 0){activar_error("localidad_agregar_cliente");}
-        else{desactivar_error("localidad_agregar_cliente");}
         
-        if(tipo_inscripcion=="" || isNaN(tipo_inscripcion || tipo_inscripcion == 0)){activar_error("tipo_inscripcion_agregar_cliente");}
-        else{desactivar_error("tipo_inscripcion_agregar_cliente");}
         
-        if(estado=="" || isNaN(estado) || estado == 0){activar_error("estado_agregar_cliente");}
-        else{desactivar_error("estado_agregar_cliente");}
+        if(localidad=="" || isNaN(localidad) || localidad == 0){activar_error("localidad_agregar_proveedor");}
+        else{desactivar_error("localidad_agregar_proveedor");}
         
-        if(dni_cuit_cuil=="" || isNaN(dni_cuit_cuil) ){activar_error("dni_cuit_cuil_agregar_cliente");}
-        else{desactivar_error("dni_cuit_cuil_agregar_cliente");}
+        if(tipo_inscripcion=="" || isNaN(tipo_inscripcion || tipo_inscripcion == 0)){activar_error("tipo_inscripcion_agregar_proveedor");}
+        else{desactivar_error("tipo_inscripcion_agregar_proveedor");}
+        
+        if(estado=="" || isNaN(estado) || estado == 0){activar_error("estado_agregar_proveedor");}
+        else{desactivar_error("estado_agregar_proveedor");}
+        
+        if(dni_cuil_cuil=="" || isNaN(dni_cuil_cuil) ){activar_error("dni_cuil_cuil_agregar_proveedor");}
+        else{desactivar_error("dni_cuil_cuil_agregar_proveedor");}
     }
     
     function activar_error(id)
@@ -1638,7 +1577,7 @@
     
     
     
-    $('#listado_buscar_clientes').DataTable({
+    $('#listado_buscar_proveedor').DataTable({
           "paging": true,
           "lengthChange": true,
           "searching": true,

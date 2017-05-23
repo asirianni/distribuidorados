@@ -94,7 +94,7 @@
                                     <td>".$value["cuil"]."</td> 
                                     <td>".$value["fecha_alta"]."</td> 
                                     <td>
-                                        <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='abrir_modal_editar_proveedor(".$value["id"].",&#34;".$value["razon_social"]."&#34;,".$value["telefono"].",&#34;".$value["correo"]."&#34;,&#34;".$value["direccion"]."&#34;,".$value["cuil"].",&#34;".$value["fecha_alta"]."&#34;);' ><i class='fa fa-edit'></i></a>
+                                        <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='abrir_modal_editar_proveedor(".$value["id"].",&#34;".$value["razon_social"]."&#34;,".$value["telefono"].",&#34;".$value["correo"]."&#34;,&#34;".$value["direccion"]."&#34;,".$value["cuil"].",&#34;".$value["fecha_alta"]."&#34;,&#34;".$value["ingresos_brutos"]."&#34;,".$value["localidad"].");' ><i class='fa fa-edit'></i></a>
                                         <button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Eliminar' onClick='baja_proveedor(".$value["id"].")'><i class='fa fa-close'></i></button>
                                     </td>    
                                 </tr>";
@@ -153,9 +153,26 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="cuit_agregar_proveedor">Cuit: </label>
-                        <input class="form-control " type="text" id="cuit_agregar_proveedor"/>
+                        <label for="cuil_agregar_proveedor">cuil: </label>
+                        <input class="form-control " type="text" id="cuil_agregar_proveedor"/>
                     </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ingresos_brutos_agregar_proveedor">Ingresos Brutos: </label>
+                        <input class="form-control" type="text" id="ingresos_brutos_agregar_proveedor"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Localidad</label>
+                    <select class="form-control select2" style="width: 100%;" id="localidad_agregar_proveedor">
+                        <?php 
+                            foreach($listado_localidades as $value)
+                            {
+                                echo "<option value='".$value["codigo"]."'>".$value["localidad"]." - ".$value["desc_provincia"]."</option>";
+                            }
+                        ?>
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -163,6 +180,7 @@
                         <input class="form-control datetimepicker" type="text" id="fecha_alta_agregar_proveedor" value="<?php echo Date("Y-m-d")?>"/>
                     </div>
                 </div>
+                
                 <div class="clearfix"></div>
             </div>
             <div class="modal-footer">
@@ -207,23 +225,52 @@
                         <input class="form-control " type="text" id="direccion_editar_proveedor"/>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="cuit_editar_proveedor">Cuit: </label>
-                        <input class="form-control " type="text" id="cuit_editar_proveedor"/>
+                        <label for="cuil_editar_proveedor">cuil: </label>
+                        <input class="form-control " type="text" id="cuil_editar_proveedor"/>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="ingresos_brutos_editar_proveedor">Ingresos Brutos: </label>
+                        <input class="form-control" type="text" id="ingresos_brutos_editar_proveedor"/>
+                    </div>
+                </div>
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="fecha_alta_editar_proveedor">Fecha de alta: </label>
                         <input class="form-control datetimepicker" type="text" id="fecha_alta_editar_proveedor" value="<?php echo Date("Y-m-d")?>"/>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <label>Localidad</label>
+                    <select class="form-control" id="localidad_editar_proveedor" disabled>
+                        <?php 
+                            foreach($listado_localidades as $value)
+                            {
+                                echo "<option value='".$value["codigo"]."'>".$value["localidad"]." - ".$value["desc_provincia"]."</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>Cambie localidad</label>
+                    <select class="form-control select2" style="width: 100%;" id="localidad2_editar_proveedor">
+                        <option value="0">Seleccione nueva localidad</option>
+                        <?php 
+                            foreach($listado_localidades as $value)
+                            {
+                                echo "<option value='".$value["codigo"]."'>".$value["localidad"]." - ".$value["desc_provincia"]."</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
                 <div class="clearfix"></div>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-danger" onClick="editar_proveedor()"><i class="fa fa-save"></i></i> Guardar Proveedor</button>
+                    <button class="btn btn-danger" onClick="editar_proveedor()"><i class="fa fa-save"></i></i> Guardar Cambios</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -276,15 +323,17 @@
 
 <script>
     
-    function abrir_modal_editar_proveedor(id,razon_social,telefono,correo,direccion,cuil,fecha_alta)
+    function abrir_modal_editar_proveedor(id,razon_social,telefono,correo,direccion,cuil,fecha_alta,ingresos_brutos,localidad)
     {
         $("#id_editar_proveedor").val(id);
         $("#razon_social_editar_proveedor").val(razon_social);
         $("#telefono_editar_proveedor").val(telefono);
         $("#correo_editar_proveedor").val(correo);
         $("#direccion_editar_proveedor").val(direccion);
-        $("#cuit_editar_proveedor").val(cuil);
+        $("#cuil_editar_proveedor").val(cuil);
         $("#fecha_alta_editar_proveedor").val(fecha_alta);
+        $("#ingresos_brutos_editar_proveedor").val(ingresos_brutos);
+        $("#localidad_editar_proveedor").val(localidad);
         
         $("#modal_editar_proveedor").modal("show");
 
@@ -292,19 +341,135 @@
     
     function agregar_proveedor()
     {
+        gestionar_errores_agregar();
+        
         var razon_social= $("#razon_social_agregar_proveedor").val();
         var telefono = $("#telefono_agregar_proveedor").val();
         var correo = $("#correo_agregar_proveedor").val();
         var direccion = $("#direccion_agregar_proveedor").val();
-        var cuit = $("#cuit_agregar_proveedor").val();
+        var cuil = $("#cuil_agregar_proveedor").val();
+        var fecha_alta = $("#fecha_alta_agregar_proveedor").val();
+        var ingresos_brutos = $("#ingresos_brutos_agregar_proveedor").val();
+        var localidad = $("#localidad_agregar_proveedor").val();
+        
+        if( razon_social != "" && telefono != "" && !isNaN(telefono) && validarEmail(correo) 
+            && direccion != "" && cuil != "" && !isNaN(cuil) && fecha_alta != "")
+        {
+            $.ajax({
+                url: "<?php echo base_url()?>index.php/Response_Ajax/agregar_proveedor",
+                type: "POST",
+                data:{
+                    razon_social:razon_social,
+                    telefono:telefono,
+                    correo:correo,
+                    direccion:direccion,
+                    cuil:cuil,
+                    fecha_alta:fecha_alta,
+                    ingresos_brutos:ingresos_brutos,
+                    localidad:localidad,
+                },
+                success: function(data)
+                {
+                    data= JSON.parse(data);
+                    
+                    if(data > 0)
+                    {
+                        location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/abm_proveedores";
+                    }
+                    else
+                    {
+                        alert("No se ha podido agregar");
+                    }
+                },
+                error: function(event){alert(event.responseText);
+                },
+            }); 
+        }
+    }
+    
+    function editar_proveedor()
+    {
+        gestionar_errores_editar();
+        
+        var id = $("#id_editar_proveedor").val();
+        var razon_social= $("#razon_social_editar_proveedor").val();
+        var telefono = $("#telefono_editar_proveedor").val();
+        var correo = $("#correo_editar_proveedor").val();
+        var direccion = $("#direccion_editar_proveedor").val();
+        var cuil = $("#cuil_editar_proveedor").val();
+        var fecha_alta = $("#fecha_alta_editar_proveedor").val();
+        var ingresos_brutos = $("#ingresos_brutos_editar_proveedor").val();
+        var localidad = $("#localidad_editar_proveedor").val();
+        var localidad2 = $("#localidad2_editar_proveedor").val();
+        
+        if( razon_social != "" && telefono != "" && !isNaN(telefono) && validarEmail(correo) 
+            && direccion != "" && cuil != "" && !isNaN(cuil) && fecha_alta != "")
+        {
+            $.ajax({
+                url: "<?php echo base_url()?>index.php/Response_Ajax/editar_proveedor",
+                type: "POST",
+                data:{
+                    id:id,
+                    razon_social:razon_social,
+                    telefono:telefono,
+                    correo:correo,
+                    direccion:direccion,
+                    cuil:cuil,
+                    fecha_alta:fecha_alta,
+                    ingresos_brutos:ingresos_brutos,
+                    localidad:localidad,
+                    localidad2:localidad2,
+                },
+                success: function(data)
+                {
+                    data= JSON.parse(data);
+                    
+                    if(data > 0)
+                    {
+                        location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/abm_proveedores";
+                    }
+                    else
+                    {
+                        alert("No se ha podido editar");
+                    }
+                },
+                error: function(event){alert(event.responseText);
+                },
+            }); 
+        }
+    }
+    
+    function gestionar_errores_agregar()
+    {
+        var razon_social= $("#razon_social_agregar_proveedor").val();
+        var telefono = $("#telefono_agregar_proveedor").val();
+        var correo = $("#correo_agregar_proveedor").val();
+        var direccion = $("#direccion_agregar_proveedor").val();
+        var cuil = $("#cuil_agregar_proveedor").val();
         var fecha_alta = $("#fecha_alta_agregar_proveedor").val();
         
         
-
+        if(razon_social == ""){activar_error("razon_social_agregar_proveedor");}
+        else{desactivar_error("razon_social_agregar_proveedor");}
+        
+        if(telefono == "" || isNaN(telefono)){activar_error("telefono_agregar_proveedor");}
+        else{desactivar_error("telefono_agregar_proveedor");}
+        
+        if(!validarEmail(correo)){activar_error("correo_agregar_proveedor");}
+        else{desactivar_error("correo_agregar_proveedor");}
+        
+        if(direccion == ""){activar_error("direccion_agregar_proveedor");}
+        else{desactivar_error("direccion_agregar_proveedor");}
+        
+        if(cuil == "" || !isNaN(cuil)){activar_error("cuil_agregar_proveedor");}
+        else{desactivar_error("cuil_agregar_proveedor");}
+        
+        if(fecha_alta == ""){activar_error("fecha_alta_agregar_proveedor");}
+        else{desactivar_error("fecha_alta_agregar_proveedor");}
     }
+    
     function baja_proveedor(id)
     {
-        
         $.ajax({
             url: "<?php echo base_url()?>index.php/Response_Ajax/baja_proveedor",
             type: "POST",
@@ -324,156 +489,38 @@
                 },
                 error: function(event){alert(event.responseText);
                 },
-            });    
+        });    
     }
     
     
-    function abrir_modal_editar_pedido(numero,fecha,fecha_entrega,cliente,estado)
+    function gestionar_errores_editar()
     {
-        $("#numero_editar_pedido").val(numero);
-        $("#fecha_editar_pedido").val(fecha);
-        $("#fecha_entrega_editar_pedido").val(fecha_entrega);
-        $("#cliente_editar_pedido").val(cliente);
-        $("#estado_editar_pedido").val(estado);
+        var razon_social= $("#razon_social_editar_proveedor").val();
+        var telefono = $("#telefono_editar_proveedor").val();
+        var correo = $("#correo_editar_proveedor").val();
+        var direccion = $("#direccion_editar_proveedor").val();
+        var cuil = $("#cuil_editar_proveedor").val();
+        var fecha_alta = $("#fecha_alta_editar_proveedor").val();
         
-        $("#modal_editar_pedido").modal("show");
+        
+        if(razon_social == ""){activar_error("razon_social_editar_proveedor");}
+        else{desactivar_error("razon_social_editar_proveedor");}
+        
+        if(telefono == "" || isNaN(telefono)){activar_error("telefono_editar_proveedor");}
+        else{desactivar_error("telefono_editar_proveedor");}
+        
+        if(!validarEmail(correo)){activar_error("correo_editar_proveedor");}
+        else{desactivar_error("correo_editar_proveedor");}
+        
+        if(direccion == ""){activar_error("direccion_editar_proveedor");}
+        else{desactivar_error("direccion_editar_proveedor");}
+        
+        if(cuil == "" || isNaN(cuil)){activar_error("cuil_editar_proveedor");}
+        else{desactivar_error("cuil_editar_proveedor");}
+        
+        if(fecha_alta == ""){activar_error("fecha_alta_editar_proveedor");}
+        else{desactivar_error("fecha_alta_editar_proveedor");}
     }
-    
-    function editar_pedido()
-    {
-        var numero = $("#numero_editar_pedido").val();
-        var fecha = $("#fecha_editar_pedido").val();
-        var fecha_entrega = $("#fecha_entrega_editar_pedido").val();
-        var cliente = $("#cliente_editar_pedido").val();
-        var cliente2 = $("#cliente2_editar_pedido").val();
-        var estado = $("#estado_editar_pedido").val();
-        
-        if(fecha != "" && fecha_entrega !="" && cliente != "" && estado != "")
-        {
-            $.ajax({
-                url: "<?php echo base_url()?>index.php/Response_Ajax/editar_pedido",
-                type: "POST",
-                data:{
-                    numero:numero,
-                    fecha:fecha,
-                    fecha_entrega:fecha_entrega,
-                    cliente:cliente,
-                    cliente2:cliente2,
-                    estado:estado,
-                 },
-                success: function(data)
-                {
-                    data= JSON.parse(data);
-                    
-                    if(data > 0)
-                    {
-                        location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_pedidos";
-                    }
-                    else
-                    {
-                        alert("No se ha podido editar");
-                    }
-                },
-                error: function(event){alert(event.responseText);
-                },
-            });    
-        }
-        else
-        {
-            gestiona_errores_editar();
-        }
-    }
-    
-    function agregar_pedido()
-    {
-        var fecha = $("#fecha_agregar_pedido").val();
-        var fecha_entrega = $("#fecha_entrega_agregar_pedido").val();
-        var cliente = $("#cliente_agregar_pedido").val();
-        var estado = $("#estado_agregar_pedido").val();
-        
-        if(fecha != "" && fecha_entrega !="" && cliente != "" && estado != "")
-        {
-            $.ajax({
-                url: "<?php echo base_url()?>index.php/Response_Ajax/agregar_pedido",
-                type: "POST",
-                data:{
-                    
-                    fecha:fecha,
-                    fecha_entrega:fecha_entrega,
-                    cliente:cliente,
-                    estado:estado,
-                 },
-                success: function(data)
-                {
-                    data= JSON.parse(data);
-                    
-                    if(data > 0)
-                    {
-                        location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_pedidos";
-                    }
-                    else
-                    {
-                        alert("No se ha podido agregar");
-                    }
-                },
-                error: function(event){alert(event.responseText);
-                },
-            });    
-        }
-        else
-        {
-            gestiona_errores_agregar();
-        }
-    }
-    
-    function gestiona_errores_agregar()
-    {
-        
-        var fecha = $("#fecha_agregar_pedido").val();
-        var fecha_entrega = $("#fecha_entrega_agregar_pedido").val();
-        var cliente = $("#cliente_agregar_pedido").val();
-        var estado = $("#estado_agregar_pedido").val();
-        
-        if(fecha==""){activar_error("fecha_agregar_pedido");}
-        else{desactivar_error("fecha_agregar_pedido");}
-        
-        if(fecha_entrega==""){activar_error("fecha_entrega_agregar_pedido");}
-        else{desactivar_error("fecha_entrega_agregar_pedido");}
-        
-        
-        if(cliente==""){activar_error("cliente_agregar_pedido");}
-        else{desactivar_error("cliente_agregar_pedido");}
-        
-        if(estado==""){activar_error("estado_agregar_pedido");}
-        else{desactivar_error("estado_agregar_pedido");}
-        
-        
-    }
-    
-    
-    function gestiona_errores_editar()
-    {
-        
-        var fecha = $("#fecha_editar_pedido").val();
-        var fecha_entrega = $("#fecha_entrega_editar_pedido").val();
-        var cliente = $("#cliente_editar_pedido").val();
-        var estado = $("#estado_editar_pedido").val();
-        
-        if(fecha==""){activar_error("fecha_editar_pedido");}
-        else{desactivar_error("fecha_editar_pedido");}
-        
-        if(fecha_entrega==""){activar_error("fecha_entrega_editar_pedido");}
-        else{desactivar_error("fecha_entrega_editar_pedido");}
-        
-        if(cliente==""){activar_error("cliente_editar_pedido");}
-        else{desactivar_error("cliente_editar_pedido");}
-        
-        if(estado==""){activar_error("estado_editar_pedido");}
-        else{desactivar_error("estado_editar_pedido");}
-        
-        
-    }
-
     
     ///
     

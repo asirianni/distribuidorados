@@ -894,11 +894,8 @@ class MY_Controller extends CI_Controller
         
         if($permiso)
         {
-            $this->load->model("Registro_de_pedidos_model");
-            $this->load->model("Registro_de_clientes_model");
-            
             $this->load->model("Compras_model");
-            
+            $this->load->model("Localidades_model");
             
             $output["css"]=$this->adminlte->get_css_datatables();
             $output["css"].=$this->adminlte->get_css_select2();
@@ -914,9 +911,8 @@ class MY_Controller extends CI_Controller
             
             $output["listado_proveedores"]=$this->Compras_model->get_proveedores();
             
-            $output["listado_pedidos"]=$this->Registro_de_pedidos_model->get_listado_pedidos();
             $output["controller_usuario"]=$this->controller_usuario;
-            $output["lista_clientes"]=$this->Registro_de_clientes_model->get_clientes_no_suspendidos();
+            $output["listado_localidades"]=$this->Localidades_model->get_localidades();
             $this->load->view("back/modulos/compras/abm_proveedores",$output);
         }
         else
@@ -925,7 +921,57 @@ class MY_Controller extends CI_Controller
         }
     }
     
+    public function factura_compra()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(5);
+        
+        if($permiso)
+        {
+            $this->load->model("Registro_de_clientes_model");
+            $this->load->model("Localidades_model");
+            $this->load->model("Facturacion_model");
+            $this->load->model("Stock_productos_model");
+            
+            
+            $this->load->model("Compras_model");
+            
+            
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["css"].=$this->adminlte->get_css_datetimepicker();
+            $output["js"]=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["js"].=$this->adminlte->get_js_datetimepicker();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            
+            $output["controller_usuario"]=$this->controller_usuario;
+            
+            $output["listado_proveedores"]=$this->Compras_model->get_proveedores();
+            
+            $output["lista_estados_cliente"]=$this->Registro_de_clientes_model->get_estados_clientes();
+            $output["lista_tipos_inscripciones"]=$this->Registro_de_clientes_model->get_tipo_inscripciones();
+            $output["listado_localidades"]=$this->Localidades_model->get_localidades();
+            $output["listado_de_descuentos"]=$this->Registro_de_clientes_model->get_descuentos();
+            $output["condiciones_de_venta"]=$this->Facturacion_model->get_condiciones_de_venta();
+            $output["puntos_de_venta"]=$this->Facturacion_model->get_puntos_de_venta();
+            $output["tipos_factura"]=$this->Facturacion_model->get_tipos_factura();
+            $output["numero_proximo"]=$this->Facturacion_model->get_proximo_numero_factura();
+            $output["controller_usuario"]=$this->controller_usuario;
+            
+            $this->load->view("back/modulos/compras/factura_compra",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
     // FIN MODULO COMPRAS
+    
+    
     public function abm_configuracion_empresa()
     {
         $permiso= $this->funciones_generales->dar_permiso(1);

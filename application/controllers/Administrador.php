@@ -27,6 +27,7 @@ class Administrador extends MY_Controller
             $output["header"]=$this->adminlte->getHeader();
             $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
             $output["footer"]=$this->adminlte->getFooter();
+            $output["controller_usuario"]=$this->controller_usuario;
             $this->load->view("back/admin/escritorio",$output);
         }
         else

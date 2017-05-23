@@ -223,12 +223,8 @@
                     <p>TOTAL: $<span id='total'>0</span></p>
                     <label>CONDICION DE VENTA:</label>
                     <select id="condicion_de_venta">
-                        <?php 
-                            foreach($condiciones_de_venta as $value)
-                            {
-                                echo "<option value='".$value["id"]."'>".$value["condicion"]."</option>";
-                            }
-                        ?>
+                        <option value="1">Contado</option>
+                        <option value="2">Cuenta Corriente</option>
                     </select>
                 </div>
             </div>

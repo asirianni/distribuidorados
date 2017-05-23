@@ -560,5 +560,53 @@ class Response_Ajax extends CI_Controller
             echo json_encode($respuesta);
         }
     }
+    
+    public function agregar_proveedor()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(7))
+        {
+            $razon_social = $this->input->post("razon_social");
+            $telefono = $this->input->post("telefono");
+            $correo = $this->input->post("correo");
+            $direccion = $this->input->post("direccion");
+            $cuil = $this->input->post("cuil");
+            $fecha_alta = $this->input->post("fecha_alta");
+            $estado = "confirmado";
+            $ingresos_brutos = $this->input->post("ingresos_brutos");
+            $localidad= $this->input->post("localidad");
+            
+            $this->load->model("Compras_model");
+            $respuesta = $this->Compras_model->agregar_proveedor($razon_social,$telefono,$correo,$direccion,$cuil,$estado,$fecha_alta,$ingresos_brutos,$localidad);
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_proveedor()
+    {
+        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(7))
+        {
+            $id = $this->input->post("id");
+            $razon_social = $this->input->post("razon_social");
+            $telefono = $this->input->post("telefono");
+            $correo = $this->input->post("correo");
+            $direccion = $this->input->post("direccion");
+            $cuil = $this->input->post("cuil");
+            $fecha_alta = $this->input->post("fecha_alta");
+            $estado = "confirmado";
+            $ingresos_brutos = $this->input->post("ingresos_brutos");
+            
+            $localidad= (int)$this->input->post("localidad");
+            $localidad2= (int)$this->input->post("localidad2");
+            
+            if($localidad2 != 0)
+            {
+                $localidad= $localidad2;
+            }
+            
+            $this->load->model("Compras_model");
+            $respuesta = $this->Compras_model->editar_proveedor($id,$razon_social,$telefono,$correo,$direccion,$cuil,$estado,$fecha_alta,$ingresos_brutos,$localidad);
+            echo json_encode($respuesta);
+        }
+    }
 }
 
