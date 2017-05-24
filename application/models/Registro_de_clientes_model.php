@@ -12,6 +12,13 @@ class Registro_de_clientes_model extends CI_Model
         return $r->result_array();
     }
     
+    public function get_cantidad_clientes_no_suspendidos()
+    {
+        $r = $this->db->query("SELECT count(cliente.id) as numero FROM cliente where cliente.estado <> 3 ");
+        $r = $r->row_array();
+        return (int)$r["numero"];
+    }
+    
     
     
     public function get_cliente($id)

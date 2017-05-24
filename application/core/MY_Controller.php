@@ -896,6 +896,7 @@ class MY_Controller extends CI_Controller
         {
             $this->load->model("Compras_model");
             $this->load->model("Localidades_model");
+            $this->load->model("Registro_de_clientes_model");
             
             $output["css"]=$this->adminlte->get_css_datatables();
             $output["css"].=$this->adminlte->get_css_select2();
@@ -913,6 +914,8 @@ class MY_Controller extends CI_Controller
             
             $output["controller_usuario"]=$this->controller_usuario;
             $output["listado_localidades"]=$this->Localidades_model->get_localidades();
+            $output["lista_tipos_inscripciones"]=$this->Registro_de_clientes_model->get_tipo_inscripciones();
+           
             $this->load->view("back/modulos/compras/abm_proveedores",$output);
         }
         else
@@ -923,7 +926,7 @@ class MY_Controller extends CI_Controller
     
     public function factura_compra()
     {
-        $permiso= $this->funciones_generales->dar_permiso_a_modulo(5);
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(7);
         
         if($permiso)
         {
@@ -961,6 +964,8 @@ class MY_Controller extends CI_Controller
             $output["numero_proximo"]=$this->Facturacion_model->get_proximo_numero_factura();
             $output["controller_usuario"]=$this->controller_usuario;
             
+            $output["lista_productos"]=$this->Stock_productos_model->get_listado_productos();
+            
             $this->load->view("back/modulos/compras/factura_compra",$output);
         }
         else
@@ -969,7 +974,142 @@ class MY_Controller extends CI_Controller
         }
     }
     
+    public function imprimir_factura_compra()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(7);
+        $numero_factura = (int)$this->input->post("numero");
+        
+        if($permiso && $numero_factura != 0)
+        {
+            $this->load->model("Facturacion_model");
+            $this->load->model("Configuracion_empresa_model");
+            
+            $output["logo"]=$this->Configuracion_empresa_model->get_configuracion(3);
+            $output["factura"]=$this->Facturacion_model->get_factura_compra($numero_factura);
+            $output["detalle_factura"]=$this->Facturacion_model->get_detalle_factura_compra($numero_factura);
+            $output["tipo_de_inscripcion"]=$this->Configuracion_empresa_model->get_configuracion(4);
+            $output["cuit"]=$this->Configuracion_empresa_model->get_configuracion(1);
+            $output["ingresos_brutos"]=$this->Configuracion_empresa_model->get_configuracion(2);
+            $output["inicio_actividad"]=$this->Configuracion_empresa_model->get_configuracion(5);
+            
+            
+            $this->load->view("back/modulos/compras/imprimir-factura",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
     // FIN MODULO COMPRAS
+    
+    // COMIENZO MODULO REPORTES
+    
+    public function reporte_de_compra()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            $this->load->model("Reportes_model");
+            
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["css"].=$this->adminlte->get_css_datetimepicker();
+            $output["js"]=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["js"].=$this->adminlte->get_js_datetimepicker();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            
+            
+            $output["listado_reporte_compras"]=$this->Reportes_model->lista_reporte_de_compra();
+            
+            $output["controller_usuario"]=$this->controller_usuario;
+            
+            $this->load->view("back/modulos/reportes/reporte_de_compra",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    public function reporte_de_venta()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            $this->load->model("Facturacion_model");
+            $this->load->model("Registro_de_clientes_model");
+            
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["css"].=$this->adminlte->get_css_datetimepicker();
+            $output["js"]=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["js"].=$this->adminlte->get_js_datetimepicker();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            $output["controller_usuario"]=$this->controller_usuario;
+            $output["listado_clientes"]=$this->Registro_de_clientes_model->get_clientes_no_suspendidos();
+            $output["estados_factura"]=$this->Facturacion_model->get_estados_factura();
+            
+            $output["leyenda_lista"]="Lista de ventas";
+            $output["hasta_consultar"]=Date("Y-m-d");
+            $output["desde_consultar"]=Date("Y-m")."-01";
+            $output["cliente_consultar"]=null;
+            $output["estado_factura_consultar"]=null;
+            
+            if($this->input->post())
+            {
+                $output["leyenda_lista"]="Lista de ventas";
+                $output["hasta_consultar"]=$this->input->post("hasta_consultar");
+                $output["desde_consultar"]=$this->input->post("desde_consultar");
+                $output["cliente_consultar"]=$this->input->post("cliente_consultar");
+                $output["estado_factura_consultar"]=$this->input->post("estado_factura_consultar");
+                
+                $output["listado_facturas"]= $this->Facturacion_model->get_facturas_con_consultas($this->input->post("desde_consultar"),$this->input->post("hasta_consultar"),$this->input->post("cliente_consultar"),$this->input->post("estado_factura_consultar"));
+            }
+            else
+            {
+                $output["listado_facturas"]= $this->Facturacion_model->get_facturas_con_consultas($output["desde_consultar"],$output["hasta_consultar"],$output["cliente_consultar"],$output["estado_factura_consultar"]);
+            }
+            
+            $this->load->view("back/modulos/reportes/reporte_de_ventas",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    function imprimir_lista_facturas()
+    {
+        
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            $hasta=$this->input->post("hasta_imprimir");
+            $desde=$this->input->post("desde_imprimir");
+            $cliente=(int)$this->input->post("cliente_imprimir");
+            $estado=(int)$this->input->post("estado_imprimir");
+            
+            
+            $this->load->model("Facturacion_model");
+            $output["listado_facturas"]= $this->Facturacion_model->get_facturas_con_consultas($desde,$hasta,$cliente,$estado);
+            
+            $this->load->view("back/modulos/reportes/impresor-facturas",$output);
+        }
+    }
+    
+    // FIN MODULO REPORTES
     
     
     public function abm_configuracion_empresa()
@@ -997,6 +1137,16 @@ class MY_Controller extends CI_Controller
         {
             redirect($this->funciones_generales->redireccionar_usuario());
         }
+    }
+    
+    public function generar_excel()
+    {
+        header("Content-type: application/vnd.ms-excel; name='excel'");
+        header("Content-Disposition: filename=Exportacion.xls");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+
+        echo $_POST['datos_a_enviar'];
     }
 }
 

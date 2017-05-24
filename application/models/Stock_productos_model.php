@@ -12,6 +12,12 @@ class Stock_productos_model extends CI_Model
         return $r->result_array();
     }
     
+    public function get_cantidad_productos()
+    {
+        $r = $this->db->query("SELECT count(productos.id) as numero FROM productos");
+        $r = $r->row_array();
+        return (int)$r["numero"];
+    }
     public function get_listado_productos()
     {
         $r = $this->db->query("select productos.id,productos.descripcion,productos.costo,productos.margen_1,productos.lista_1,productos.margen_2,productos.lista_2,productos.margen_3,productos.lista_3,productos.margen_4,productos.lista_4,productos.rubro,productos.stock,productos.punto_critico,productos.unidad_medida,rubros.descripcion as desc_rubro,unidad_medida.descripcion as medida_desc from productos INNER JOIN rubros on rubros.id = productos.rubro INNER JOIN unidad_medida on unidad_medida.id = productos.unidad_medida ");

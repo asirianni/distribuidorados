@@ -94,7 +94,7 @@
                                     <td>".$value["cuil"]."</td> 
                                     <td>".$value["fecha_alta"]."</td> 
                                     <td>
-                                        <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='abrir_modal_editar_proveedor(".$value["id"].",&#34;".$value["razon_social"]."&#34;,".$value["telefono"].",&#34;".$value["correo"]."&#34;,&#34;".$value["direccion"]."&#34;,".$value["cuil"].",&#34;".$value["fecha_alta"]."&#34;,&#34;".$value["ingresos_brutos"]."&#34;,".$value["localidad"].");' ><i class='fa fa-edit'></i></a>
+                                        <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='abrir_modal_editar_proveedor(".$value["id"].",&#34;".$value["razon_social"]."&#34;,".$value["telefono"].",&#34;".$value["correo"]."&#34;,&#34;".$value["direccion"]."&#34;,".$value["cuil"].",&#34;".$value["fecha_alta"]."&#34;,&#34;".$value["ingresos_brutos"]."&#34;,".$value["localidad"].",".$value["tipo_inscripcion"].");' ><i class='fa fa-edit'></i></a>
                                         <button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Eliminar' onClick='baja_proveedor(".$value["id"].")'><i class='fa fa-close'></i></button>
                                     </td>    
                                 </tr>";
@@ -179,6 +179,17 @@
                         <label for="fecha_alta_agregar_proveedor">Fecha de alta: </label>
                         <input class="form-control datetimepicker" type="text" id="fecha_alta_agregar_proveedor" value="<?php echo Date("Y-m-d")?>"/>
                     </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Tipo de inscripcion</label>
+                    <select class="form-control" id="inscripcion_agregar_proveedor">
+                        <?php 
+                            foreach($lista_tipos_inscripciones as $value)
+                            {
+                                echo "<option value='".$value["id"]."'>".$value["inscripcion"]."</option>";
+                            }
+                        ?>
+                    </select>
                 </div>
                 
                 <div class="clearfix"></div>
@@ -267,6 +278,18 @@
                     </select>
                 </div>
                 <div class="clearfix"></div>
+                <div class="col-md-6">
+                    <label>Tipo de inscripcion</label>
+                    <select class="form-control" id="inscripcion_editar_proveedor">
+                        <?php 
+                            foreach($lista_tipos_inscripciones as $value)
+                            {
+                                echo "<option value='".$value["id"]."'>".$value["inscripcion"]."</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+                <div class="clearfix"></div>
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
@@ -323,7 +346,7 @@
 
 <script>
     
-    function abrir_modal_editar_proveedor(id,razon_social,telefono,correo,direccion,cuil,fecha_alta,ingresos_brutos,localidad)
+    function abrir_modal_editar_proveedor(id,razon_social,telefono,correo,direccion,cuil,fecha_alta,ingresos_brutos,localidad,tipo_inscripcion)
     {
         $("#id_editar_proveedor").val(id);
         $("#razon_social_editar_proveedor").val(razon_social);
@@ -334,7 +357,7 @@
         $("#fecha_alta_editar_proveedor").val(fecha_alta);
         $("#ingresos_brutos_editar_proveedor").val(ingresos_brutos);
         $("#localidad_editar_proveedor").val(localidad);
-        
+        $("#inscripcion_editar_proveedor").val(tipo_inscripcion);
         $("#modal_editar_proveedor").modal("show");
 
     }
@@ -351,6 +374,7 @@
         var fecha_alta = $("#fecha_alta_agregar_proveedor").val();
         var ingresos_brutos = $("#ingresos_brutos_agregar_proveedor").val();
         var localidad = $("#localidad_agregar_proveedor").val();
+        var tipo_inscripcion =$("#inscripcion_agregar_proveedor").val();
         
         if( razon_social != "" && telefono != "" && !isNaN(telefono) && validarEmail(correo) 
             && direccion != "" && cuil != "" && !isNaN(cuil) && fecha_alta != "")
@@ -367,12 +391,13 @@
                     fecha_alta:fecha_alta,
                     ingresos_brutos:ingresos_brutos,
                     localidad:localidad,
+                    tipo_inscripcion:tipo_inscripcion,
                 },
                 success: function(data)
                 {
                     data= JSON.parse(data);
                     
-                    if(data > 0)
+                    if(data)
                     {
                         location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/abm_proveedores";
                     }
@@ -401,6 +426,7 @@
         var ingresos_brutos = $("#ingresos_brutos_editar_proveedor").val();
         var localidad = $("#localidad_editar_proveedor").val();
         var localidad2 = $("#localidad2_editar_proveedor").val();
+        var tipo_inscripcion = $("#inscripcion_editar_proveedor").val();
         
         if( razon_social != "" && telefono != "" && !isNaN(telefono) && validarEmail(correo) 
             && direccion != "" && cuil != "" && !isNaN(cuil) && fecha_alta != "")
@@ -419,6 +445,7 @@
                     ingresos_brutos:ingresos_brutos,
                     localidad:localidad,
                     localidad2:localidad2,
+                    tipo_inscripcion:tipo_inscripcion,
                 },
                 success: function(data)
                 {
@@ -461,7 +488,7 @@
         if(direccion == ""){activar_error("direccion_agregar_proveedor");}
         else{desactivar_error("direccion_agregar_proveedor");}
         
-        if(cuil == "" || !isNaN(cuil)){activar_error("cuil_agregar_proveedor");}
+        if(cuil == "" || isNaN(cuil)){activar_error("cuil_agregar_proveedor");}
         else{desactivar_error("cuil_agregar_proveedor");}
         
         if(fecha_alta == ""){activar_error("fecha_alta_agregar_proveedor");}

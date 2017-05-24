@@ -64,11 +64,11 @@
               <!-- small box -->
               <div class="small-box bg-aqua">
                 <div class="inner">
-                  <h3>100</h3>
+                  <h3><?php echo $saldo_caja_diaria?></h3>
                   <p>Saldo caja diaria</p>
                 </div>
                 <div class="icon">
-                  <i class="fa fa-building"></i>
+                  <i class="fa fa fa-calculator"></i>
                 </div>
                 <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/caja" class="small-box-footer">Ver mas   <i class="fa fa-arrow-circle-right"></i></a>
               </div>
@@ -77,11 +77,11 @@
               <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
-                  <h3>3</h3>
+                  <h3><?php echo $cantidad_pedidos_pendientes?></h3>
                   <p>Pedidos pendientes</p>
                 </div>
                 <div class="icon">
-                  <i class="fa  fa-hand-stop-o"></i>
+                  <i class="fa fa-edit"></i>
                 </div>
                 <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_pedidos" class="small-box-footer">Ver mas   <i class="fa fa-arrow-circle-right"></i></a>
               </div>
@@ -90,11 +90,11 @@
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3>0</h3>
+                  <h3><?php echo $cantidad_productos?></h3>
                   <p>Productos</p>
                 </div>
                 <div class="icon">
-                  <i class="fa fa-calculator"></i>
+                  <i class="fa fa-cube"></i>
                 </div>
                 <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/stock_de_productos_listado" class="small-box-footer">Ver mas   <i class="fa fa-arrow-circle-right"></i></a>
               </div>
@@ -103,11 +103,11 @@
               <!-- small box -->
               <div class="small-box bg-red">
                 <div class="inner">
-                  <h3>1</h3>
+                  <h3><?php echo $cantidad_clientes ?></h3>
                   <p>Clientes</p>
                 </div>
                 <div class="icon">
-                  <i class="fa fa-sticky-note-o"></i>
+                  <i class="fa fa-users"></i>
                 </div>
                 <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_clientes" class="small-box-footer">Ver mas   <i class="fa fa-arrow-circle-right"></i></a>
               </div>

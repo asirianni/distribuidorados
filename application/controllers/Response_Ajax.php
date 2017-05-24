@@ -14,7 +14,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_producto()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $descripcion= $this->input->post("descripcion");
             $stock= $this->input->post("stock");
@@ -42,7 +42,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_producto()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $id_producto= $this->input->post("id_producto");
             $descripcion= $this->input->post("descripcion");
@@ -83,7 +83,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_precio_vigente()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $id_producto= $this->input->post("id_producto");
             $precio=$this->input->post("precio");
@@ -98,7 +98,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_precio_vigente()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $id= $this->input->post("id");
             $precio= $this->input->post("precio");
@@ -113,7 +113,7 @@ class Response_Ajax extends CI_Controller
     
     public function eliminar_precio_vigente()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $id= $this->input->post("id");
             
@@ -126,7 +126,7 @@ class Response_Ajax extends CI_Controller
     
     public function eliminar_ubicacion_de_producto()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $id= $this->input->post("id");
             
@@ -139,7 +139,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_ubicacion_a_producto()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $id_producto= $this->input->post("id_producto");
             $id_ubicacion= $this->input->post("id_ubicacion");
@@ -153,7 +153,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_rubro()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $id_rubro= $this->input->post("id_rubro");
             $descripcion= $this->input->post("descripcion");
@@ -167,7 +167,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_rubro()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             
             $descripcion= $this->input->post("descripcion");
@@ -181,7 +181,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_ubicacion()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             
             $descripcion= $this->input->post("descripcion");
@@ -195,7 +195,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_ubicacion()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             
             $descripcion= $this->input->post("descripcion");
@@ -210,7 +210,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_unidad_de_medida()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             
             $id= $this->input->post("descripcion");
@@ -227,7 +227,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_unidad_de_medida()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             
             $descripcion= $this->input->post("descripcion");
@@ -243,7 +243,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_movimiento_y_detalle()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(3))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $fecha = $this->input->post("fecha");
             $tipo_comprobante= $this->input->post("tipo_comprobante");
@@ -260,7 +260,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_cliente()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $dni_cuit_cuil= $this->input->post("dni_cuit_cuil");
             $razon_social= $this->input->post("razon_social");
@@ -290,7 +290,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_cliente()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $id= $this->input->post("id");
             $dni_cuit_cuil= $this->input->post("dni_cuit_cuil");
@@ -339,7 +339,7 @@ class Response_Ajax extends CI_Controller
     
     public function get_cliente()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(2))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $this->load->library("Md5");
             $id= $this->input->post("id");
@@ -353,7 +353,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_pedido_y_detalle()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $fecha= $this->input->post("fecha");
             $fecha_entrega= $this->input->post("fecha_entrega");
@@ -372,7 +372,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_pedido_y_detalle()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $numero_pedido= $this->input->post("numero_pedido");
             $fecha= $this->input->post("fecha");
@@ -392,7 +392,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_pedido()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $numero= $this->input->post("numero");
             $fecha= $this->input->post("fecha");
@@ -414,7 +414,7 @@ class Response_Ajax extends CI_Controller
     
     public function editar_configuracion_empresa()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso(1))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $valor= $this->input->post("valor");
             $id= $this->input->post("id");
@@ -427,7 +427,7 @@ class Response_Ajax extends CI_Controller
     
    public function get_pedidos_cliente_pendientes()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $id= $this->input->post("id");
             $this->load->model("Facturacion_model");
@@ -439,7 +439,7 @@ class Response_Ajax extends CI_Controller
     
     public function get_remitos_cliente_pendientes()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $id= $this->input->post("id");
             $this->load->model("Facturacion_model");
@@ -451,7 +451,7 @@ class Response_Ajax extends CI_Controller
     
     public function get_detalle_remito_sin_cobrar()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $numero_remito= $this->input->post("numero_remito");
             $this->load->model("Facturacion_model");
@@ -463,7 +463,7 @@ class Response_Ajax extends CI_Controller
     
     public function get_detalle_pedido_sin_cobrar()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $numero_pedido= $this->input->post("numero_pedido");
             $this->load->model("Facturacion_model");
@@ -475,12 +475,12 @@ class Response_Ajax extends CI_Controller
     
     public function crear_factura()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             
             $punto_venta= $this->input->post("punto_de_venta");
             $fecha= $this->input->post("fecha");
-            $cliente= $this->input->post("cliente");
+            $cliente= $this->input->post("proveedor");
             $remito_o_pedido= $this->input->post("remito_o_pedido");
             $numero_remito_pedido= $this->input->post("numero_remito_pedido");
             $tipo_factura= $this->input->post("tipo_factura");
@@ -493,7 +493,32 @@ class Response_Ajax extends CI_Controller
             $total= $this->input->post("total");
             
             $this->load->model("Facturacion_model");
-            $respuesta = $this->Facturacion_model->crear_factura($punto_venta,$fecha,$cliente,$remito_o_pedido,$numero_remito_pedido,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle);
+            $respuesta = $this->Facturacion_model->crear_factura($punto_venta,$fecha,$proveedor,$remito_o_pedido,$numero_remito_pedido,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle);
+            
+            echo json_encode($respuesta);
+        }
+    }
+    
+    
+    public function crear_factura_compra()
+    {
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
+        {
+            
+            $punto_venta= $this->input->post("punto_de_venta");
+            $fecha= $this->input->post("fecha");
+            $proveedor= $this->input->post("proveedor");
+            $tipo_factura= $this->input->post("tipo_factura");
+            $condicion_venta= $this->input->post("condicion_venta");
+            $estado= 1;
+            $detalle= $this->input->post("detalle");
+            $descuento_general= $this->input->post("descuento_general");
+            
+            
+            $total= $this->input->post("total");
+            
+            $this->load->model("Facturacion_model");
+            $respuesta = $this->Facturacion_model->crear_factura_compra($punto_venta,$fecha,$proveedor,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle);
             
             echo json_encode($respuesta);
         }
@@ -501,7 +526,7 @@ class Response_Ajax extends CI_Controller
     
     public function get_listado_productos_segun_usuario()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(4))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $this->load->model("Registro_de_clientes_model");
             $this->load->model("Registro_de_pedidos_model");
@@ -518,7 +543,7 @@ class Response_Ajax extends CI_Controller
     
     public function eliminar_movimiento()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(5))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $this->load->model("Movimiento_caja_model");
             $this->load->model("Caja_model");
@@ -552,7 +577,7 @@ class Response_Ajax extends CI_Controller
     
     public function baja_proveedor()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(7))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $id= $this->input->post("id");
             $this->load->model("Compras_model");
@@ -563,7 +588,7 @@ class Response_Ajax extends CI_Controller
     
     public function agregar_proveedor()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(7))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $razon_social = $this->input->post("razon_social");
             $telefono = $this->input->post("telefono");
@@ -574,16 +599,17 @@ class Response_Ajax extends CI_Controller
             $estado = "confirmado";
             $ingresos_brutos = $this->input->post("ingresos_brutos");
             $localidad= $this->input->post("localidad");
+            $tipo_inscripcion= $this->input->post("tipo_inscripcion");
             
             $this->load->model("Compras_model");
-            $respuesta = $this->Compras_model->agregar_proveedor($razon_social,$telefono,$correo,$direccion,$cuil,$estado,$fecha_alta,$ingresos_brutos,$localidad);
+            $respuesta = $this->Compras_model->agregar_proveedor($razon_social,$telefono,$correo,$direccion,$cuil,$estado,$fecha_alta,$ingresos_brutos,$localidad,$tipo_inscripcion);
             echo json_encode($respuesta);
         }
     }
     
     public function editar_proveedor()
     {
-        if($this->input->is_ajax_request() && $this->function_general->dar_permiso_a_modulo(7))
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             $id = $this->input->post("id");
             $razon_social = $this->input->post("razon_social");
@@ -592,6 +618,7 @@ class Response_Ajax extends CI_Controller
             $direccion = $this->input->post("direccion");
             $cuil = $this->input->post("cuil");
             $fecha_alta = $this->input->post("fecha_alta");
+            $tipo_inscripcion= $this->input->post("tipo_inscripcion");
             $estado = "confirmado";
             $ingresos_brutos = $this->input->post("ingresos_brutos");
             
@@ -604,7 +631,7 @@ class Response_Ajax extends CI_Controller
             }
             
             $this->load->model("Compras_model");
-            $respuesta = $this->Compras_model->editar_proveedor($id,$razon_social,$telefono,$correo,$direccion,$cuil,$estado,$fecha_alta,$ingresos_brutos,$localidad);
+            $respuesta = $this->Compras_model->editar_proveedor($id,$razon_social,$telefono,$correo,$direccion,$cuil,$estado,$fecha_alta,$ingresos_brutos,$localidad,$tipo_inscripcion);
             echo json_encode($respuesta);
         }
     }

@@ -21,6 +21,11 @@ class Administrador extends MY_Controller
     {
         if($this->funciones_generales->dar_permiso(1))
         {
+            $this->load->model("Stock_productos_model");
+            $this->load->model("Registro_de_clientes_model");
+            $this->load->model("Caja_model");
+            $this->load->model("Registro_de_pedidos_model");
+            
             $output["css"]="";
             $output["js"]="";
             $output["menu"]=$this->adminlte->getMenu();
@@ -28,6 +33,15 @@ class Administrador extends MY_Controller
             $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
             $output["footer"]=$this->adminlte->getFooter();
             $output["controller_usuario"]=$this->controller_usuario;
+            
+            $output["cantidad_productos"]= $this->Stock_productos_model->get_cantidad_productos();
+            $output["cantidad_clientes"]= $this->Registro_de_clientes_model->get_cantidad_clientes_no_suspendidos();
+            
+            $saldo = $this->Caja_model->obtener_caja(Date("Y-m-d"));
+            $saldo= $saldo["saldo"];
+            
+            $output["saldo_caja_diaria"]=(float)$saldo;
+            $output["cantidad_pedidos_pendientes"]= $this->Registro_de_pedidos_model->get_cantidad_pedidos_pendientes();
             $this->load->view("back/admin/escritorio",$output);
         }
         else

@@ -6,6 +6,14 @@ class Registro_de_pedidos_model extends CI_Model
         parent::__construct();
     }
     
+    
+    public function get_cantidad_pedidos_pendientes()
+    {
+        $r = $this->db->query("select count(pedidos.numero) as numero from pedidos where pedidos.estado = 'pendiente'");
+        $r = $r->row_array();
+        return (int)$r["numero"];
+    }
+    
     public function get_listado_pedidos()
     {
         $r = $this->db->query("SELECT pedidos.*, cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.descuento_gral FROM pedidos INNER JOIN cliente on cliente.id = pedidos.cliente ");
