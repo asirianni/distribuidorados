@@ -83,10 +83,6 @@
             <div class="col-md-12 marco">
                 <div class="col-md-4">
                     <div class="col-md-12">
-                            <button class="btn btn-primary disabled" id="btn_asociar_remito">ASOCIAR<br/>REMITO</button>
-                            <button class="btn btn-danger disabled" id="btn_asociar_pedido">ASOCIAR<br/>PEDIDO</button>
-                            <button class="btn btn-warning disabled" id="btn_guardar" onclick="abrir_modal_guardar();"><i class="fa fa-save"></i><br/>GUARDAR</button>
-
                     </div>
                 </div>
                
@@ -185,7 +181,10 @@
         <div class="col-md-12">
             <div class="col-md-12 marco">
                 <div class="col-md-12 fila">
-                    <span><strong>DETALLES DE PRODUCTO</strong></span> <button class="btn btn-warning disabled" id='btn_agregar_producto_detalle' onClick="ver_modal_lista_productos()"><i class="fa fa-plus"></i>Agregar</button>
+                    <span><strong>DETALLES DE PRODUCTO</strong></span> 
+                    <button class="btn btn-warning disabled" id='btn_agregar_producto_detalle' onClick="ver_modal_lista_productos()"><i class="fa fa-plus"></i>Agregar</button>
+                    <button class="btn btn-danger disabled" id="btn_asociar_pedido">ASOCIAR PEDIDO</button>
+                            
                 </div>
                 <div class="col-md-12 fila">
                     <div class="box">
@@ -226,6 +225,9 @@
                         <option value="1">Contado</option>
                         <option value="2">Cuenta Corriente</option>
                     </select>
+                    <p style="text-align: center;margin-top: 20px;">
+                        <button class="btn btn-warning disabled" id="btn_guardar" onclick="abrir_modal_guardar();"><i class="fa fa-save"></i><br/>GUARDAR</button>
+                    </p>
                 </div>
             </div>
         </div>

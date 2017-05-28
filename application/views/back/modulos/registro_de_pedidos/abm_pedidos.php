@@ -59,12 +59,22 @@
 
     <!-- Main content -->
     <section class="content">
+        <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/generar_excel" method="post" target="_blank" id="FormularioExportacion">
+            <input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />
+        </form>
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_pedidos_agregar" class="btn btn-danger" ><i class='fa fa-plus'></i> Agregar Pedido</a>
+                    <div class="col-md-6">
+                        <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_pedidos_agregar" class="btn btn-danger" ><i class='fa fa-plus'></i> Agregar Pedido</a>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pull-right">
+                            <button id="btn_exportar_excel" type="button" class="btn btn-success botonExcel" onclick="exportar_excel()"><i class="fa fa-file-excel-o"></i> Exportar</button>
+                        </div>
+                    </div>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="tabla_listado" class="table table-bordered">
@@ -300,6 +310,17 @@
     echo $js;
   ?>
 
+<script>
+    $(document).ready(function()
+    {
+        $("#btn_exportar_excel").click(function()
+        {
+            $("#datos_a_enviar").val( $("<div>").append( $("#tabla_listado").eq(0).clone()).html());
+            $("#FormularioExportacion").submit();
+        });
+    });
+  </script>
+  
 <script>
     
     

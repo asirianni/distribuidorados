@@ -480,11 +480,11 @@ class Response_Ajax extends CI_Controller
             
             $punto_venta= $this->input->post("punto_de_venta");
             $fecha= $this->input->post("fecha");
-            $cliente= $this->input->post("proveedor");
+            $cliente= $this->input->post("cliente");
             $remito_o_pedido= $this->input->post("remito_o_pedido");
             $numero_remito_pedido= $this->input->post("numero_remito_pedido");
             $tipo_factura= $this->input->post("tipo_factura");
-            $condicion_venta= $this->input->post("condicion_venta");
+            $condicion_venta= (int)$this->input->post("condicion_venta");
             $estado= 1;
             $detalle= $this->input->post("detalle");
             $descuento_general= $this->input->post("descuento_general");
@@ -493,7 +493,13 @@ class Response_Ajax extends CI_Controller
             $total= $this->input->post("total");
             
             $this->load->model("Facturacion_model");
-            $respuesta = $this->Facturacion_model->crear_factura($punto_venta,$fecha,$proveedor,$remito_o_pedido,$numero_remito_pedido,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle);
+            $respuesta = $this->Facturacion_model->crear_factura($punto_venta,$fecha,$cliente,$remito_o_pedido,$numero_remito_pedido,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle);
+            
+            
+            if($condicion_venta == 1) // SI ES DE CONTADO
+            {
+                
+            }
             
             echo json_encode($respuesta);
         }

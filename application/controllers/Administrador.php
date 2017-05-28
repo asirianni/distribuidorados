@@ -25,6 +25,7 @@ class Administrador extends MY_Controller
             $this->load->model("Registro_de_clientes_model");
             $this->load->model("Caja_model");
             $this->load->model("Registro_de_pedidos_model");
+            $this->load->model("Facturacion_model");
             
             $output["css"]="";
             $output["js"]="";
@@ -39,6 +40,20 @@ class Administrador extends MY_Controller
             
             $saldo = $this->Caja_model->obtener_caja(Date("Y-m-d"));
             $saldo= $saldo["saldo"];
+            
+            
+            $output["enero"]= $this->Facturacion_model->get_suma_totales_por_mes(1);
+            $output["febrero"]= $this->Facturacion_model->get_suma_totales_por_mes(2);
+            $output["marzo"]= $this->Facturacion_model->get_suma_totales_por_mes(3);
+            $output["abril"]= $this->Facturacion_model->get_suma_totales_por_mes(4);
+            $output["mayo"]= $this->Facturacion_model->get_suma_totales_por_mes(5);
+            $output["junio"]= $this->Facturacion_model->get_suma_totales_por_mes(6);
+            $output["julio"]= $this->Facturacion_model->get_suma_totales_por_mes(7);
+            $output["agosto"]= $this->Facturacion_model->get_suma_totales_por_mes(8);
+            $output["septiembre"]= $this->Facturacion_model->get_suma_totales_por_mes(9);
+            $output["octubre"]= $this->Facturacion_model->get_suma_totales_por_mes(10);
+            $output["noviembre"]= $this->Facturacion_model->get_suma_totales_por_mes(11);
+            $output["diciembre"]= $this->Facturacion_model->get_suma_totales_por_mes(12);
             
             $output["saldo_caja_diaria"]=(float)$saldo;
             $output["cantidad_pedidos_pendientes"]= $this->Registro_de_pedidos_model->get_cantidad_pedidos_pendientes();

@@ -102,7 +102,6 @@
                                    <td>".$value["medida_desc"]."</td>-->
                                     <td>
                                         <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_producto(".$value["id"].",&#34;".$value["descripcion"]."&#34;,".$value["stock"].",".$value["punto_critico"].",".$value["rubro"].",".$value["unidad_medida"].",".$value["costo"].",".$value["margen_1"].",".$value["lista_1"].",".$value["margen_2"].",".$value["lista_2"].",".$value["margen_3"].",".$value["lista_3"].",".$value["margen_4"].",".$value["lista_4"].")'><i class='fa fa-edit'></i></button>
-                                        <a href='".base_url()."index.php/".$controller_usuario."/precios_vigentes_de_producto/".$value["id"]."' class='btn btn-primary' data-toggle='tooltip' title='' data-original-title='Precios vigentes'><i class='fa fa-dollar'></i></a>
                                         <a href='".base_url()."index.php/".$controller_usuario."/ubicaciones_de_producto/".$value["id"]."' class='btn btn-default' data-toggle='tooltip' title='' data-original-title='Ubicaciones'><i class='fa fa-send-o'></i></a>
                                     </td>    
                                 </tr>";
@@ -529,10 +528,10 @@
             $("#margen_4_agregar").val(0);
         };
         
-        var lista_1_agregar = costo*margen_1_agregar;
-        var lista_2_agregar = costo*margen_2_agregar;
-        var lista_3_agregar = costo*margen_3_agregar;
-        var lista_4_agregar = costo*margen_4_agregar;
+        var lista_1_agregar = ((costo*margen_1_agregar) / 100)+ costo;
+        var lista_2_agregar = ((costo*margen_2_agregar) / 100)+ costo;
+        var lista_3_agregar = ((costo*margen_3_agregar) / 100)+ costo;
+        var lista_4_agregar = ((costo*margen_4_agregar) / 100)+ costo;
         
         $("#lista_1_agregar").val(lista_1_agregar);
         $("#lista_2_agregar").val(lista_2_agregar);
@@ -579,10 +578,10 @@
             $("#margen_4_editar").val(0);
         };
         
-        var lista_1_editar = costo*margen_1_editar;
-        var lista_2_editar = costo*margen_2_editar;
-        var lista_3_editar = costo*margen_3_editar;
-        var lista_4_editar = costo*margen_4_editar;
+        var lista_1_editar = ((costo*margen_1_editar) / 100)+ costo;
+        var lista_2_editar = ((costo*margen_2_editar) / 100)+ costo;
+        var lista_3_editar = ((costo*margen_3_editar) / 100)+ costo;
+        var lista_4_editar = ((costo*margen_4_editar) / 100)+ costo;
         
         $("#lista_1_editar").val(lista_1_editar);
         $("#lista_2_editar").val(lista_2_editar);

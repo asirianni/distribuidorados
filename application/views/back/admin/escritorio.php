@@ -114,13 +114,34 @@
             </div><!-- ./col -->
     </div><!-- /.row -->
     
+    
     <div class="row">
-        <div class="col-md-12">
-             <!-- Calendar -->
+            <!-- Left col -->
+            <section class="col-lg-7 connectedSortable">
+              <!-- Custom tabs (Charts with tabs)-->
+              <!--<div class="nav-tabs-custom">
+                <ul class="nav nav-tabs pull-right">
+                  <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
+                  <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
+                  <li class="pull-left header"><i class="fa fa-inbox"></i> Estadisticas</li>
+                </ul>
+                <div class="tab-content no-padding">
+                  <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
+                  <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+                </div>
+              </div>--><!-- /.nav-tabs-custom -->
+              <div id="myfirstchart" style="height: 250px;"></div>
+
+
+            </section><!-- /.Left col -->
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-5 connectedSortable">
+
+              <!-- Calendar -->
               <div class="box box-solid bg-green-gradient">
                 <div class="box-header">
                   <i class="fa fa-calendar"></i>
-                  <h3 class="box-title">Calendar</h3>
+                  <h3 class="box-title">Calendario</h3>
                   <!-- tools box -->
                   <div class="pull-right box-tools">
                     <!-- button with a dropdown -->
@@ -144,47 +165,17 @@
                 <div class="box-footer text-black">
                   <div class="row">
                     <div class="col-sm-6">
-                      <!-- Progress bars -->
-                      <div class="clearfix">
-                        <span class="pull-left">Task #1</span>
-                        <small class="pull-right">90%</small>
-                      </div>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
-                      </div>
-
-                      <div class="clearfix">
-                        <span class="pull-left">Task #2</span>
-                        <small class="pull-right">70%</small>
-                      </div>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
-                      </div>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                      <div class="clearfix">
-                        <span class="pull-left">Task #3</span>
-                        <small class="pull-right">60%</small>
-                      </div>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
-                      </div>
-
-                      <div class="clearfix">
-                        <span class="pull-left">Task #4</span>
-                        <small class="pull-right">40%</small>
-                      </div>
-                      <div class="progress xs">
-                        <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
-                      </div>
+                      
                     </div><!-- /.col -->
                   </div><!-- /.row -->
                 </div>
               </div><!-- /.box -->
 
-        </div>
-    </div>
-
+            </section><!-- right col -->
+          </div><!-- /.row (main row) -->
+    </section>
+    <!-- /.content -->
+  </div>
     </section>
     <!-- /.content -->
   </div>
@@ -239,6 +230,61 @@
 <?php
     echo $js;
 ?>
+
+<script>
+    new Morris.Line({
+              // ID of the element in which to draw the chart.
+//              element: 'myfirstchart',
+              // Chart data records -- each entry in this array corresponds to a point on
+              // the chart.
+//              data: [
+//                { y: '751', value: 1 },
+//                { y: '40', value: 2 },
+//                { y: '50', value: 3 },
+//                { y: '60', value: 4 },
+//                { y: '70', value:5 },
+//                { y: '80', value:6 },
+//                { y: '90', value:7 },
+//                { y: '100', value:8 },
+//                { y: '200', value:9 },
+//                { y: '300', value:10 },
+//                { y: '400', value:11 },
+//                { y: '<?php //echo $total_facturas?>', value:12 }
+//              ],
+//              // The name of the data record attribute that contains x-values.
+//              xkey: 'y',
+//              // A list of names of data record attributes that contain y-values.
+//              ykeys: ['value'],
+//              // Labels for the ykeys -- will be displayed when you hover over the
+//              // chart.
+//              labels: ['Value'],
+//              parseTime: false,
+//              
+//              ymax: <?php //echo $total_facturas_enero?>,
+              
+              element: 'myfirstchart',
+            data: [
+            { y: 'enero', a: <?php echo $enero?> },
+            { y: 'febrero', a: <?php echo $febrero?> },
+            { y: 'marzo', a: <?php echo $marzo?>},
+            { y: 'abril', a: <?php echo $abril?> },
+            { y: 'mayo', a: <?php echo $mayo?>},
+            { y: 'junio', a: <?php echo $junio?>},
+            { y: 'julio', a: <?php echo $julio?>},
+            { y: 'agosto', a: <?php echo $agosto?>},
+            { y: 'septiembre', a: <?php echo $septiembre?>},
+            { y: 'octubre', a: <?php echo $octubre?>},
+            { y: 'noviembre', a: <?php echo $noviembre?>},
+            { y: 'diciembre', a: <?php echo $diciembre?>}
+          ],
+          xkey: 'y',
+          ykeys: ['a'],
+          labels: ['Ventas'], 
+          parseTime: false,
+          resize: true
+              
+            });
+</script>
 </body>
 </html>
 

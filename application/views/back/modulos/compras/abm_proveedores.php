@@ -151,16 +151,22 @@
                         <input class="form-control " type="text" id="direccion_agregar_proveedor"/>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="cuil_agregar_proveedor">cuil: </label>
                         <input class="form-control " type="text" id="cuil_agregar_proveedor"/>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="ingresos_brutos_agregar_proveedor">Ingresos Brutos: </label>
                         <input class="form-control" type="text" id="ingresos_brutos_agregar_proveedor"/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fecha_alta_agregar_proveedor">Fecha de alta: </label>
+                        <input class="form-control datetimepicker" type="text" id="fecha_alta_agregar_proveedor" value="<?php echo Date("Y-m-d")?>"/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -173,12 +179,6 @@
                             }
                         ?>
                     </select>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="fecha_alta_agregar_proveedor">Fecha de alta: </label>
-                        <input class="form-control datetimepicker" type="text" id="fecha_alta_agregar_proveedor" value="<?php echo Date("Y-m-d")?>"/>
-                    </div>
                 </div>
                 <div class="col-md-6">
                     <label>Tipo de inscripcion</label>
