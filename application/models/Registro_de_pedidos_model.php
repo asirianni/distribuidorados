@@ -20,9 +20,40 @@ class Registro_de_pedidos_model extends CI_Model
         return $r->result_array();
     }
     
+    public function get_fecha_min()
+    {
+        $r = $this->db->query("select min(fecha) as fecha from pedidos");
+        $r=$r->row_array();
+        return $r["fecha"];
+    }
+    
+    public function get_fecha_max()
+    {
+        $r = $this->db->query("select max(fecha) as fecha from pedidos");
+        $r=$r->row_array();
+        return $r["fecha"];
+    }
+    
+    public function get_listado_pedidos_consulta($fecha_desde,$fecha_hasta,$cliente,$estado)
+    {
+        $sql= "SELECT pedidos.*, cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.descuento_gral FROM pedidos INNER JOIN cliente on cliente.id = pedidos.cliente where pedidos.fecha >= '".$fecha_desde."' and pedidos.fecha <= '".$fecha_hasta."'";
+        
+        if((int)$cliente != 0)
+        {
+            $sql.=" and pedidos.cliente = $cliente";
+        }
+        
+        if($estado != "todos")
+        {
+            $sql.=" and pedidos.estado = '".$estado."'";
+        }
+        $r = $this->db->query($sql);
+        return $r->result_array();
+    }
+    
     public function get_pedido($numero_pedido)
     {
-        $r = $this->db->query("SELECT pedidos.*, cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.descuento_gral FROM pedidos INNER JOIN cliente on cliente.id = pedidos.cliente where pedidos.numero = $numero_pedido");
+        $r = $this->db->query("SELECT pedidos.*, cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.descuento_gral, cliente.lista FROM pedidos INNER JOIN cliente on cliente.id = pedidos.cliente where pedidos.numero = $numero_pedido");
         return $r->row_array();
     }
     
@@ -53,15 +84,16 @@ class Registro_de_pedidos_model extends CI_Model
         {
             $numero = $this->db->query("SELECT max(pedidos.numero) as numero FROM pedidos");
             $numero= $numero->row_array();
-            $numero= 1 + (int)$numero["numero"];
+            $numero= (int)$numero["numero"];
             
             for($i=0; $i < count($detalle);$i++)
             {
                 $datos = Array(
                     "num_pedido"=>$numero,
-                    "cod_producto"=>$detalle[$i][0],
-                    "cantidad"=>$detalle[$i][1],
-                    "precio"=>$detalle[$i][2],
+                    "cod_producto"=>$detalle[$i]["cod_producto"],
+                    "cantidad"=>$detalle[$i]["cantidad"],
+                    "precio"=>$detalle[$i]["precio"],
+                    "descuento"=>$detalle[$i]["descuento"],
                     "estado"=>"pendiente",
                 );
                 
@@ -72,12 +104,11 @@ class Registro_de_pedidos_model extends CI_Model
         return $respuesta;
     }
     
-    public function editar_pedido_y_detalle($numero_pedido,$fecha,$fecha_entrega,$cliente,$estado,$detalle)
+    public function editar_pedido_y_detalle($numero_pedido,$fecha,$fecha_entrega,$estado,$detalle)
     {
         $datos = Array(
             "fecha"=>$fecha,
             "fecha_entrega"=>$fecha_entrega,
-            "cliente"=>$cliente,
             "estado"=>$estado,
         );
         $this->db->where("numero",$numero_pedido);
@@ -86,14 +117,16 @@ class Registro_de_pedidos_model extends CI_Model
         if($respuesta)
         {
             $this->db->query("delete from pedido_detalle where num_pedido = $numero_pedido");
+           
             for($i=0; $i < count($detalle);$i++)
             {
                 $datos = Array(
                     "num_pedido"=>$numero_pedido,
-                    "cod_producto"=>$detalle[$i][0],
-                    "cantidad"=>$detalle[$i][1],
-                    "precio"=>$detalle[$i][2],
-                    "estado"=>$detalle[$i][3],
+                    "cod_producto"=>$detalle[$i]["cod_producto"],
+                    "cantidad"=>$detalle[$i]["cantidad"],
+                    "precio"=>$detalle[$i]["precio"],
+                    "descuento"=>$detalle[$i]["descuento"],
+                    "estado"=>"pendiente",
                 );
                 
                 $this->db->insert("pedido_detalle",$datos);

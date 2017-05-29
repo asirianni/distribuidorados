@@ -84,8 +84,7 @@
                 <div class="col-md-4">
                     <div class="col-md-12">
                             
-                            <button class="btn btn-warning disabled" id="btn_guardar" onclick="abrir_modal_guardar();"><i class="fa fa-save"></i><br/>GUARDAR</button>
-
+                            
                     </div>
                 </div>
                
@@ -225,6 +224,7 @@
                         <option value="1">Contado</option>
                         <option value="2">Cuenta Corriente</option>
                     </select>
+                    <p style="text-align: center;margin-top: 20px;"><button class="btn btn-warning disabled" id="btn_guardar" onclick="abrir_modal_guardar();"><i class="fa fa-save"></i><br/>GUARDAR</button></p>
                 </div>
             </div>
         </div>

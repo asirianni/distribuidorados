@@ -87,9 +87,12 @@
                             <td>".$value["fecha_registro"]."</td>
                             <td>".$value["desc_tipo"]."</td>
                             <td>
-                                <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_usuario(".$value["id"].")'><i class='fa fa-edit'></i></button>
-                                <a href='".base_url()."index.php/Administrador/administrar_modulos_de_usuario/".$value["id"]."' class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Modulos' onClick='adm_modulos_usuario(".$value["id"].")'><i class='fa fa-cubes'></i></a>
-                            </td>
+                                <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_usuario(".$value["id"].")'><i class='fa fa-edit'></i></button>";
+                                if((int)$value["tipo_usuario"] != 1)
+                                {
+                                    echo "<a href='".base_url()."index.php/Administrador/administrar_modulos_de_usuario/".$value["id"]."' class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Modulos' onClick='adm_modulos_usuario(".$value["id"].")'><i class='fa fa-cubes'></i></a>";
+                                }
+                        echo "</td>
                         </tr>";
                       }?>
                     </tbody>

@@ -111,23 +111,40 @@
                     
                     <!-- TABLA DE PEDIDO DETALLE -->
                     <div class="col-md-12" style="margin-top: 10px;display: none;" id="contenedor_tabla_productos">
-                        <table id="tabla_listado" class="table table-bordered table-hover" >
+                        <button class="btn btn-danger" id="btn_agregar_producto_detalle" onclick="$('#modal_lista_productos').modal('show');"><i class="fa fa-plus"></i> Agregar</button>
+                        <table id="tabla_listado" class="table table-bordered table-hover" style="margin-top: 20px;">
                             <thead>
-                              <tr>
-                                <th>Codigo</th>
-                                <th>Descripcion</th>
-                                <th>Stock</th>
-                                <th>Precio Vigente</th>
-                                <th>Cant Solicitada</th>
-
-                              </tr>
+                                <tr>
+                                    <th style='display: none;'>Codigo</th>
+                                    <th>Descripcion</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Desc</th>
+                                    <th>Subtotal</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
                             </thead>
                             <tbody id="cuerpo_tabla_listado">
                                 
                             </tbody>
                           </table>
+                        <div class="col-md-12" style="padding-right: 22px !important;">
+                            <div class="col-md-6">&nbsp;</div>
+                                <div class="col-md-6 marco-sin-width">
+                                    <div  style="font-size: 18px;font-weight: bold;">
+                                        <div class="col-md-6">
+                                            <p>TOTAL</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>$<span style="font-size:22px;" id='total'>0</span></p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                        </div>
                         <div class="col-md-12" style="text-align: center;">
-                            <button class="btn btn-danger" onClick="agregar_pedido_y_detalle()"><i class='fa fa-save'></i> Guardar Pedido</button>
+                            <button class="btn btn-danger disabled" id="btn_guardar" onClick="agregar_pedido_y_detalle()"><i class='fa fa-save'></i> Guardar Pedido</button>
                         </div>
                     </div>
                     
@@ -148,6 +165,41 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
+
+<div class="modal modal-default" id="modal_lista_productos">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>
+                    Agrege un producto 
+                    <button class="btn btn-danger pull-right" onClick="$('#modal_lista_productos').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tabla_listado_productos" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Codigo</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpo_listado_productos">
+                               
+                                            
+                            </tbody>
+                          </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 <!-- jQuery 2.2.3 -->
 <script src="<?php echo base_url()?>recursos/plugins/jQuery/jquery-2.1.4.min.js"></script>
@@ -196,6 +248,214 @@
 <script>
     
     var productos_cargados = false;
+    var arreglo_detalles = new Array();
+    
+    function agregar_detalle(cod_producto,descripcion,precio)
+    {
+        if(!buscar_codigo_en_arreglo(cod_producto))
+        {
+            var cantidad =1;
+            var descuento = 0;
+            var subtotal=precio;
+            var total=cantidad*subtotal;
+            var arreglo= {"cod_producto":cod_producto,"descripcion":descripcion,"cantidad":cantidad,"precio":precio,"descuento":descuento,"total":total,"subtotal":subtotal};
+            arreglo_detalles.push(arreglo);
+
+            $("#btn_guardar").removeClass("disabled");
+            generar_html_tabla_listado();
+        }
+        else
+        {
+            alert("Producto ya agregado");
+        } 
+    }
+    
+    function buscar_codigo_en_arreglo(cod_producto)
+    {
+        var i=0;
+        var respuesta = false;
+        
+        while( i < arreglo_detalles.length)
+        {
+            if(arreglo_detalles[i] != undefined)
+            {
+                if(arreglo_detalles[i]["cod_producto"] == cod_producto)
+                {
+                    respuesta= true;
+                    i= arreglo_detalles.length;
+                }
+            }
+            i++;
+        }
+        
+        return respuesta;
+    }
+    
+    function get_posicion_codigo_en_arreglo(cod_producto)
+    {
+        var i=0;
+        var valor = -1;
+        
+        while( i < arreglo_detalles.length)
+        {
+            if(arreglo_detalles[i] != undefined)
+            {
+                if(arreglo_detalles[i]["cod_producto"] == cod_producto)
+                {
+                    valor = i;
+                    i= arreglo_detalles.length;
+                }
+            }
+            i++;
+        }
+        
+        return valor;
+    }
+    
+    function cambio_valor(codigo_producto)
+    {
+        var i= get_posicion_codigo_en_arreglo(codigo_producto);
+        
+        var codigo =arreglo_detalles[i]["codigo"];
+        var cod_producto =arreglo_detalles[i]["cod_producto"];
+        var descripcion =arreglo_detalles[i]["descripcion"];
+        
+        var iva =arreglo_detalles[i]["iva"];
+        
+        var cantidad = parseFloat($("#cantidad_"+codigo_producto).val());
+        var precio = parseFloat($("#precio_"+codigo_producto).val());
+        var descuento = parseFloat($("#descuento_"+codigo_producto).val());
+        
+        if(isNaN(cantidad))
+        {
+            cantidad=arreglo_detalles[i]["cantidad"];
+        }
+        if(isNaN(precio))
+        {
+            precio=arreglo_detalles[i]["precio"];
+        }
+        if(isNaN(descuento))
+        {
+            descuento=arreglo_detalles[i]["descuento"];
+        }
+        
+        var descuento_en_pesos= precio * descuento / 100;
+        
+        var subtotal= precio-descuento_en_pesos;
+        var total = subtotal*cantidad;
+        arreglo_detalles[i]["cod_producto"]=cod_producto;
+        arreglo_detalles[i]["codigo"]=codigo;
+        arreglo_detalles[i]["descripcion"]=descripcion;
+        arreglo_detalles[i]["cantidad"]=cantidad;
+        arreglo_detalles[i]["precio"]=precio;
+        arreglo_detalles[i]["descuento"]=descuento;
+        arreglo_detalles[i]["iva"]=iva;
+        arreglo_detalles[i]["subtotal"]=subtotal;
+        arreglo_detalles[i]["total"]=total;
+        arreglo_detalles[i]["cod_producto"]=cod_producto;
+        
+        generar_html_tabla_listado();
+    }
+    
+    function gestiona_errores_agregar()
+    {
+        var fecha = $("#fecha_agregar_pedido").val();
+        var fecha_entrega = $("#fecha_entrega_agregar_pedido").val();
+        var cliente = $("#cliente_agregar_pedido").val();
+        var estado = $("#estado_agregar_pedido").val();
+        
+        if(fecha==""){activar_error("fecha_agregar_pedido");}
+        else{desactivar_error("fecha_agregar_pedido");}
+        
+        if(fecha_entrega==""){activar_error("fecha_entrega_agregar_pedido");}
+        else{desactivar_error("fecha_entrega_agregar_pedido");}
+        
+        
+        if(cliente==""){activar_error("cliente_agregar_pedido");}
+        else{desactivar_error("cliente_agregar_pedido");}
+        
+        if(estado==""){activar_error("estado_agregar_pedido");}
+        else{desactivar_error("estado_agregar_pedido");}
+        
+        if(arreglo_detalles.length <= 0){}
+        else{}
+    }
+    
+    function ccleaner_arreglo_detalle()
+    {
+        var aux=new Array();
+        
+        for(var i=0; i < arreglo_detalles.length;i++)
+        {
+            if(arreglo_detalles[i] != undefined)
+            {
+                aux.push(arreglo_detalles[i]);
+            }
+        }
+        
+        arreglo_detalles=aux;
+        
+    }
+    
+    function eliminar_producto(codigo_producto)
+    {
+        var posicion = get_posicion_codigo_en_arreglo(codigo_producto);
+        
+        delete arreglo_detalles[posicion];
+        ccleaner_arreglo_detalle();
+        
+        if(arreglo_detalles.length <= 0)
+        {
+            $("#btn_guardar").addClass("disabled");
+        }
+        else
+        {
+            $("#btn_guardar").removeClass("disabled");
+        }
+        generar_html_tabla_listado();
+    }
+    
+    
+    function generar_html_tabla_listado()
+    {
+        var html="";
+        
+        var suma_totales = 0;
+        
+        for(var i=0; i < arreglo_detalles.length;i++)
+        {
+            if(arreglo_detalles[i] != undefined)
+            {
+                var codigo =arreglo_detalles[i]["codigo"];
+                var cod_producto =arreglo_detalles[i]["cod_producto"];
+                var descripcion =arreglo_detalles[i]["descripcion"];
+                var cantidad =arreglo_detalles[i]["cantidad"];
+                var precio =arreglo_detalles[i]["precio"];
+                var descuento =arreglo_detalles[i]["descuento"];
+                var subtotal= arreglo_detalles[i]["subtotal"];
+                var total=arreglo_detalles[i]["total"];
+                
+                
+                suma_totales+=total;
+                
+                html+="<tr>";
+                html+="<td style='display: none;'><input type='text' id='codigo_detalle_"+cod_producto+"' value='"+codigo+"'></td>";
+                html+="<td>"+descripcion+"</td>";
+                html+="<td><input type='number' step='0.5' id='cantidad_"+cod_producto+"' value='"+cantidad+"' onChange='cambio_valor("+cod_producto+")'></td>";
+                html+="<td>$<input type='number' step='0.5' id='precio_"+cod_producto+"' value='"+precio+"' onChange='cambio_valor("+cod_producto+")'></td>";
+                html+="<td><input type='number' step='0.5' id='descuento_"+cod_producto+"' value='"+descuento+"' onChange='cambio_valor("+cod_producto+")'>%</td>";
+                html+="<td>$"+subtotal.toFixed(2)+"</td>";
+                html+="<td style='font-weight: bold;' id='total_"+cod_producto+"'>$"+total.toFixed(2)+"</td>";
+                html+="<td><button class='btn btn-danger' onClick='eliminar_producto("+cod_producto+")'><i class='fa fa-close'></i></button></td>";
+                html+="</tr>";
+            }
+        }
+        
+        $("#total").text((suma_totales).toFixed(2));
+        $("#cuerpo_tabla_listado").html(html);
+        
+        
+    }
     
     function cargar_productos()
     {
@@ -229,13 +489,15 @@
                            
                             for(var i=0; i < data.length;i++)
                             {
-                               html+="<tr>";
-                               html+="<td id='id_producto_"+data[i]["id"]+"'>"+data[i]["id"]+"</td>";
-                               html+="<td>"+data[i]["descripcion"]+"</td>";
-                               html+="<td>"+data[i]["stock"]+"</td>";
-                               html+="<td><input type='number'  step='0.5' id='costo_producto_"+data[i]["id"]+"' value='"+data[i]["precio"]+"'/></td>";
-                               html+="<td><input type='number' step='0.5' id='cantidad_producto_"+data[i]["id"]+"' value='0'/></td>";
-                               html+="</tr>";
+                                html+="<tr>";
+                                    html+="<td>"+data[i]["id"]+"</td>";
+                                    html+="<td>"+data[i]["descripcion"]+"</td>";
+                                    html+="<td>"+data[i]["stock"]+"</td>";
+                                    html+="<td>"+data[i]["precio"]+"</td>";
+                                    html+="<td>";
+                                        html+="<button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Agregar' onClick='agregar_detalle("+data[i]["id"]+",&#34;"+data[i]["descripcion"]+"&#34;,"+data[i]["precio"]+")'><i class='fa fa-plus'></i></button>";
+                                    html+="</td>";
+                                html+="</tr>";
                             }    
                            
                            
@@ -245,12 +507,12 @@
                             $("#cliente_agregar_pedido").attr("disabled","");
                             $("#btn_cargar_productos").text("Reiniciar");
                             
-                            $("#cuerpo_tabla_listado").html(html);
+                            $("#cuerpo_listado_productos").html(html);
                             productos_cargados=true;
                             
                             
 
-                             $('#tabla_listado').DataTable({
+                             $('#tabla_listado_productos').DataTable({
                                 "paging": true,
                                 "lengthChange": true,
                                 "searching": true,
@@ -276,18 +538,23 @@
     
     function agregar_pedido_y_detalle()
     {
-        var fecha = $("#fecha_agregar_pedido").val();
-        var fecha_entrega = $("#fecha_entrega_agregar_pedido").val();
-        var cliente = $("#cliente_agregar_pedido").val();
-        var estado = $("#estado_agregar_pedido").val();
+        var seguir = !$("#btn_guardar").hasClass("disabled");
         
-        if(fecha != "" && fecha_entrega !="" && cliente != "" && estado != "")
+        if(seguir)
         {
-            procesar();
-        }
-        else
-        {
-            gestiona_errores_agregar();
+            var fecha = $("#fecha_agregar_pedido").val();
+            var fecha_entrega = $("#fecha_entrega_agregar_pedido").val();
+            var cliente = $("#cliente_agregar_pedido").val();
+            var estado = $("#estado_agregar_pedido").val();
+
+            if(fecha != "" && fecha_entrega !="" && cliente != "" && estado != "")
+            {
+                procesar();
+            }
+            else
+            {
+                gestiona_errores_agregar();
+            }
         }
     }
     
@@ -314,21 +581,7 @@
     
     function procesar()
     {
-        var ids_con_cantidades = new Array();
-        
-        
-        $( "td[id^='id_producto_']").each(function(indice, elemento) {
-            var id= parseInt($(elemento).text());
-           
-            var cantidad_solicitada= parseFloat($("#cantidad_producto_"+id).val());
-            var costo= parseFloat($("#costo_producto_"+id).val());
-            
-            if(cantidad_solicitada != 0 && !isNaN(cantidad_solicitada))
-            {
-                var registro = new Array(id,cantidad_solicitada,costo,estado);
-                ids_con_cantidades.push(registro);
-            }
-        });
+       
         
         var fecha = $("#fecha_agregar_pedido").val();
         var fecha_entrega = $("#fecha_entrega_agregar_pedido").val();
@@ -343,7 +596,7 @@
                 fecha_entrega:fecha_entrega,
                 cliente:cliente,
                 estado:estado,
-                detalle:ids_con_cantidades,
+                detalle:arreglo_detalles,
             },
             success: function(data)
             {

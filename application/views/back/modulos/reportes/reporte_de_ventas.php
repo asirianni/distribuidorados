@@ -90,11 +90,11 @@
                                     <?php
                                         if($hasta_consultar != null)
                                         {
-                                            echo "<input type='text' class='form-control datetimepicker' id='desde_consultar' name='hasta_consultar' value='".$hasta_consultar."'>";
+                                            echo "<input type='text' class='form-control datetimepicker' id='hasta_consultar' name='hasta_consultar' value='".$hasta_consultar."'>";
                                         }
                                         else
                                         {
-                                            echo "<input type='text' class='form-control datetimepicker' id='desde_consultar' name='hasta_consultar' value='".Date('Y-m-d')."'>";
+                                            echo "<input type='text' class='form-control datetimepicker' id='hasta_consultar' name='hasta_consultar' value='".Date('Y-m-d')."'>";
                                         }
                                     ?>
                                 </div>

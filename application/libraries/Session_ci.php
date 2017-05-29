@@ -46,7 +46,8 @@ class Session_ci
        
         
         $funciones = new Funciones_generales();
-        $modulos_usuario = $this->ci->Usuario_model->get_modulos_usuario($arreglo["id"]);
+        $tipo_usuario = (int)$arreglo["tipo_usuario"];
+        $modulos_usuario = $this->ci->Usuario_model->get_modulos_usuario($arreglo["id"],$tipo_usuario);
         
         $menu_modulos=AdminLTE::getMenuModulos($modulos_usuario,Funciones_generales::get_name_controller_usuario_sin_sesion($arreglo["tipo_usuario"]));
         

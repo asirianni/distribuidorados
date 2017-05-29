@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Nutrilog</title>
+  <title>Distribuidores</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -14,9 +14,9 @@
   
 </head>
 <body onload="window.print()">
- 
+ <div class="col-xs-offset-1 col-xs-10">
     <div class="row">
-        <div class="col-xs-12">
+        
         <table id="tabla_listado" class="table table-bordered">
                     <thead>
                       <tr>

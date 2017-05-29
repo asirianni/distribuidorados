@@ -26,17 +26,26 @@ class Funciones_generales
     
     public function dar_permiso_a_modulo($id_modulo)
     {
-        $id = (int)$this->ci->session->userdata("id");
+        $tipo_usuario = (int)$this->ci->session->userdata("tipo_usuario");
         
-        if($id!=0)
+        if($tipo_usuario != 1)
         {
-            $array=$this->ci->Usuario_model->get_permiso_modulo_usuario($id_modulo,$this->ci->session->userdata("id"));
-            $respuesta= (boolean)$array;
-            return $respuesta;
+            $id = (int)$this->ci->session->userdata("id");
+
+            if($id!=0)
+            {
+                $array=$this->ci->Usuario_model->get_permiso_modulo_usuario($id_modulo,$this->ci->session->userdata("id"));
+                $respuesta= (boolean)$array;
+                return $respuesta;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
-            return false;
+            return true;
         }
     }
     

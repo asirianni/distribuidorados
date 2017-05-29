@@ -111,6 +111,65 @@ class Facturacion_model extends CI_Model
                 
                 $this->db->insert("factura_detalle",$datos);
             }
+            
+            if((int)$condicion_venta == 1) // SI ES DE CONTADO
+            {
+               
+                $this->load->model("Caja_model");
+                $numero= $this->Caja_model->obtener_ultimo_movimiento();
+                $fecha=date('Y-m-d');
+                $concepto= "e";
+                $importe= $total;
+                $detalle= "";
+                $empleado=$this->session->userdata('id');
+
+                $caja = $this->Caja_model->obtener_caja(Date("Y-m-d"));
+
+                if($caja)
+                {
+                    $entradas = $caja["entradas"];
+                    $salidas = $caja["salidas"];
+                    $saldo = $caja["saldo"];
+
+                    if($concepto == "e")
+                    {
+                       $entradas = (float)$entradas + (float)$importe;
+                       $saldo = (float)$saldo + (float)$importe;
+                    }
+                    else
+                    {
+                       $salidas = (float)$salidas + (float)$importe;
+                       $saldo = (float)$saldo - (float)$importe;
+                    }
+
+                    $this->Caja_model->actualizar_caja($entradas,$salidas,$saldo,"a");
+                }
+                else 
+                {
+                    $this->Caja_model->abrir_caja();
+                    $caja = $this->Caja_model->obtener_caja(Date("Y-m-d"));
+
+                    $entradas = $caja["entradas"];
+                    $salidas = $caja["salidas"];
+                    $saldo = $caja["saldo"];
+
+                    if($concepto == "e")
+                    {
+                       $entradas = (float)$entradas + (float)$importe;
+                       $saldo = (float)$saldo + (float)$importe;
+                    }
+                    else
+                    {
+                       $salidas = (float)$salidas + (float)$importe;
+                       $saldo = (float)$saldo - (float)$importe;
+                    }
+
+                    $this->Caja_model->actualizar_caja($entradas,$salidas,$saldo,"a");
+                }
+
+                $this->Caja_model->registrar_movimiento_caja($numero, $fecha, $concepto, $importe, $detalle, $empleado,1,$concepto);
+               
+            }
         }
         
         

@@ -77,50 +77,145 @@
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table id="tabla_listado" class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Fecha</th>
-                        <th>F. Entrega</th>
-                        <th>Cliente</th>
-                        <th>Cuit-Dni-cuil cliente</th>
-                        <th>Desc. gral</th>
-                        <th>Estado</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            foreach($listado_pedidos as $value)
-                            {
-                                if($value["estado"] == "cumplido" )
+                    
+                    <div class="col-md-12">
+                        <p style="color: #333;font-size: 19px;font-weight: bold;margin-bottom: 12px;">CONSULTA DE PEDIDOS:</p>
+                        <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_pedidos" method="post">
+                        <div class="col-md-2">
+                            <label>Desde</label>
+                            <?php
+                                if($desde_consultar != null)
                                 {
-                                    echo "<tr class='bg-success'>";
-                                }
-                                else if($value["estado"] == "pendiente" )
-                                {
-                                    echo "<tr class='bg-danger'>";
+                                    echo "<input type='text' class='form-control datetimepicker' id='desde_consultar' name='desde_consultar' value='".$desde_consultar."'>";
                                 }
                                 else
                                 {
-                                    echo "<tr>";
+                                    echo "<input type='text' class='form-control datetimepicker' id='desde_consultar' name='desde_consultar' value='".Date('Y-m-d')."'>";
                                 }
-                                echo 
-                                "   <td>".$value["fecha"]."</td>
-                                    <td>".$value["fecha_entrega"]."</td>
-                                    <td>".$value["nombre"]." ".$value["apellido"]."</td>
-                                    <td>".$value["dni_cuit_cuil"]."</td>
-                                    <td>".$value["descuento_gral"]."%</td>
-                                    <td>".$value["estado"]."</td> 
-                                    <td>
-                                        <a href='".base_url()."index.php/".$controller_usuario."/registro_de_pedidos_editar/".$value["numero"]."' class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' ><i class='fa fa-edit'></i></a>
-                                        <!--<button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Eliminar' onClick='abrir_modal_eliminar_transportista()'>X</button>-->
-                                    </td>    
-                                </tr>";
-                            }
-                        ?>  
-                    </tbody>
-                  </table>
+                            ?>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Hasta</label>
+                            <?php
+                                if($hasta_consultar != null)
+                                {
+                                    echo "<input type='text' class='form-control datetimepicker' id='hasta_consultar' name='hasta_consultar' value='".$hasta_consultar."'>";
+                                }
+                                else
+                                {
+                                    echo "<input type='text' class='form-control datetimepicker' id='hasta_consultar' name='hasta_consultar' value='".Date('Y-m')."-01'>";
+                                }
+                            ?>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Cliente</label>
+                            <select class="form-control select2" style="width: 100%" id="cliente_consultar" name="cliente_consultar">
+                            <?php
+                                if($cliente_consultar != null)
+                                {
+                                    echo "<option value='0'>Todos</option>";
+                                            
+                                    foreach($listado_clientes as $value)
+                                    {
+                                        if($cliente_consultar == $value["id"])
+                                        {
+                                            echo "<option value='".$value["id"]."' selected>".$value["dni_cuit_cuil"]." - ".$value["nombre"]." ".$value["apellido"]."</option>";
+                                        }
+                                        else
+                                        {
+                                            echo "<option value='".$value["id"]."'>".$value["dni_cuit_cuil"]." - ".$value["nombre"]." ".$value["apellido"]."</option>";
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    echo "<option value='0'>Todos</option>";
+                                            
+                                    foreach($listado_clientes as $value)
+                                    {
+                                        echo "<option value='".$value["id"]."'>".$value["dni_cuit_cuil"]." - ".$value["nombre"]." ".$value["apellido"]."</option>";
+                                    }
+                                }
+                            ?>                     
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Estado</label>
+                            <select class="form-control" id="estado_consultar" name="estado_consultar">
+                                <?php
+                                    $estados = Array("todos","pendiente","cumplido");
+                                    
+                                    for($i=0;$i<count($estados);$i++)
+                                    {
+                                        if($estado_consultar == $estados[$i])
+                                        {
+                                            echo "<option value='".$estados[$i]."' selected>".$estados[$i]."</option>";
+                                        }
+                                        else
+                                        {
+                                            echo "<option value='".$estados[$i]."'>".$estados[$i]."</option>";
+                                        }
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                            
+                        <div class="col-md-2">
+                            <label>&nbsp;</label>
+                            <button class="form-control btn btn-danger" id="btn_consultar"><i class="fa fa-search-minus"></i> Consultar</button>
+                        </div>
+                    </form>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div style="margin-top: 25px;"></div>
+                    <div class="col-md-12">
+                        <p style="color: #333;font-size: 19px;font-weight: bold;margin-bottom: 12px;">LISTADO DE PEDIDOS:</p>
+                    
+                        <table id="tabla_listado" class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Fecha</th>
+                              <th>F. Entrega</th>
+                              <th>Cliente</th>
+                              <th>Cuit-Dni-cuil cliente</th>
+                              <th>Desc. gral</th>
+                              <th>Estado</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              <?php
+                                  foreach($listado_pedidos as $value)
+                                  {
+                                      if($value["estado"] == "cumplido" )
+                                      {
+                                          echo "<tr class='bg-success'>";
+                                      }
+                                      else if($value["estado"] == "pendiente" )
+                                      {
+                                          echo "<tr class='bg-danger'>";
+                                      }
+                                      else
+                                      {
+                                          echo "<tr>";
+                                      }
+                                      echo 
+                                      "   <td>".$value["fecha"]."</td>
+                                          <td>".$value["fecha_entrega"]."</td>
+                                          <td>".$value["nombre"]." ".$value["apellido"]."</td>
+                                          <td>".$value["dni_cuit_cuil"]."</td>
+                                          <td>".$value["descuento_gral"]."%</td>
+                                          <td>".$value["estado"]."</td> 
+                                          <td>
+                                              <a href='".base_url()."index.php/".$controller_usuario."/registro_de_pedidos_editar/".$value["numero"]."' class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' ><i class='fa fa-edit'></i></a>
+                                              <!--<button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Eliminar' onClick='abrir_modal_eliminar_transportista()'>X</button>-->
+                                          </td>    
+                                      </tr>";
+                                  }
+                              ?>  
+                          </tbody>
+                        </table>
+                     </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
          </div>

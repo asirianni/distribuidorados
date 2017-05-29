@@ -106,9 +106,17 @@ class Usuario_model extends CI_Model
         return $this->db->update("usuarios",$datos);
     }
     
-    public function get_modulos_usuario($id)
+    public function get_modulos_usuario($id,$tipo_usuario)
     {
-        $r = $this->db->query("SELECT modulos_usuarios.id_usuario,modulos_usuarios.id_usuario,modulos_usuarios.id_modulo,modulos.modulo as desc_modulo FROM modulos_usuarios INNER JOIN modulos on modulos.id = modulos_usuarios.id_modulo where modulos_usuarios.id_usuario = $id order by modulos.id");
+        $r =null;
+        if($tipo_usuario == 1)
+        {
+            $r =$this->db->query("SELECT modulos.id as id_modulo, modulo from modulos");
+        }
+        else
+        {
+           $r = $this->db->query("SELECT modulos_usuarios.id_usuario,modulos_usuarios.id_usuario,modulos_usuarios.id_modulo,modulos.modulo as desc_modulo FROM modulos_usuarios INNER JOIN modulos on modulos.id = modulos_usuarios.id_modulo where modulos_usuarios.id_usuario = $id");
+        }
         return $r->result_array();
     }
     

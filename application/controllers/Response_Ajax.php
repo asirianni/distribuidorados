@@ -360,12 +360,12 @@ class Response_Ajax extends CI_Controller
             $cliente= $this->input->post("cliente");
             $estado= $this->input->post("estado");
             $detalle= $this->input->post("detalle");
-            
+            $descuento_general= $this->input->post("descuento_general");
             $this->load->model("Registro_de_pedidos_model");
             
             
             
-            $respuesta = $this->Registro_de_pedidos_model->agregar_pedido_y_detalle($fecha,$fecha_entrega,$cliente,$estado,$detalle);
+            $respuesta = $this->Registro_de_pedidos_model->agregar_pedido_y_detalle($fecha,$fecha_entrega,$cliente,$estado,$detalle,$descuento_general);
             echo json_encode($respuesta);
         }
     }
@@ -377,7 +377,6 @@ class Response_Ajax extends CI_Controller
             $numero_pedido= $this->input->post("numero_pedido");
             $fecha= $this->input->post("fecha");
             $fecha_entrega= $this->input->post("fecha_entrega");
-            $cliente= $this->input->post("cliente");
             $estado= $this->input->post("estado");
             $detalle= $this->input->post("detalle");
             
@@ -385,7 +384,7 @@ class Response_Ajax extends CI_Controller
             
             
             
-            $respuesta = $this->Registro_de_pedidos_model->editar_pedido_y_detalle($numero_pedido,$fecha,$fecha_entrega,$cliente,$estado,$detalle);
+            $respuesta = $this->Registro_de_pedidos_model->editar_pedido_y_detalle($numero_pedido,$fecha,$fecha_entrega,$estado,$detalle);
             echo json_encode($respuesta);
         }
     }
@@ -496,10 +495,7 @@ class Response_Ajax extends CI_Controller
             $respuesta = $this->Facturacion_model->crear_factura($punto_venta,$fecha,$cliente,$remito_o_pedido,$numero_remito_pedido,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle);
             
             
-            if($condicion_venta == 1) // SI ES DE CONTADO
-            {
-                
-            }
+            
             
             echo json_encode($respuesta);
         }

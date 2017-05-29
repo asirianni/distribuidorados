@@ -83,6 +83,7 @@
             <div class="col-md-12 marco">
                 <div class="col-md-4">
                     <div class="col-md-12">
+                        <p><img height="100" src="<?php echo base_url()?>recursos/images/imagen_factura.png"/></p>
                     </div>
                 </div>
                

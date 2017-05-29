@@ -15,34 +15,35 @@
   </style>
 </head>
 <body onload="window.print()">
-    
-<div class='row'>
-    <div class='col-md-offset-1 col-md-4'>
-	<h3>Movimiento: 17</h3>
-	<table class='table table-striped'>
-            <tr>
-                <td>Fecha: </td>
-                <td><?php echo $comprobante["fecha"]?></td>
-            </tr>
-            <tr>
-                <td>Concepto: </td>
-                <td><?php echo $comprobante["concepto"]?></td>
-            </tr>
-            <tr>
-                <td>Empleado: </td>
-                <td><?php echo $comprobante["nombre_empleado"]?></td>
-            </tr>
-            <tr>
-                <td>Tipo de movimiento: </td>
-                <td><?php echo $comprobante["tipo_mov"]?></td>
-            </tr>
-            <tr>
-                <td>Importe: </td>
-                <td><?php echo $comprobante["importe"]?></td>
-            </tr>
-        </table>
-    </div>
-</div>    
+<div class="col-xs-offset-1 col-xs-10">  
+    <div class='row'>
+        <div class='col-md-offset-1 col-md-4'>
+            <h3>Movimiento: 17</h3>
+            <table class='table table-striped'>
+                <tr>
+                    <td>Fecha: </td>
+                    <td><?php echo $comprobante["fecha"]?></td>
+                </tr>
+                <tr>
+                    <td>Concepto: </td>
+                    <td><?php echo $comprobante["concepto"]?></td>
+                </tr>
+                <tr>
+                    <td>Empleado: </td>
+                    <td><?php echo $comprobante["nombre_empleado"]?></td>
+                </tr>
+                <tr>
+                    <td>Tipo de movimiento: </td>
+                    <td><?php echo $comprobante["tipo_mov"]?></td>
+                </tr>
+                <tr>
+                    <td>Importe: </td>
+                    <td><?php echo $comprobante["importe"]?></td>
+                </tr>
+            </table>
+        </div>
+    </div>   
+</div>
 
 
 <!-- jQuery 2.2.3 -->

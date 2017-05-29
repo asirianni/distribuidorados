@@ -481,43 +481,9 @@ class MY_Controller extends CI_Controller
             $this->load->model("Registro_de_clientes_model");
             $listado_clientes= $this->Registro_de_clientes_model->get_clientes_no_suspendidos();
             
-            $contenido= 
-            "<table class='table table-striped'>
-                <thead>
-                    <tr>
-                        <th>CUIL-DNI-CUIT</th>
-                        <th>RAZON SOCIAL</th>
-                        <th>LOCALIDAD</th>
-                        <th>TELEFONO</th>
-                        <th>TIPO INSCRIPCION</th>
-                        <th>ESTADO</th>
-                    </tr>
-                </thead>
-            <tbody>
-            ";
             
-            
-            foreach($listado_clientes as $value)
-            {
-                
-                $contenido.=                
-                "<tr>
-                    <td>".$value["dni_cuit_cuil"]."</td>
-                    <td>".$value["razon_social"]."</td>
-                    <td>".$value["desc_localidad"]."</td>
-                    <td>".$value["telefono"]."</td>
-                    <td>".$value["desc_inscripcion"]."</td>
-                    <td>".$value["desc_estado"]."</td>   
-                </tr>";
-                            
-            }
-            
-            $contenido.= 
-            "</tbody>
-            </table>";
-            
-            $output["contenido"]=$contenido;
-            $this->load->view("back/impresor/impresor",$output);
+            $output["listado_clientes"]=$listado_clientes;
+            $this->load->view("back/modulos/registro_de_clientes/imprimir_listado_clientes",$output);
         }
     }
     
@@ -557,7 +523,36 @@ class MY_Controller extends CI_Controller
             $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
             $output["footer"]=$this->adminlte->getFooter();
             
-            $output["listado_pedidos"]=$this->Registro_de_pedidos_model->get_listado_pedidos();
+            
+            $desde_consultar=null;
+            $hasta_consultar=null;
+            $cliente_consultar=null;
+            $estado_consultar=null;
+            
+            $output["listado_pedidos"]=null;
+            
+            if($this->input->post())
+            {
+                $desde_consultar=$this->input->post("desde_consultar");
+                $hasta_consultar=$this->input->post("hasta_consultar");
+                $cliente_consultar=$this->input->post("cliente_consultar");
+                $estado_consultar=$this->input->post("estado_consultar");
+                $output["listado_pedidos"]=$this->Registro_de_pedidos_model->get_listado_pedidos_consulta($desde_consultar,$hasta_consultar,$cliente_consultar,$estado_consultar);
+            }
+            else
+            {
+                $desde_consultar=$this->Registro_de_pedidos_model->get_fecha_min();
+                $hasta_consultar=$this->Registro_de_pedidos_model->get_fecha_max();
+                $output["listado_pedidos"]=$this->Registro_de_pedidos_model->get_listado_pedidos();
+            }
+            
+            $output["desde_consultar"]=$desde_consultar;
+            $output["hasta_consultar"]=$hasta_consultar;
+            $output["cliente_consultar"]=$cliente_consultar;
+            $output["estado_consultar"]=$estado_consultar;
+            
+            $output["listado_clientes"]=$this->Registro_de_clientes_model->get_clientes_no_suspendidos();
+            
             $output["controller_usuario"]=$this->controller_usuario;
             $output["lista_clientes"]=$this->Registro_de_clientes_model->get_clientes_no_suspendidos();
             $this->load->view("back/modulos/registro_de_pedidos/abm_pedidos",$output);
@@ -626,7 +621,7 @@ class MY_Controller extends CI_Controller
             $output["detalle_pedido"]=$this->Registro_de_pedidos_model->get_detalle_pedido($numero_pedido);
             $output["lista_clientes"]=$this->Registro_de_clientes_model->get_clientes_no_suspendidos();
             $output["numero_pedido"]=$numero_pedido;
-            $output["listado_productos_faltantes"]= $this->Registro_de_pedidos_model->get_listado_productos_faltantes($numero_pedido);
+            $output["listado_productos"]= $this->Stock_productos_model->get_listado_productos();
             $output["controller_usuario"]=$this->controller_usuario;
             $this->load->view("back/modulos/registro_de_pedidos/editar_pedido",$output);
         }

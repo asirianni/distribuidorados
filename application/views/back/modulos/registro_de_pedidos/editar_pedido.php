@@ -103,7 +103,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="cliente_agregar_pedido">Cliente: </label>
-                            <select class="form-control select2" style="width: 100%;" id="cliente_agregar_pedido">
+                            <select class="form-control" id="cliente_agregar_pedido" disabled="">
                                 <?php
                                     foreach($lista_clientes as $value)
                                     {
@@ -120,101 +120,48 @@
                             </select>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                     
                     <!-- TABLA DE PEDIDO DETALLE -->
-                        <div class="col-md-12">
-                            <input type="button" class="btn btn-danger" id="btn_productos_agregados" value="Productos ya agregados"/>&nbsp;
-                            <input type="button" class="btn btn-default" id="btn_agregar_productos" value="Productos sin agregar"/>
-                        </div> 
-                    
-                    <div id="tabla1" class="col-md-12" style="margin-top: 32px;">
-                        <table id="tabla_listado_detalle" class="table table-bordered table-hover">
+                    <div style="margin-top: 20px;">&nbsp;</div>
+                    <div class="col-md-12">
+                        <div class="col-md-12" style="margin-top: 10px;margin-bottom: 10px;">
+                            <button class="btn btn-danger" id="btn_agregar_producto_detalle" onclick="ver_modal_lista_productos()"><i class="fa fa-plus"></i> Agregar</button>
+                        </div>
+                        <table id="tabla_listado" class="table table-bordered table-hover">
                             <thead>
-                              <tr>
-                                <th>Cod producto</th>
-                                <th>Producto</th>
-                                <th>Precio Vigente</th>
-                                <th>Cantidad</th>
-                                <th>Estado</th>
-                                <!--<th></th>-->
-
-                              </tr>
+                                <tr>
+                                    <th style='display: none;'>Codigo</th>
+                                    <th>Descripcion</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Desc</th>
+                                    <th>Subtotal</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                    foreach($detalle_pedido as $value)
-                                    {
-                                        echo 
-                                        "<tr>
-                                            <td id='id_producto_".$value["cod_producto"]."'>".$value["cod_producto"]."</td>
-                                            <td>".$value["desc_producto"]."</td>
-                                            <td><input type='number'  step='0.5'   id='costo_producto_".$value["cod_producto"]."' value='".$value["precio"]."'/></td>
-                                            <td><input type='number' step='0.5' id='cantidad_producto_".$value["cod_producto"]."'  value='".$value["cantidad"]."'/></td>
-                                            
-                                            <td>
-                                                <select class='form-control' id='estado_producto_detalle_".$value["cod_producto"]."'>";
-                                                    if($value["estado"] == "pendiente")
-                                                    {
-                                                        echo 
-                                                        "<option value='pendiente' selected>pendiente</option>
-                                                        <option value='cumplido'>cumplido</option>";
-                                                    }
-                                                    else if($value["estado"] == "cumplido")
-                                                    {
-                                                        echo 
-                                                        "<option value='pendiente'>pendiente</option>
-                                                        <option value='cumplido' selected>cumplido</option>";
-                                                    }
-                                                    
-                                            echo"</select>
-                                            </td>
-                                            <!--<td>
-                                                <input type='button' class='btn btn-default' value='eliminar'/>
-                                            </td>-->
-                                        </tr>";
-                                    }
-                                ?>  
+                            <tbody id="cuerpo_tabla_listado">
+                                
                             </tbody>
                           </table>
+                        
                     </div>
-                    <!-- TABLA DE PEDIDO DETALLE -->
-                    <div id="tabla2" class="col-md-12" style="margin-top: 10px;display:none;">
-                        <table id="tabla_listado_productos_no_agregados" class="table table-bordered table-hover">
-                            <thead>
-                              <tr>
-                                <th>Codigo</th>
-                                <th>Descripcion</th>
-                                <th>Stock</th>
-                                <th>Precio Vigente</th>
-                                <th>Cant Solicitada</th>
-                                <th>Estado</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    foreach($listado_productos_faltantes as $value)
-                                    {
-                                        echo 
-                                        "<tr>
-                                            <td id='id_producto_".$value["id"]."'>".$value["id"]."</td>
-                                            <td>".$value["descripcion"]."</td>
-                                            <td>".$value["stock"]."</td>
-                                            <td><input type='number'  step='0.5' id='costo_producto_".$value["id"]."' value='".$value["precio"]."'/></td>
-                                            <td><input type='number' step='0.5' id='cantidad_producto_".$value["id"]."' value='0'/></td>
-                                             <td>
-                                                <select class='form-control' id='estado_producto_detalle_".$value["id"]."'>
-                                                    <option value='pendiente'>pendiente</option>
-                                                    <option value='cumplido'>cumplido</option>
-                                                </select>
-                                            </td>
-                                        </tr>";
-                                    }
-                                ?>  
-                            </tbody>
-                          </table>
+                    <div class="col-md-12" style="padding-right: 22px !important;">
+                        <div class="col-md-6">&nbsp;</div>
+                            <div class="col-md-6 marco-sin-width">
+                                <div  style="font-size: 18px;font-weight: bold;">
+                                    <div class="col-md-6">
+                                        <p>TOTAL</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>$<span style="font-size:22px;" id='total'>0</span></p>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                     <div class="col-md-12" style="text-align: center;">
-                        <button class="btn btn-danger" onClick="editar_pedido_y_detalle()"><i class='fa fa-save'></i> Guardar Cambios</button>
+                        <button class="btn btn-danger" id="btn_guardar_pedido" onClick="editar_pedido_y_detalle()"><i class='fa fa-save'></i> Guardar Cambios</button>
                     </div>
                     <!-- -->
                 </div><!-- /.box-body -->
@@ -233,6 +180,42 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
+
+<div class="modal modal-default" id="modal_lista_productos">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>
+                    Agrege un producto 
+                    <button class="btn btn-danger pull-right" onClick="$('#modal_lista_productos').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="tabla_listado_productos" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Codigo</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpo_listado_productos">
+                               
+                                            
+                            </tbody>
+                          </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 
 <!-- jQuery 2.2.3 -->
 <script src="<?php echo base_url()?>recursos/plugins/jQuery/jquery-2.1.4.min.js"></script>
@@ -280,6 +263,239 @@
 
 <script>
     
+    var lista_productos = JSON.parse('<?php echo json_encode($listado_productos);?>');
+    var lista_cliente = "<?php echo $pedido["lista"]?>";
+    var arreglo_detalles = new Array();
+    var cliente_seleccionado=0;
+    
+    $(document).ready(function(){
+        var detalle = JSON.parse('<?php echo json_encode($detalle_pedido);?>');
+        
+        for(var i=0; i < detalle.length;i++)
+        {
+            agregar_detalle(detalle[i]["cod_producto"],detalle[i]["desc_producto"],detalle[i]["precio"],detalle[i]["cantidad"],detalle[i]["descuento"]);
+        }
+    });
+    
+    $.fn.dataTable.ext.errMode = 'none';
+    
+    function ver_modal_lista_productos()
+    {
+        
+        var html= "";
+
+            for(var i=0; i < lista_productos.length;i++)
+            {
+                html+="<tr>";
+                html+="<td>"+lista_productos[i]["id"]+"</td>";
+                html+="<td>"+lista_productos[i]["descripcion"]+"</td>";
+                html+="<td>"+lista_productos[i]["stock"]+"</td>";
+                html+="<td>"+lista_productos[i][lista_cliente]+"</td>";
+                html+="<td>";
+                    html+="<button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Agregar' onClick='agregar_detalle("+lista_productos[i]["id"]+",&#34;"+lista_productos[i]["descripcion"]+"&#34;,"+lista_productos[i][lista_cliente]+",0,0)'><i class='fa fa-plus'></i></button>";
+                html+="</td>";
+                html+="</tr>";
+            }
+
+            $("#cuerpo_listado_productos").html(html);
+
+            $('#tabla_listado_productos').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true
+            });
+
+            $('#modal_lista_productos').modal('show');    
+        
+    }
+    
+    function agregar_detalle(cod_producto,descripcion,precio,cantidad,descuento)
+    {
+        if(!buscar_codigo_en_arreglo(cod_producto))
+        {
+            var subtotal=parseFloat(precio);
+            var total=cantidad*subtotal;
+            var arreglo= {"cod_producto":cod_producto,"descripcion":descripcion,"cantidad":cantidad,"precio":precio,"descuento":descuento,"total":total,"subtotal":subtotal};
+            arreglo_detalles.push(arreglo);
+
+            $("#btn_guardar_pedido").removeClass("disabled");
+            generar_html_tabla_listado();
+        }
+        else
+        {
+            alert("Producto ya agregado");
+        }
+        
+    }
+    
+    function buscar_codigo_en_arreglo(cod_producto)
+    {
+        var i=0;
+        var respuesta = false;
+        
+        while( i < arreglo_detalles.length)
+        {
+            if(arreglo_detalles[i] != undefined)
+            {
+                if(arreglo_detalles[i]["cod_producto"] == cod_producto)
+                {
+                    respuesta= true;
+                    i= arreglo_detalles.length;
+                }
+            }
+            i++;
+        }
+        
+        return respuesta;
+    }
+    
+    function get_posicion_codigo_en_arreglo(cod_producto)
+    {
+        var i=0;
+        var valor = -1;
+        
+        while( i < arreglo_detalles.length)
+        {
+            if(arreglo_detalles[i] != undefined)
+            {
+                if(arreglo_detalles[i]["cod_producto"] == cod_producto)
+                {
+                    valor = i;
+                    i= arreglo_detalles.length;
+                }
+            }
+            i++;
+        }
+        
+        return valor;
+    }
+    
+    
+    
+    function generar_html_tabla_listado()
+    {
+        var html="";
+        
+        var suma_totales = 0;
+        
+        for(var i=0; i < arreglo_detalles.length;i++)
+        {
+            if(arreglo_detalles[i] != undefined)
+            {
+                var codigo =arreglo_detalles[i]["codigo"];
+                var cod_producto =arreglo_detalles[i]["cod_producto"];
+                var descripcion =arreglo_detalles[i]["descripcion"];
+                var cantidad =parseFloat(arreglo_detalles[i]["cantidad"]);
+                var precio =parseFloat(arreglo_detalles[i]["precio"]);
+                var descuento =parseFloat(arreglo_detalles[i]["descuento"]);
+                var subtotal= parseFloat(arreglo_detalles[i]["subtotal"]);
+                var total=arreglo_detalles[i]["total"];
+                
+                
+                suma_totales+=total;
+                
+                html+="<tr>";
+                html+="<td style='display: none;'><input type='text' id='codigo_detalle_"+cod_producto+"' value='"+codigo+"'></td>";
+                html+="<td>"+descripcion+"</td>";
+                html+="<td><input type='number' step='0.5' id='cantidad_"+cod_producto+"' value='"+cantidad+"' onChange='cambio_valor("+cod_producto+")'></td>";
+                html+="<td>$<input type='number' step='0.5' id='precio_"+cod_producto+"' value='"+precio+"' onChange='cambio_valor("+cod_producto+")'></td>";
+                html+="<td><input type='number' step='0.5' id='descuento_"+cod_producto+"' value='"+descuento+"' onChange='cambio_valor("+cod_producto+")'>%</td>";
+                html+="<td>$"+subtotal.toFixed(2)+"</td>";
+                html+="<td style='font-weight: bold;' id='total_"+cod_producto+"'>$"+total.toFixed(2)+"</td>";
+                html+="<td><button class='btn btn-danger' onClick='eliminar_producto("+cod_producto+")'><i class='fa fa-close'></i></button></td>";
+                html+="</tr>";
+            }
+        }
+        
+        
+        $("#total").text((suma_totales).toFixed(2));
+        $("#cuerpo_tabla_listado").html(html);
+        
+        
+    }
+    
+    function ccleaner_arreglo_detalle()
+    {
+        var aux=new Array();
+        
+        for(var i=0; i < arreglo_detalles.length;i++)
+        {
+            if(arreglo_detalles[i] != undefined)
+            {
+                aux.push(arreglo_detalles[i]);
+            }
+        }
+        
+        arreglo_detalles=aux;
+        
+    }
+    
+    function eliminar_producto(codigo_producto)
+    {
+        var posicion = get_posicion_codigo_en_arreglo(codigo_producto);
+        
+        delete arreglo_detalles[posicion];
+        ccleaner_arreglo_detalle();
+        
+        if(arreglo_detalles.length <= 0)
+        {
+            $("#btn_guardar_pedido").addClass("disabled");
+        }
+        else
+        {
+            $("#btn_guardar_pedido").removeClass("disabled");
+        }
+        generar_html_tabla_listado();
+    }
+        
+     function cambio_valor(codigo_producto)
+    {
+        var i= get_posicion_codigo_en_arreglo(codigo_producto);
+        
+        var codigo =arreglo_detalles[i]["codigo"];
+        var cod_producto =arreglo_detalles[i]["cod_producto"];
+        var descripcion =arreglo_detalles[i]["descripcion"];
+        
+        var iva =arreglo_detalles[i]["iva"];
+        
+        var cantidad = parseFloat($("#cantidad_"+codigo_producto).val());
+        var precio = parseFloat($("#precio_"+codigo_producto).val());
+        var descuento = parseFloat($("#descuento_"+codigo_producto).val());
+        
+        if(isNaN(cantidad))
+        {
+            cantidad=arreglo_detalles[i]["cantidad"];
+        }
+        if(isNaN(precio))
+        {
+            precio=arreglo_detalles[i]["precio"];
+        }
+        if(isNaN(descuento))
+        {
+            descuento=arreglo_detalles[i]["descuento"];
+        }
+        
+        var descuento_en_pesos= precio * descuento / 100;
+        
+        var subtotal= precio-descuento_en_pesos;
+        var total = subtotal*cantidad;
+        arreglo_detalles[i]["cod_producto"]=cod_producto;
+        arreglo_detalles[i]["codigo"]=codigo;
+        arreglo_detalles[i]["descripcion"]=descripcion;
+        arreglo_detalles[i]["cantidad"]=cantidad;
+        arreglo_detalles[i]["precio"]=precio;
+        arreglo_detalles[i]["descuento"]=descuento;
+        arreglo_detalles[i]["iva"]=iva;
+        arreglo_detalles[i]["subtotal"]=subtotal;
+        arreglo_detalles[i]["total"]=total;
+        arreglo_detalles[i]["cod_producto"]=cod_producto;
+        
+        generar_html_tabla_listado();
+    }
+    
     function editar_pedido_y_detalle()
     {
         var fecha = $("#fecha_agregar_pedido").val();
@@ -320,26 +536,6 @@
     
     function procesar()
     {
-        
-        
-        
-        var ids_con_cantidades = new Array();
-        
-        //LEYENDO DE PRODUCTOS NO AGREGADOS
-        $( "td[id^='id_producto_']").each(function(indice, elemento) {
-            var id= parseInt($(elemento).text());
-           
-            var cantidad_solicitada= parseFloat($("#cantidad_producto_"+id).val());
-            var costo= parseFloat($("#costo_producto_"+id).val());
-            var estado = $("#estado_producto_detalle_"+id).val();
-            
-            if(cantidad_solicitada != 0 && !isNaN(cantidad_solicitada))
-            {
-                var registro = new Array(id,cantidad_solicitada,costo,estado);
-                ids_con_cantidades.push(registro);
-            }
-        });
-        
         var numero_pedido = "<?php echo $numero_pedido?>";
         var fecha = $("#fecha_agregar_pedido").val();
         var fecha_entrega = $("#fecha_entrega_agregar_pedido").val();
@@ -355,7 +551,7 @@
                 fecha_entrega:fecha_entrega,
                 cliente:cliente,
                 estado:estado,
-                detalle:ids_con_cantidades,
+                detalle:arreglo_detalles,
             },
             success: function(data)
             {
@@ -389,21 +585,6 @@
     
     // FIN
     
-    $("#btn_productos_agregados").click(function(){
-        $("#tabla1").css("display","block");
-        $("#tabla2").css("display","none");
-        $("#btn_productos_agregados").removeClass("btn-default");
-        $("#btn_productos_agregados").addClass("btn-danger");
-        $("#btn_agregar_productos").removeClass("btn-danger");
-    });
-    
-    $("#btn_agregar_productos").click(function(){
-        $("#btn_agregar_productos").removeClass("btn-default");
-        $("#btn_agregar_productos").addClass("btn-danger");
-        $("#btn_productos_agregados").removeClass("btn-danger");
-        $("#tabla2").css("display","block");
-        $("#tabla1").css("display","none");
-    });
     
     $(function () {
         $('#tabla_listado_detalle').DataTable({
