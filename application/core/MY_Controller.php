@@ -458,7 +458,7 @@ class MY_Controller extends CI_Controller
             
             // LOGIC
             
-            $output["listado_clientes"]= $this->Registro_de_clientes_model->get_clientes_no_suspendidos();
+            $output["listado_clientes"]= $this->Registro_de_clientes_model->get_clientes();
             $output["controller_usuario"]=$this->controller_usuario;
             $output["lista_estados_cliente"]=$this->Registro_de_clientes_model->get_estados_clientes();
             $output["lista_tipos_inscripciones"]=$this->Registro_de_clientes_model->get_tipo_inscripciones();
@@ -490,7 +490,7 @@ class MY_Controller extends CI_Controller
     public function generar_excel_clientes()
     {
         header("Content-type: application/vnd.ms-excel; name='excel'");
-        header("Content-Disposition: filename=ficheroExcel.xls");
+        header("Content-Disposition: filename=Lista-de-Clientes.xls");
         header("Pragma: no-cache");
         header("Expires: 0");
 

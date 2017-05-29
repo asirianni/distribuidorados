@@ -78,7 +78,8 @@
             <div class="box">
                 <div class="box-header">
                     <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/generar_excel_clientes" method="post" target="_blank" id="FormularioExportacion">
-                    
+                        <input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />
+                    </form>
                     <button class="btn btn-danger" onClick="$('#modal_agregar_cliente').modal('show');return false;"><i class='fa fa-plus'></i> Agregar Cliente</button>
                     <p class="pull-right">
                         <button id="btn_exportar_excel" type="button" class="btn btn-success botonExcel" onClick="exportar_excel()" ><i class="fa fa-file-excel-o"></i> Exportar</button>&nbsp;&nbsp;
@@ -122,9 +123,7 @@
                         ?>  
                     </tbody>
                   </table>
-                <input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />
-
-            </form>
+                
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
          </div>
@@ -156,7 +155,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="dni_cuit_cuil_editar_cliente">Dni - Cuit - Cuil: </label>
-                            <input class="form-control" type="text" id="dni_cuit_cuil_editar_cliente" name="dni_cuit_cuil_editar_cliente" value=""/>
+                            <input class="form-control" type="number" id="dni_cuit_cuil_editar_cliente" name="dni_cuit_cuil_editar_cliente" value=""/>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -181,7 +180,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="telefono_editar_cliente">Telefono: </label>
-                            <input class="form-control" type="text" id="telefono_editar_cliente" name="telefono_editar_cliente" value=""/>
+                            <input class="form-control" type="number" id="telefono_editar_cliente" name="telefono_editar_cliente" value=""/>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -318,7 +317,7 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <p id="mensaje_error_editar_cliente" style="font-weight: bold;color: #f00;font-size: 15px;"></p>
+                        <p id="mensaje_error_editar_cliente" style="font-weight: bold;color: #00F;font-size: 15px;"></p>
                     </div>
                     <div class="clearfix"></div>
                     
@@ -345,7 +344,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="dni_cuit_cuil_agregar_cliente">Dni - Cuit - Cuil: </label>
-                            <input class="form-control" type="text" id="dni_cuit_cuil_agregar_cliente" name="dni_cuit_cuil_agregar_cliente" value=""/>
+                            <input class="form-control" type="number" id="dni_cuit_cuil_agregar_cliente" name="dni_cuit_cuil_agregar_cliente" value=""/>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -370,7 +369,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="telefono_agregar_cliente">Telefono: </label>
-                            <input class="form-control" type="text" id="telefono_agregar_cliente" name="telefono_agregar_cliente" value=""/>
+                            <input class="form-control" type="number" id="telefono_agregar_cliente" name="telefono_agregar_cliente" value=""/>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -454,18 +453,26 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="estado_agregar_cliente">Estado</label>
-                            <select class="form-control select2" style="width: 100% !important;" id="estado_agregar_cliente" name="estado_agregar_cliente">
+                            <select class="form-control" id="estado_agregar_cliente" name="estado_agregar_cliente" value="1">
                                 <?php
                                     foreach($lista_estados_cliente as $value)
                                     {
-                                        echo "<option value='".$value["id"]."'>".$value["estado"]."</option>";
+                                        if((int)$value["id"] == 1)
+                                        {
+                                            echo "<option value='".$value["id"]."' selected>".$value["estado"]."</option>";
+                                        }
+                                        else
+                                        {
+                                            echo "<option value='".$value["id"]."'>".$value["estado"]."</option>";
+                                        }
                                     }
+                                            
                                 ?>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <p id="mensaje_error_agregar_cliente" style="font-weight: bold;color: #f00;font-size: 15px;"></p>
+                        <p id="mensaje_error_agregar_cliente" style="font-weight: bold;color: #00F;font-size: 15px;"></p>
                     </div>
                     <div class="clearfix"></div>
                     
@@ -582,7 +589,7 @@
         
         
         
-        if  (dni_cuit_cuil != "" && ingresos_brutos != "" && !isNaN(dni_cuit_cuil) &&
+        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) &&
              razon_social != "" && nombre != "" && apellido != "" &&
              telefono != "" && correo != "" && validarEmail(correo) &&
              direccion !="" && localidad != "" && !isNaN(localidad) && localidad != 0 &&
@@ -656,7 +663,7 @@
         var lista = $("#lista_agregar_cliente").val();
         
         if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) &&
-             razon_social != "" && ingresos_brutos != "" && nombre != "" && apellido != "" &&
+             razon_social != ""  && nombre != "" && apellido != "" &&
              telefono != "" && correo != "" && validarEmail(correo) &&
              direccion !="" && localidad != "" && !isNaN(localidad) && localidad != 0 &&
              tipo_inscripcion != "" && !isNaN(tipo_inscripcion) && tipo_inscripcion != 0 && estado != "" && !isNaN(estado) && estado != 0
@@ -716,7 +723,6 @@
         var telefono = $("#telefono_agregar_cliente").val();
         var correo = $("#correo_agregar_cliente").val();
         var direccion = $("#direccion_agregar_cliente").val();
-        var ingresos_brutos = $("#ingresos_brutos_agregar_cliente").val();
         
         var localidad = parseInt($("#localidad_agregar_cliente").val());
         var tipo_inscripcion = parseInt($("#tipo_inscripcion_agregar_cliente").val());
@@ -726,8 +732,6 @@
         if(razon_social==""){activar_error("razon_social_agregar_cliente");}
         else{desactivar_error("razon_social_agregar_cliente");}
         
-        if(ingresos_brutos==""){activar_error("ingresos_brutos_agregar_cliente");}
-        else{desactivar_error("ingresos_brutos_agregar_cliente");}
         
         if(nombre==""){activar_error("nombre_agregar_cliente");}
         else{desactivar_error("nombre_agregar_cliente");}
@@ -769,7 +773,6 @@
         var telefono = $("#telefono_editar_cliente").val();
         var correo = $("#correo_editar_cliente").val();
         var direccion = $("#direccion_editar_cliente").val();
-        var ingresos_brutos = $("#ingresos_brutos_editar_cliente").val()
         
         var localidad = parseInt($("#localidad_editar_cliente").val());
         var tipo_inscripcion = parseInt($("#tipo_inscripcion_editar_cliente").val());
@@ -780,8 +783,6 @@
         else{desactivar_error("razon_social_editar_cliente");}
         
         
-        if(ingresos_brutos==""){activar_error("ingresos_brutos_editar_cliente");}
-        else{desactivar_error("ingresos_brutos_editar_cliente");}
         
         if(nombre==""){activar_error("nombre_editar_cliente");}
         else{desactivar_error("nombre_editar_cliente");}
@@ -823,7 +824,7 @@
     {
         $("#"+id).css("border-width","2px");
         $("#"+id).css("border-style","solid");
-        $("#"+id).css("border-color","#F00");
+        $("#"+id).css("border-color","#00F");
     }
     
     function desactivar_error(id)

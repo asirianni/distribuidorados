@@ -87,7 +87,7 @@
                             <td>".$value["fecha_registro"]."</td>
                             <td>".$value["desc_tipo"]."</td>
                             <td>
-                                <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_usuario(".$value["id"].")'><i class='fa fa-edit'></i></button>";
+                                <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_usuario(".$value["id"].")'><i class='fa fa-edit'></i></button>&nbsp;";
                                 if((int)$value["tipo_usuario"] != 1)
                                 {
                                     echo "<a href='".base_url()."index.php/Administrador/administrar_modulos_de_usuario/".$value["id"]."' class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Modulos' onClick='adm_modulos_usuario(".$value["id"].")'><i class='fa fa-cubes'></i></a>";
@@ -125,7 +125,7 @@
             <div class="modal-body">
                 <form action="#" method="post" id="formulario_agregar_usuario">
                 <div class="col-md-12">
-                    <p style="font-size: 16px;font-weight: bold;color: #F00;" id="mensaje_error"></p>
+                    <p style="font-size: 16px;font-weight: bold;color: #00F;" id="mensaje_error"></p>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -221,7 +221,7 @@
                 <form action="#" method="post" id="formulario_editar_usuario">
                     <input type="text" id="id_editar_usuario" name="id_editar_usuario" value="" hidden="true">
                 <div class="col-md-12">
-                    <p style="font-size: 16px;font-weight: bold;color: #F00;" id="mensaje_error_editar"></p>
+                    <p style="font-size: 16px;font-weight: bold;color: #00F;" id="mensaje_error_editar"></p>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -263,17 +263,18 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="nueva_password2_editar_usuario">Confirmar contraseña</label>
-                        <input class="form-control" id="nueva_password2_editar_usuario" name="nueva_password2_editar_usuario" value="" type="password">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
                         <label for="fecha_registro_editar_usuario">Fecha registro</label>
                         <input type="text" class="form-control datetimepicker" id="fecha_registro_editar_usuario" name="fecha_registro_editar_usuario">
                         
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nueva_password2_editar_usuario">Confirmar contraseña</label>
+                        <input class="form-control" id="nueva_password2_editar_usuario" name="nueva_password2_editar_usuario" value="" type="password">
+                    </div>
+                </div>
+                
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="estado_editar_usuario">Estado</label>

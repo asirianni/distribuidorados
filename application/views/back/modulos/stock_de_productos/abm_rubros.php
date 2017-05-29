@@ -311,7 +311,7 @@
     {
         $("#"+id).css("border-width","2px");
         $("#"+id).css("border-style","solid");
-        $("#"+id).css("border-color","#F00");
+        $("#"+id).css("border-color","#00F");
     }
     
     function desactivar_error(id)

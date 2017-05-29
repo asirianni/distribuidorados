@@ -28,10 +28,10 @@ class Response_Ajax extends CI_Controller
             $margen_3= (float)$this->input->post("margen_3_agregar");
             $margen_4= (float)$this->input->post("margen_4_agregar");
                
-            $lista_1 = $margen_1*$costo;
-            $lista_2 = $margen_2*$costo;
-            $lista_3 = $margen_3*$costo;
-            $lista_4 = $margen_4*$costo;
+            $lista_1 = (($costo * $margen_1) / 100) + $costo;
+            $lista_2 = (($costo * $margen_2) / 100) + $costo;
+            $lista_3 = (($costo * $margen_3) / 100) + $costo;
+            $lista_4 = (($costo * $margen_4) / 100) + $costo;
             
             $this->load->model("Stock_productos_model");
             $respuesta = $this->Stock_productos_model->agregar_producto($descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4);
@@ -59,10 +59,10 @@ class Response_Ajax extends CI_Controller
             $margen_3= (float)$this->input->post("margen_3");
             $margen_4= (float)$this->input->post("margen_4");
                
-            $lista_1 = $margen_1*$costo;
-            $lista_2 = $margen_2*$costo;
-            $lista_3 = $margen_3*$costo;
-            $lista_4 = $margen_4*$costo;
+            $lista_1 = (($costo * $margen_1) / 100) + $costo;
+            $lista_2 = (($costo * $margen_2) / 100) + $costo;
+            $lista_3 = (($costo * $margen_3) / 100) + $costo;
+            $lista_4 = (($costo * $margen_4) / 100) + $costo;
             
             if($rubro2 != 0 && $rubro2!=$rubro)
             {

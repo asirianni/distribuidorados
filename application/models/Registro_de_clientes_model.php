@@ -12,9 +12,15 @@ class Registro_de_clientes_model extends CI_Model
         return $r->result_array();
     }
     
-    public function get_cantidad_clientes_no_suspendidos()
+    public function get_clientes()
     {
-        $r = $this->db->query("SELECT count(cliente.id) as numero FROM cliente where cliente.estado <> 3 ");
+        $r = $this->db->query("select cliente.id,cliente.dni_cuit_cuil,cliente.ingresos_brutos,cliente.nombre,cliente.apellido,cliente.razon_social,cliente.lista,cliente.telefono,cliente.correo,cliente.direccion,cliente.localidad,cliente.descuento_gral,cliente.tipo_inscripcion, estado_cliente.estado as desc_estado, localidades.localidad as desc_localidad, provincias.id as id_provincia, provincias.provincia as desc_provincia,tipo_inscripcion.inscripcion as desc_inscripcion from cliente INNER JOIN localidades on localidades.codigo = cliente.localidad INNER JOIN provincias on provincias.id = localidades.id_provincia INNER JOIN estado_cliente on estado_cliente.id = cliente.estado INNER JOIN tipo_inscripcion on tipo_inscripcion.id = cliente.tipo_inscripcion");
+        return $r->result_array();
+    }
+    
+    public function get_cantidad_clientes()
+    {
+        $r = $this->db->query("SELECT count(cliente.id) as numero FROM cliente");
         $r = $r->row_array();
         return (int)$r["numero"];
     }

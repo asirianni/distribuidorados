@@ -36,7 +36,7 @@ class Administrador extends MY_Controller
             $output["controller_usuario"]=$this->controller_usuario;
             
             $output["cantidad_productos"]= $this->Stock_productos_model->get_cantidad_productos();
-            $output["cantidad_clientes"]= $this->Registro_de_clientes_model->get_cantidad_clientes_no_suspendidos();
+            $output["cantidad_clientes"]= $this->Registro_de_clientes_model->get_cantidad_clientes();
             
             $saldo = $this->Caja_model->obtener_caja(Date("Y-m-d"));
             $saldo= $saldo["saldo"];
@@ -101,10 +101,11 @@ class Administrador extends MY_Controller
             $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
             $output["footer"]=$this->adminlte->getFooter();
             
-            $output["modulos_existentes"] = $this->Usuario_model->get_modulos_usuario($id_usuario);
+            
             $output["modulos_faltantes"] = $this->Usuario_model->get_modulos_faltantes_usuario($id_usuario); 
             $output["id_usuario"]=$id_usuario;
-            $output["usuario"]=$this->Usuario_model->get_usuario_por_id($id_usuario);
+            $output["usuario"]=$usuario=$this->Usuario_model->get_usuario_por_id($id_usuario);
+            $output["modulos_existentes"] = $this->Usuario_model->get_modulos_usuario($id_usuario,$usuario["tipo_usuario"]);
             $this->load->view("back/admin/adm_modulos_usuario",$output);
         }
         else
