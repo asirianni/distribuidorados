@@ -489,12 +489,62 @@ class MY_Controller extends CI_Controller
     
     public function generar_excel_clientes()
     {
-        header("Content-type: application/vnd.ms-excel; name='excel'");
-        header("Content-Disposition: filename=Lista-de-Clientes.xls");
-        header("Pragma: no-cache");
-        header("Expires: 0");
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(2);
+        
+        if($permiso)
+        {
+            header("Content-type: application/vnd.ms-excel; name='excel'");
+            header("Content-Disposition: filename=Lista-de-Clientes.xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
 
-        echo $_POST['datos_a_enviar'];
+            $this->load->model("Registro_de_clientes_model");
+            $listado_clientes= $this->Registro_de_clientes_model->get_clientes_no_suspendidos();
+            
+            
+            $html=
+           "<table>
+                <tr>
+                    <td><h2>Listado de clientes</h2></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+            <table class='table table-striped'>
+                        <thead>
+                            <tr>
+                                <th>CUIL-DNI-CUIT</th>
+                                <th>RAZON SOCIAL</th>
+                                <th>LOCALIDAD</th>
+                                <th>TELEFONO</th>
+                                <th>TIPO INSCRIPCION</th>
+                                <th>ESTADO</th>
+                            </tr>
+                        </thead>
+                    <tbody>";
+            foreach($listado_clientes as $value)
+            {
+                $html.=               
+                    "<tr>
+                        <td>".$value["dni_cuit_cuil"]."</td>
+                        <td>".$value["razon_social"]."</td>
+                        <td>".$value["desc_localidad"]."</td>
+                        <td>".$value["telefono"]."</td>
+                        <td>".$value["desc_inscripcion"]."</td>
+                        <td>".$value["desc_estado"]."</td>   
+                    </tr>";
+
+            }
+                $html.= "</tbody>
+        </table>";
+            
+            
+            echo $html;
+        }
     }
     
     // FIN MODULO DE CLIENTES
@@ -676,12 +726,23 @@ class MY_Controller extends CI_Controller
         }
     }
     
-    public function imprimir_factura()
+    public function imprimir_factura($numero = null)
     {
         $permiso= $this->funciones_generales->dar_permiso_a_modulo(5);
-        $numero_factura = (int)$this->input->post("numero");
+        $permiso2= $this->funciones_generales->dar_permiso_a_modulo(6);
+        $numero_factura = null;
         
-        if($permiso && $numero_factura != 0)
+        if($this->input->post())
+        {
+            $numero_factura =(int)$this->input->post("numero");
+        }
+        else
+        {
+            $numero_factura = $numero;
+        }
+        
+        
+        if($permiso || $permiso2 && $numero_factura != null && $numero != 0)
         {
             $this->load->model("Facturacion_model");
             $this->load->model("Configuracion_empresa_model");
@@ -857,21 +918,97 @@ class MY_Controller extends CI_Controller
     public function ver_factura($numero = null)
     {
         $permiso= $this->funciones_generales->dar_permiso_a_modulo(5);
+        $permiso2= $this->funciones_generales->dar_permiso_a_modulo(6);
+        
+        if($permiso || $permiso2 && $numero != null)
+        {
+            $this->load->model("Registro_de_clientes_model");
+            $this->load->model("Localidades_model");
+            
+            $this->load->model("Facturacion_model");
+            $this->load->model("Configuracion_empresa_model");
+            
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["js"]=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            
+            // LOGIC
+            $output["controller_usuario"]=$this->controller_usuario;
+            $output["factura"]=$this->Facturacion_model->get_factura($numero);
+            $output["detalle_factura"]=$this->Facturacion_model->get_detalle_factura($numero);
+            $output["tipo_de_inscripcion"]=$this->Configuracion_empresa_model->get_configuracion(4);
+            $output["cuit"]=$this->Configuracion_empresa_model->get_configuracion(1);
+            $output["ingresos_brutos"]=$this->Configuracion_empresa_model->get_configuracion(2);
+            $output["inicio_actividad"]=$this->Configuracion_empresa_model->get_configuracion(5);
+            
+            $this->load->view("back/modulos/facturacion/ver_factura",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    // FIN MODULO FACTURACION
+    
+    // COMIENZO MODULO ESTADOS DE CUENTAS
+    
+    public function estados_de_cuentas()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(6);
         
         if($permiso)
         {
-            $this->load->model("Orden_trabajo_model");
-            $this->load->model("Factura_model");
-            $this->load->model("Cliente_model");
+            $this->load->model("Registro_de_clientes_model");
+            $this->load->model("Localidades_model");
             
-            $this->load->model("Factura_model");
-
-            $factura = $this->Factura_model->getFacturaPorNumero($numero);
-            $salida["factura"] = $factura;
-            $salida["detalles"]= $this->Orden_trabajo_model->getDetallesDeOT($factura["ot"]);
-            $salida["cliente"] = $this->Cliente_model->getCliente($factura["cliente"]);
-
-            $this->load->view("back/ver_factura",$salida);
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["css"].=$this->adminlte->get_css_datetimepicker();
+            $output["js"]=$this->adminlte->get_js_datetimepicker();
+            $output["js"].=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            
+            $desde = null;
+            $hasta = null;
+            $tipo = "todos";
+            $cliente_consultar="todos";
+            
+            if($this->input->post())
+            {
+                $desde = $this->input->post("desde_consultar");
+                $hasta = $this->input->post("hasta_consultar");
+                $tipo = $this->input->post("tipo_consultar");
+                $cliente_consultar = $this->input->post("cliente_consultar");
+            }
+            else
+            {
+                $desde = $this->Registro_de_clientes_model->get_fecha_min_cuenta_clientes();
+                $hasta = $this->Registro_de_clientes_model->get_fecha_max_cuenta_clientes();
+            }
+            
+            $output["desde_consultar"]=$desde;
+            $output["hasta_consultar"]=$hasta;
+            $output["tipo_consultar"]=$tipo;
+            $output["cliente_consultar"]=$cliente_consultar;
+            // LOGIC
+            
+            $output["listado_clientes"]=$this->Registro_de_clientes_model->get_clientes_no_suspendidos();
+            $output["listado_cuentas_clientes"]= $this->Registro_de_clientes_model->get_cuentas_clientes_con_consulta($desde,$hasta,$tipo,$cliente_consultar);
+            $output["controller_usuario"]=$this->controller_usuario;
+            $output["lista_estados_cliente"]=$this->Registro_de_clientes_model->get_estados_clientes();
+            $output["lista_tipos_inscripciones"]=$this->Registro_de_clientes_model->get_tipo_inscripciones();
+            $output["listado_localidades"]=$this->Localidades_model->get_localidades();
+            $output["listado_de_descuentos"]=$this->Registro_de_clientes_model->get_descuentos();
+            $this->load->view("back/modulos/registro_de_clientes/cuentas_clientes",$output);
         }
         else
         {
@@ -879,8 +1016,137 @@ class MY_Controller extends CI_Controller
         }
     }
     
-    // FIN MODULO FACTURACION
+    public function imprimir_cuentas_clientes()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(6);
+        
+        if($permiso && $this->input->post())
+        {
+            $this->load->model("Registro_de_clientes_model");
+            
+            $desde=$this->input->post("desde_imprimir");
+            $hasta=$this->input->post("hasta_imprimir");
+            $tipo=$this->input->post("tipo_imprimir");
+            $cliente_consultar=$this->input->post("cliente_imprimir");
+                    
+                    
+            $listado_cuentas_clientes= $this->Registro_de_clientes_model->get_cuentas_clientes_con_consulta($desde,$hasta,$tipo,$cliente_consultar);
+            
+            
+            
+            $output["listado_cuentas_clientes"]=$listado_cuentas_clientes;
+            $this->load->view("back/modulos/registro_de_clientes/impresor-cuentas-clientes",$output);
+        }
+    }
     
+    public function imprimir_cuenta_cliente($id = null)
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(6);
+        
+        if($permiso && $id != null)
+        {
+            $this->load->model("Registro_de_clientes_model");
+            
+            $cuenta_cliente= $this->Registro_de_clientes_model->get_cuenta_cliente($id);
+            
+            $output["cuenta_cliente"]=$cuenta_cliente;
+            $this->load->view("back/modulos/registro_de_clientes/imprimir_cuenta_cliente",$output);
+        }
+    }
+    
+    public function generar_excel_cuentas_clientes()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(6);
+        
+        if($permiso && $this->input->post())
+        {
+            header("Content-type: application/vnd.ms-excel; name='excel'");
+            header("Content-Disposition: filename=Lista-de-Cuentas-Clientes.xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+            $this->load->model("Registro_de_clientes_model");
+            
+            $desde=$this->input->post("desde_imprimir");
+            $hasta=$this->input->post("hasta_imprimir");
+            $tipo=$this->input->post("tipo_imprimir");
+            $cliente_consultar=$this->input->post("cliente_imprimir");
+                    
+                    
+            $listado_cuentas_clientes= $this->Registro_de_clientes_model->get_cuentas_clientes_con_consulta($desde,$hasta,$tipo,$cliente_consultar);
+            
+            $html=
+           "<table>
+                <tr>
+                    <th>Fecha desde</th>
+                    <th>Fecha Hasta</th>
+                    <th>Tipo</th>
+                    <th>Cliente</th>
+                </tr>
+                <tr>
+                    <td>$desde</td>
+                    <td>$hasta</td>
+                    <td>$tipo</td>
+                    <td>$cliente_consultar</td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th></th>
+                </tr>
+            </table>
+            ";
+            
+            $html .=
+            "<table>
+                    <thead>
+                      <tr>
+                        <th>FECHA</th>
+                        <th>CLIENTE</th>
+                        <th>ENTRADA</th>
+                        <th>SALIDA</th>
+                      </tr>
+                    </thead>
+                    <tbody>";
+            
+            foreach($listado_cuentas_clientes as $value)
+            {
+                $html.=
+                    "<tr>
+                        <td>".$value["fecha"]."</td>
+                        <td>".$value["cliente_dni_cuit_cuil"]." - ".$value["cliente_nombre"]." ".$value["cliente_apellido"]."</td>";
+                        
+                        if((float)$value["importe_recibo"] != 0)
+                        {
+                            $html.= "<td>".$value["importe_recibo"]."</td>";
+                            $html.= "<td>0</td>";
+                        }
+                        else if((float)$value["importe_factura"] != 0)
+                        {
+                            $html.= "<td>0</td>";
+                            $html.= "<td>".$value["importe_factura"]."</td>";
+                        }
+                        else
+                        {
+                            $html.= "<td>0</td>";
+                            $html.= "<td>0</td>";
+                        }
+                        
+                        
+                    $html.="</tr>";
+            }
+       $html.= "</tbody>
+        </table>";
+            
+            echo $html;
+        }
+    }
+    
+    // FIN MODULO ESTADOS DE CUENTAS
+   
     // COMIENZO MODULO COMPRAS
     
     public function abm_proveedores()

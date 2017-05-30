@@ -255,24 +255,26 @@ class Administrador extends MY_Controller
             
             // SI SE SUBIO LA IMAGEN
             
+            $this->load->library("Md5");
+            // SE INTENTA CREAR EL USUARIO
+            $foto_perfil="foto_default.png";
+                
+            $usuario= $this->input->post("usuario_agregar_usuario");
+            $pass= $this->input->post("password_agregar_usuario");
+            $pass= Md5::cifrar($pass);
+            $correo= $this->input->post("correo_agregar_usuario");
+            $tipo_usuario= $this->input->post("tipo_agregar_usuario");
+            $estado= $this->input->post("estado_agregar_usuario");
+            $fecha_registro= $this->input->post("fecha_registro_agregar_usuario");
+            $nombre= $this->input->post("nombre_agregar_usuario");
+            $apellido= $this->input->post("apellido_agregar_usuario");
+                
             if($respuesta)
             {
-                $this->load->library("Md5");
-                // SE INTENTA CREAR EL USUARIO
-                $foto_perfil=$data["upload_data"]["file_name"];
-                
-                $usuario= $this->input->post("usuario_agregar_usuario");
-                $pass= $this->input->post("password_agregar_usuario");
-                $pass= Md5::cifrar($pass);
-                $correo= $this->input->post("correo_agregar_usuario");
-                $tipo_usuario= $this->input->post("tipo_agregar_usuario");
-                $estado= $this->input->post("estado_agregar_usuario");
-                $fecha_registro= $this->input->post("fecha_registro_agregar_usuario");
-                $nombre= $this->input->post("nombre_agregar_usuario");
-                $apellido= $this->input->post("apellido_agregar_usuario");
-                
-                $respuesta= $this->Usuario_model->agregar_usuario($usuario,$pass,$correo,$tipo_usuario,$estado,$fecha_registro,$nombre,$apellido,$foto_perfil);
+               $foto_perfil=$data["upload_data"]["file_name"];
             }
+            
+            $respuesta= $this->Usuario_model->agregar_usuario($usuario,$pass,$correo,$tipo_usuario,$estado,$fecha_registro,$nombre,$apellido,$foto_perfil);
         }
         
         echo json_encode($respuesta);

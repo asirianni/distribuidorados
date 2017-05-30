@@ -101,8 +101,8 @@ class AdminLTE extends Config
               <b>Version</b> 1.1
             </div>
             &nbsp;
-            <!--<strong>Copyright &copy; 2014-2016 <a href='http://almsaeedstudio.com'>Almsaeed Studio</a>.</strong> All rights
-            reserved.-->
+            <strong>desarrollo por  <a target='_blank' href='https://www.facebook.com/Ordene-su-negocio-737763829635258'>ordenesunegocio</a> de Adrian Sirianni.</strong>
+
          </footer>";
         return $html;
     }
@@ -215,7 +215,7 @@ class AdminLTE extends Config
                              </li>";
                     break;
                 
-                case 6: $html.="<li><a href='".base_url()."index.php/".$controller_user."'><i class='fa fa-bars'></i> <span>Estados de cuenta</span></a></li>"; 
+                case 6: $html.="<li><a href='".base_url()."index.php/".$controller_user."/estados_de_cuentas'><i class='fa fa-bars'></i> <span>Estados de cuenta</span></a></li>"; 
                     break;
                 case 7: $html.="<li class='treeview'>
                                 <a href='#'>

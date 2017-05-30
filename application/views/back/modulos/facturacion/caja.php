@@ -356,21 +356,7 @@
         {
           if(tipo_comp == 1)
           {
-            $.ajax({
-                 type:"POST",
-                 url: "<?php echo base_url()?>index.php/Response_Ajax/mostrar_datos_factura",
-                 data:{comprobante:num_comp},
-
-                 beforeSend: function(event){},
-                 success: function(data){
-                     data = JSON.parse(data);
-
-                     $("#cuerpo-modal").html(data);
-                     $("#modal").modal("show");
-
-                 },
-                 error: function(event){alert(event.responseText);},
-             });   
+              location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/ver_factura/"+num_comp;
           }
           else if(tipo_comp == 5)
           {

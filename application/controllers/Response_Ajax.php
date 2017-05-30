@@ -637,5 +637,23 @@ class Response_Ajax extends CI_Controller
             echo json_encode($respuesta);
         }
     }
+    
+    public function agregar_movimiento_cuenta_cliente()
+    {
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
+        {
+            $cliente= $this->input->post("cliente");
+            $fecha= Date("Y-m-d");
+            $tipo_factura= $this->input->post("tipo_factura");
+            $numero_factura= $this->input->post("numero_factura");
+            $importe_factura= $this->input->post("importe_factura");
+            $importe_recibo= $this->input->post("importe_recibo");
+            $usuario = $this->session->userdata("id");
+            
+            $this->load->model("Registro_de_clientes_model");
+            $respuesta = $this->Registro_de_clientes_model->agregar_movimiento_cuenta_cliente($cliente,$fecha,$tipo_factura,$numero_factura,$importe_factura,$importe_recibo,$usuario);
+            echo json_encode($respuesta);
+        }
+    }
 }
 

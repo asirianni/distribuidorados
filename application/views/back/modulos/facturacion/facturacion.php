@@ -228,6 +228,7 @@
                     </select>
                     <p style="text-align: center;margin-top: 20px;">
                         <button class="btn btn-warning disabled" id="btn_guardar" onclick="abrir_modal_guardar();"><i class="fa fa-save"></i><br/>GUARDAR</button>
+                        <button class="btn btn-warning disabled" id="btn_nuevo" onclick=""><i class="fa fa-calculator"></i><br/>Nuevo</button>
                     </p>
                 </div>
             </div>
@@ -783,7 +784,8 @@
                                 $("#imprimir_factura").submit();
                             }
                             
-                            location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/facturacion";
+                            $("#btn_guardar").addClass("disabled");
+                            $("#btn_nuevo").removeClass("disabled");
                             
                         }
                     },
@@ -809,6 +811,10 @@
             }    
         }
     }
+    
+    $("#btn_nuevo").click(function(){
+        location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/facturacion";
+    });
     
     function ccleaner_arreglo_detalle()
     {

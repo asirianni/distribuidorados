@@ -76,9 +76,9 @@
                         <th>List 2</th>
                         <th>List 3</th>
                         <th>List 4</th>
-                        <!--<th>Stock</th>
+                        <th>Stock</th>
                         <th>Punto Critico</th>
-                        <th>Rubro</th>
+                        <!--<th>Rubro</th>
                         <th>Unidad de medida</th>-->
                         <th>Controles</th>
                       </tr>
@@ -87,8 +87,19 @@
                         <?php
                             foreach($listado_productos as $value)
                             {
+                                $stock = (float)$value["stock"];
+                                $punto_critico= (float)$value["punto_critico"];
+                                
+                                if($stock <= $punto_critico)
+                                {
+                                    echo "<tr class='bg-danger'>";
+                                }
+                                else
+                                {
+                                    echo "<tr>";
+                                }
                                 echo 
-                                "<tr>
+                                "
                                     <td>".$value["id"]."</td>
                                     <td>".$value["descripcion"]."</td>
                                     <td>$".$value["costo"]."</td>
@@ -96,9 +107,9 @@
                                     <td>$".$value["lista_2"]."</td>
                                     <td>$".$value["lista_3"]."</td>
                                     <td>$".$value["lista_4"]."</td>
-                                    <!--<td>".$value["stock"]."</td>
+                                    <td>".$value["stock"]."</td>
                                     <td>".$value["punto_critico"]."</td>
-                                    <td>".$value["desc_rubro"]."</td>
+                                   <!-- <td>".$value["desc_rubro"]."</td>
                                    <td>".$value["medida_desc"]."</td>-->
                                     <td>
                                         <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_producto(".$value["id"].",&#34;".$value["descripcion"]."&#34;,".$value["stock"].",".$value["punto_critico"].",".$value["rubro"].",".$value["unidad_medida"].",".$value["costo"].",".$value["margen_1"].",".$value["lista_1"].",".$value["margen_2"].",".$value["lista_2"].",".$value["margen_3"].",".$value["lista_3"].",".$value["margen_4"].",".$value["lista_4"].")'><i class='fa fa-edit'></i></button>
