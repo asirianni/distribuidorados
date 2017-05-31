@@ -218,7 +218,7 @@
             <div class="col-md-offset-6 col-md-6">
                 <div class="marco" style="font-size: 18px;">
                     <p>SUB-TOTAL: $<span id='subtotal'>0</span></p>
-                    <p>DESC. GRAL: <input type="number"  class=""  id="descuento_general" value="Seleccione cliente" onChange='generar_html_tabla_listado()' disabled> -$<span id="pesos_de_descuento">0</span></p>
+                    <p>DESC. GRAL: <input type="number"  class=""  id="descuento_general" value="" onChange='generar_html_tabla_listado()' disabled> -$<span id="pesos_de_descuento">0</span></p>
                     <!--<p>IMPUESTOS: $<span id='impuestos'>0</span></p>-->
                     <p>TOTAL: $<span id='total'>0</span></p>
                     <label>CONDICION DE VENTA:</label>
@@ -668,7 +668,7 @@
 <script src="<?php echo base_url()?>recursos/bootstrap/js/bootstrap.min.js"></script>
 <!-- Morris.js charts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="<?php echo base_url()?>recursos/plugins/morris/morris.min.js"></script>
+<!--<script src="<?php echo base_url()?>recursos/plugins/morris/morris.min.js"></script>-->
 <!-- Sparkline -->
 <script src="<?php echo base_url()?>recursos/plugins/sparkline/jquery.sparkline.min.js"></script>
 <!-- jvectormap -->
@@ -690,7 +690,7 @@
 <!-- AdminLTE App -->
 <script src="<?php echo base_url()?>recursos/dist/js/app.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="<?php echo base_url()?>recursos/dist/js/pages/dashboard.js"></script>
+<!--<script src="<?php echo base_url()?>recursos/dist/js/pages/dashboard.js"></script>-->
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url()?>recursos/dist/js/demo.js"></script>
 <!--FUNCIONES GLOBALES -->
@@ -773,13 +773,15 @@
                     },
                     success: function(data)
                     {
+                        alert(data);
                         data= JSON.parse(data);
-
+                        alert(data);
                         if(data)
                         {
                             
                             if(imprimir)
                             {
+                                alert(imprimir);
                                 $("#numero_factura_imprimir").val(data["numero"]);
                                 $("#imprimir_factura").submit();
                             }
