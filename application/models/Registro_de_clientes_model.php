@@ -43,14 +43,14 @@ class Registro_de_clientes_model extends CI_Model
     {
        $sql="SELECT cuenta_cliente.*, cliente.dni_cuit_cuil as cliente_dni_cuit_cuil, cliente.nombre as cliente_nombre, cliente.apellido as cliente_apellido,usuarios.usuario as desc_usuario FROM cuenta_cliente INNER JOIN cliente on cliente.id = cuenta_cliente.cliente INNER JOIN usuarios on usuarios.id = cuenta_cliente.usuario where cuenta_cliente.fecha >= '".$desde."' and cuenta_cliente.fecha <= '".$hasta."' ";
        
-       if($tipo == "recibo")
+       if($tipo == "entrada")
        {
-           $sql.= " and importe_recibo != null";
+           $sql.= " and cuenta_cliente.importe_recibo != 0";
        }
        
-       if($tipo == "factura")
+       if($tipo == "salida")
        {
-           $sql.= " and cuenta_cliente.importe_factura != null";
+           $sql.= " and cuenta_cliente.importe_factura != 0";
        }
        
        if($cliente_consultar != "todos")

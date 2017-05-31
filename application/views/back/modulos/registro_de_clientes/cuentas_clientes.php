@@ -113,8 +113,7 @@
                                 <select class="form-control" name="tipo_consultar">
                                     
                                     <?php
-                                    echo "saas".$tipo_consultar;
-                                        $opciones = Array("todos","recibo","factura");
+                                        $opciones = Array("todos","entrada","salida");
                                         
                                         for($i=0; $i < count($opciones);$i++)
                                         {
