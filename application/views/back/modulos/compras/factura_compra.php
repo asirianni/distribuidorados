@@ -83,13 +83,13 @@
             <div class="col-md-12 marco">
                 <div class="col-md-4">
                     <div class="col-md-12">
-                            
-                            
+                        <p><img height="100" src="<?php echo base_url()?>recursos/images/imagen_factura.png"/></p>
                     </div>
                 </div>
                
                 <div class="col-md-8">
                     <div class="col-md-12">
+                        <div style="margin-top: 5px;">&nbsp;</div>
                             <div class="col-md-3">
                                <label>TIPO DE FACTURA</label>
                                <select id="tipo_factura" class="form-control" onchange="cambio_tipo_factura()">
@@ -224,7 +224,7 @@
                         <option value="1">Contado</option>
                         <option value="2">Cuenta Corriente</option>
                     </select>
-                    <p style="text-align: center;margin-top: 20px;"><button class="btn btn-warning disabled" id="btn_guardar" onclick="abrir_modal_guardar();"><i class="fa fa-save"></i><br/>GUARDAR</button></p>
+                    <p style="text-align: center;margin-top: 20px;"><button class="btn btn-danger disabled" id="btn_guardar" onclick="abrir_modal_guardar();"><i class="fa fa-save"></i><br/>GUARDAR</button></p>
                 </div>
             </div>
         </div>
@@ -544,7 +544,7 @@
                                             <td>".$value["descripcion"]."</td>
                                             <td>".$value["stock"]."</td>
                                             <td>".$value["costo"]."</td>
-                                            <td><button class='btn btn-danger' onclick='agregar_detalle(".$value["id"].",&#34;".$value["descripcion"]."&#34;,".$value["stock"].",".$value["costo"].")'>Seleccionar</button></td>
+                                            <td><button class='btn btn-danger' onclick='agregar_detalle(".$value["id"].",&#34;".$value["descripcion"]."&#34;,".$value["costo"].")'>Seleccionar</button></td>
                                         </tr>
                                     ";
                                 }
@@ -698,7 +698,6 @@
             var detalle = arreglo_detalles;
             var descuento_general = $("#descuento_general").val();
             
-            alert(proveedor);
             if(tipo_factura != 0 && fecha != "" && proveedor != 0 && detalle)
             {
                 $.ajax({
@@ -728,7 +727,7 @@
                                 $("#imprimir_factura").submit();
                             }
                             
-                            location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/facturacion";
+                            location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/factura_compra";
                             
                         }
                     },
@@ -867,7 +866,7 @@
             var descuento = 0;
             var subtotal=precio;
             var total=0;
-            var arreglo= {"cod_producto":cod_producto,"descripcion":descripcion,"cantidad":0,"precio":precio,"descuento":descuento,"total":total,"subtotal":subtotal};
+            var arreglo= {"cod_producto":cod_producto,"descripcion":descripcion,"cantidad":1,"precio":precio,"descuento":descuento,"total":total,"subtotal":subtotal};
             arreglo_detalles.push(arreglo);
 
             generar_html_tabla_listado();

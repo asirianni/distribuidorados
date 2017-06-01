@@ -48,7 +48,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Reporte de ventas
+        Reporte de compras
         <!--<small>Control panel</small>-->
       </h1>
       <ol class="breadcrumb">
@@ -65,11 +65,11 @@
             <div class="box">
                 <div class="box-header">
                     <div class="col-md-12" style="margin-top: 10px;">
-                        <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/reporte_de_venta" method="post" id="formulario_consultar_remito">
+                        <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/reporte_de_compras" method="post" id="formulario_consultar_remito">
                             <div class="col-md-12">
                                 <p style="color: #333;font-size: 19px;font-weight: bold;margin-bottom: 12px;">CONSULTE HISTORIAL</p>
                             </div>
-                            <div class="col-md-3 col-sm-3">
+                            <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <label for="desde_consultar">Desde</label>
                                     <?php
@@ -84,7 +84,7 @@
                                     ?>
                                     </div>
                             </div>
-                            <div class="col-md-3 col-sm-3">
+                            <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <label for="hasta_consultar">Hasta</label>
                                     <?php
@@ -99,41 +99,7 @@
                                     ?>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-3">
-                                <label>Cliente: </label>
-                                <select type="text" class="form-control select2" style="width: 100%;"  id="cliente_consultar" name="cliente_consultar">
-                                    
-                                    <?php
-                                        if($cliente_consultar != null)
-                                        {
-                                            echo "<option value='0'>Todos</option>";
-                                            
-                                            foreach($listado_clientes as $value)
-                                            {
-                                                if($cliente_consultar == $value["id"])
-                                                {
-                                                    echo "<option value='".$value["id"]."' selected>".$value["dni_cuit_cuil"]." - ".$value["nombre"]." ".$value["apellido"]."</option>";
-                                                }
-                                                else
-                                                {
-                                                  echo "<option value='".$value["id"]."'>".$value["dni_cuit_cuil"]." - ".$value["nombre"]." ".$value["apellido"]."</option>";
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            echo "<option value='0'>Todos</option>";
-                                            
-                                            foreach($listado_clientes as $value)
-                                            {
-                                                echo "<option value='".$value["id"]."'>".$value["dni_cuit_cuil"]." - ".$value["nombre"]." ".$value["apellido"]."</option>";
-                                            }
-                                        }
-                                        
-                                    ?> 
-                                </select>
-                            </div>
-                            <div class="col-md-3 col-sm-3">
+                            <div class="col-md-4 col-sm-4">
                                 <label>Estado de factura: </label>
                                 <select type="text" class="form-control select2" style="width: 100%;"  id="estado_factura_consultar" name="estado_factura_consultar">
                                     
@@ -189,19 +155,17 @@
                     </div>
                 </div><!-- /.box-header -->
                 
-                <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/exportar_reporte_ventas" method="post" target="_blank" id="FormularioExportacion" hidden="">
+                <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/exportar_reporte_compras" method="post" target="_blank" id="FormularioExportacion" hidden="">
                     <input type="text" name="desde_imprimir" value="<?php echo $desde_consultar?>">
                     <input type="text" name="hasta_imprimir" value="<?php echo $hasta_consultar?>">
-                    <input type="text" name="cliente_imprimir" value="<?php echo $cliente_consultar?>">
                     <input type="text" name="estado_imprimir" value="<?php echo $estado_factura_consultar?>">
                     <input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />
                 </form>
 
                 <!-- FORMULARIO PARA IMPRIMIR LISTA -->
-                <form id="formulario_impresion" action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/imprimir_lista_facturas" method="post" target="_blank" style="display: none;">
+                <form id="formulario_impresion" action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/imprimir_lista_facturas_de_compra" method="post" target="_blank" style="display: none;">
                     <input type="text" name="desde_imprimir" value="<?php echo $desde_consultar?>">
                     <input type="text" name="hasta_imprimir" value="<?php echo $hasta_consultar?>">
-                    <input type="text" name="cliente_imprimir" value="<?php echo $cliente_consultar?>">
                     <input type="text" name="estado_imprimir" value="<?php echo $estado_factura_consultar?>">
                 </form>
                 <!-- FIN FORMULARIO PARA IMPRIMIR LISTA-->
@@ -214,7 +178,6 @@
                     <thead>
                       <tr>
                         <th>FECHA</th>
-                        <th>CLIENTE</th>
                         <th>FACTURA</th>
                         <th>TIPO</th>
                         <th>IMPORTE</th>
@@ -243,7 +206,6 @@
                                 }
                                 echo "
                                     <td>".$value["fecha"]."</td>
-                                    <td>".$value["cliente_dni_cuit_cuil"]." - ".$value["cliente_nombre"]." ".$value["cliente_apellido"]."</td>
                                     <td>".$value["numero"]."</td>
                                     <td>".$value["desc_tipo_factura"]."</td>
                                     <td>$".$value["total"]."</td>
@@ -251,7 +213,7 @@
                                        
                                 </tr>";
                             }
-                        ?>  
+                        ?>   
                     </tbody>
                   </table>
                 </div><!-- /.box-body -->

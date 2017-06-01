@@ -238,7 +238,8 @@ class AdminLTE extends Config
                                       </span>
                                     </a>
                                     <ul class='treeview-menu'>
-                                      <li><a href='".base_url()."index.php/".$controller_user."/reporte_de_compra'><i class='fa fa-circle-o'></i>Reporte de compra</a></li>
+                                      <li><a href='".base_url()."index.php/".$controller_user."/reporte_de_pedidos'><i class='fa fa-circle-o'></i>Reporte de pedidos</a></li>
+                                      <li><a href='".base_url()."index.php/".$controller_user."/reporte_de_compras'><i class='fa fa-circle-o'></i>Reporte de compras</a></li>
                                       <li><a href='".base_url()."index.php/".$controller_user."/reporte_de_venta'><i class='fa fa-circle-o'></i>Reporte de venta</a></li>
                                     </ul>
                                  </li>";

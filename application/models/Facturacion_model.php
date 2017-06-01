@@ -34,6 +34,20 @@ class Facturacion_model extends CI_Model
        return $r["fecha"];
     }
     
+    public function get_fecha_min_compra()
+    {
+       $r = $this->db->query("select min(fecha) as fecha from factura_compra");
+       $r= $r->row_array();
+       return $r["fecha"];
+    }
+    
+    public function get_fecha_max_compra()
+    {
+       $r = $this->db->query("select max(fecha) as fecha from factura_compra");
+       $r= $r->row_array();
+       return $r["fecha"];
+    }
+    
     public function get_remitos_cliente_pendientes($id)
     {
         $r = $this->db->query("SELECT * FROM remito where cliente = $id and estado ='pendiente'");
@@ -243,6 +257,39 @@ class Facturacion_model extends CI_Model
         //
     }
     
+    public function actualiza_costo($cod_producto,$costo)
+    {
+        // CODIGO SUMA STOCK
+        
+            $costo = (float)$costo;
+            
+            $producto= $this->db->query("select * from productos where id = $cod_producto");
+            $producto = $producto->row_array();
+            
+            $margen_1 = (float)$producto["margen_1"];
+            $margen_2 = (float)$producto["margen_2"];
+            $margen_3 = (float)$producto["margen_3"];
+            $margen_4 = (float)$producto["margen_4"];
+            
+            $lista_1 = ($costo * $margen_1) / 100 + $costo;
+            $lista_2 = ($costo * $margen_2) / 100 + $costo;
+            $lista_3 = ($costo * $margen_3) / 100 + $costo;
+            $lista_4 = ($costo * $margen_4) / 100 + $costo;
+            
+            $datos = Array(
+                "costo"=>$costo,
+                "lista_1"=>$lista_1,
+                "lista_2"=>$lista_2,
+                "lista_3"=>$lista_3,
+                "lista_4"=>$lista_4,
+            );
+            
+            $this->db->where("id",$cod_producto);
+            $this->db->update("productos",$datos);
+        //
+    }
+    
+    
     public function get_factura($numero)
     {
         $r= $this->db->query("SELECT factura.*, cliente.razon_social as cliente_razon_social, cliente.dni_cuit_cuil as cliente_dni_cuit_cuil, cliente.direccion cliente_direccion, cliente.ingresos_brutos as cliente_ingresos_brutos, localidades.localidad as cliente_desc_localidad, cliente.nombre as cliente_nombre, cliente.apellido as cliente_apellido, provincias.provincia as cliente_desc_provincia, tipo_inscripcion.inscripcion as desc_cliente_tipo_de_inscripcion,condicion_de_venta.condicion as desc_condicion, tipo_factura.tipo as  desc_tipo_factura, punto_venta as desc_punto_venta,usuarios.usuario as desc_usuario,estado_factura.estado as desc_estado from factura INNER JOIN cliente on cliente.id = factura.cliente INNER JOIN localidades on cliente.localidad = localidades.codigo INNER JOIN provincias on provincias.id = localidades.id_provincia INNER JOIN tipo_inscripcion on tipo_inscripcion.id = cliente.tipo_inscripcion INNER JOIN condicion_de_venta on condicion_de_venta.id = factura.condicion_venta INNER JOIN tipo_factura on tipo_factura.codigo = factura.tipo_factura INNER JOIN punto_venta on punto_venta.codigo = factura.punto_venta INNER JOIN usuarios on usuarios.id = factura.usuario INNER JOIN estado_factura on estado_factura.codigo = factura.estado where factura.numero =$numero");
@@ -291,6 +338,20 @@ class Facturacion_model extends CI_Model
         return $r->result_array();
     }
     
+    public function get_facturas_compras_con_consultas($desde,$hasta,$estado)
+    {
+        $sql = "SELECT factura_compra.*, punto_venta.punto as desc_punto_venta, tipo_factura.tipo as desc_tipo_factura,condicion_de_venta.condicion as desc_condicion,estado_factura.estado as desc_estado, usuarios.usuario as desc_usuario FROM factura_compra INNER JOIN punto_venta on punto_venta.codigo = factura_compra.punto_venta INNER JOIN tipo_factura on tipo_factura.codigo = factura_compra.tipo_factura INNER JOIN condicion_de_venta on condicion_de_venta.id = factura_compra.condicion_venta INNER JOIN estado_factura on estado_factura.codigo = factura_compra.estado INNER JOIN usuarios on factura_compra.usuario = usuarios.id where factura_compra.fecha >= '".$desde."' and factura_compra.fecha <= '".$hasta."'";
+        
+        
+        if((int)$estado != 0)
+        {
+            $sql.=" and factura_compra.estado = $estado";
+        }
+        
+        $r = $this->db->query($sql);
+        return $r->result_array();
+    }
+    
     public function get_proximo_numero_factura_compra()
     {
         $r = $this->db->query("select max(numero) as numero from factura_compra");
@@ -329,6 +390,7 @@ class Facturacion_model extends CI_Model
             foreach($detalle as $value)
             {
                 $this->suma_stock($value["cod_producto"], $value["cantidad"]);
+                $this->actualiza_costo($value["cod_producto"],$value["precio"]);
                 
                 $datos = Array(
                     "num_factura"=>$numero_factura,
@@ -339,6 +401,8 @@ class Facturacion_model extends CI_Model
                 );
                 
                 $this->db->insert("factura_compra_detalle",$datos);
+                
+                
             }
         }
         

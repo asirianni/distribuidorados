@@ -17,6 +17,7 @@ class Movimiento_caja_model extends CI_Model
     
     public function __construct() {
         parent::__construct();
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
     }
     
     public function getMovimientoFecha($fecha)

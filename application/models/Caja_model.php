@@ -15,7 +15,7 @@ class Caja_model extends CI_Model
     //put your code here
     function __construct() {
         parent::__construct();
-        $this->load->database();
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
     }
     
     public function obtener_caja($fecha)

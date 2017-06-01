@@ -1338,7 +1338,7 @@ class MY_Controller extends CI_Controller
     
     // COMIENZO MODULO REPORTES
     
-    public function reporte_de_compra()
+    public function reporte_de_pedidos()
     {
         $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
         
@@ -1358,11 +1358,11 @@ class MY_Controller extends CI_Controller
             $output["footer"]=$this->adminlte->getFooter();
             
             
-            $output["listado_reporte_compras"]=$this->Reportes_model->lista_reporte_de_compra();
+            $output["listado_reporte_compras"]=$this->Reportes_model->lista_reporte_de_pedidos();
             
             $output["controller_usuario"]=$this->controller_usuario;
             
-            $this->load->view("back/modulos/reportes/reporte_de_compra",$output);
+            $this->load->view("back/modulos/reportes/reporte_de_pedidos",$output);
         }
         else
         {
@@ -1370,7 +1370,7 @@ class MY_Controller extends CI_Controller
         }
     }
     
-    public function generar_reporte_de_compra_excel()
+    public function generar_reporte_de_pedido_excel()
     {
         $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
         
@@ -1382,7 +1382,7 @@ class MY_Controller extends CI_Controller
             header("Expires: 0");
             
             $this->load->model("Reportes_model");
-            $listado_reporte_compras=$this->Reportes_model->lista_reporte_de_compra();
+            $listado_reporte_pedidos=$this->Reportes_model->lista_reporte_de_pedidos();
             
             $html=
             "
@@ -1399,7 +1399,7 @@ class MY_Controller extends CI_Controller
                     </thead>
                     <tbody>";
             $total_pesos= 0;
-            foreach($listado_reporte_compras as $value)
+            foreach($listado_reporte_pedidos as $value)
             {
                 $total_registro = (float)$value["cantidad_a_pedir"] * (float)$value["costo"];
                 $total_pesos+= $total_registro;
@@ -1563,6 +1563,138 @@ class MY_Controller extends CI_Controller
             $output["listado_facturas"]= $this->Facturacion_model->get_facturas_con_consultas($desde,$hasta,$cliente,$estado);
             
             $this->load->view("back/modulos/reportes/impresor-facturas",$output);
+        }
+    }
+    
+    
+    public function reporte_de_compras()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            $this->load->model("Facturacion_model");
+            $this->load->model("Registro_de_clientes_model");
+            
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["css"].=$this->adminlte->get_css_datetimepicker();
+            $output["js"]=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["js"].=$this->adminlte->get_js_datetimepicker();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            $output["controller_usuario"]=$this->controller_usuario;
+            $output["estados_factura"]=$this->Facturacion_model->get_estados_factura();
+            
+            $output["leyenda_lista"]="Lista de compras";
+            $output["hasta_consultar"]=$this->Facturacion_model->get_fecha_max_compra();
+            $output["desde_consultar"]=$this->Facturacion_model->get_fecha_min_compra();
+            $output["estado_factura_consultar"]="0";
+            
+            if($this->input->post())
+            {
+                $output["leyenda_lista"]="Lista de compras";
+                $output["hasta_consultar"]=$this->input->post("hasta_consultar");
+                $output["desde_consultar"]=$this->input->post("desde_consultar");
+                $output["estado_factura_consultar"]=$this->input->post("estado_factura_consultar");
+                
+                $output["listado_facturas"]= $this->Facturacion_model->get_facturas_compras_con_consultas($this->input->post("desde_consultar"),$this->input->post("hasta_consultar"),$this->input->post("estado_factura_consultar"));
+            }
+            else
+            {
+                $output["listado_facturas"]= $this->Facturacion_model->get_facturas_compras_con_consultas($output["desde_consultar"],$output["hasta_consultar"],$output["estado_factura_consultar"]);
+            }
+            
+            $this->load->view("back/modulos/reportes/reporte_de_compras",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    function exportar_reporte_compras()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            $hasta=$this->input->post("hasta_imprimir");
+            $desde=$this->input->post("desde_imprimir");
+            $estado=(int)$this->input->post("estado_imprimir");
+            
+            
+            $this->load->model("Facturacion_model");
+            $listado_facturas= $this->Facturacion_model->get_facturas_compras_con_consultas($desde,$hasta,$estado);
+           
+            header("Content-type: application/vnd.ms-excel; name='excel'");
+            header("Content-Disposition: filename=Reporte-de-Compras.xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+            $html=
+            "
+                <table>
+                    <tr>
+                        <th>DESDE</th>
+                        <th>HASTA</th>
+                        <th>ESTADO</th>
+                    </tr>
+                    <tr>
+                        <td>".$desde."</td>
+                        <td>".$hasta."</td>
+                        <td>".$estado."</td>
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr><td></td></tr>
+                </table>
+                <table>
+                    <thead>
+                      <tr>
+                        <th>FECHA</th>
+                        <th>FACTURA</th>
+                        <th>TIPO</th>
+                        <th>IMPORTE</th>
+                        <th>ESTADO</th>
+                      </tr>
+                    </thead>
+                    <tbody>";
+            
+                foreach($listado_facturas as $value)
+                {
+                    $html.= "<tr>
+                                <td>".$value["fecha"]."</td>
+                                <td>".$value["numero"]."</td>
+                                <td>".$value["desc_tipo_factura"]."</td>
+                                <td>$".$value["total"]."</td>
+                                <td>".$value["desc_estado"]."</td>     
+                            </tr>";
+                }  
+                    $html.= "</tbody>
+                  </table>";
+            echo $html;
+        }
+    }
+    
+    function imprimir_lista_facturas_de_compra()
+    {
+        
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            $hasta=$this->input->post("hasta_imprimir");
+            $desde=$this->input->post("desde_imprimir");
+            $estado=(int)$this->input->post("estado_imprimir");
+            
+            
+            $this->load->model("Facturacion_model");
+            $output["listado_facturas"]= $this->Facturacion_model->get_facturas_compras_con_consultas($desde,$hasta,$estado);
+           
+            $this->load->view("back/modulos/reportes/impresor-facturas-compras",$output);
         }
     }
     

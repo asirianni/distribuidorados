@@ -675,5 +675,19 @@ class Response_Ajax extends CI_Controller
             echo json_encode($respuesta);
         }
     }
+    
+    public function get_total_entradas_por_cliente($cliente)
+    {
+        $r = $this->db->query("SELECT sum(importe_recibo) as entradas FROM cuenta_cliente where cliente = $cliente ");
+        $r=$r->row_array();
+        return (float)$r["entradas"];
+    }
+    
+    public function get_total_salidas_por_cliente($cliente)
+    {
+        $r = $this->db->query("SELECT sum(importe_factura) as salidas FROM cuenta_cliente where cliente = $cliente ");
+        $r=$r->row_array();
+        return (float)$r["salidas"];
+    }
 }
 

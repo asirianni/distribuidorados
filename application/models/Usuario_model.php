@@ -10,6 +10,7 @@ class Usuario_model extends CI_Model
 {
     public function __construct() {
         parent::__construct();
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
     }
     
     public function get_usuario_inicio_sesion($usuario,$password)

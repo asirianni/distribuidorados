@@ -4,6 +4,7 @@ class Stock_productos_model extends CI_Model
 {
     public function __construct() {
         parent::__construct();
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
     }
     
     public function consulta_generica($sql)

@@ -254,8 +254,8 @@
                         <option value="2">Cuenta Corriente</option>
                     </select>
                     <p style="text-align: center;margin-top: 20px;">
-                        <button class="btn btn-warning disabled" id="btn_guardar" onclick="abrir_modal_guardar();"><i class="fa fa-save"></i><br/>GUARDAR</button>
-                        <button class="btn btn-warning disabled" id="btn_nuevo" onclick=""><i class="fa fa-calculator"></i><br/>Nuevo</button>
+                        <button class="btn btn-danger disabled" id="btn_guardar" onclick="abrir_modal_guardar();"><i class="fa fa-save"></i><br/>GUARDAR</button>
+                        <button class="btn btn-danger disabled" id="btn_nuevo" onclick=""><i class="fa fa-calculator"></i><br/>Nuevo</button>
                     </p>
                 </div>
             </div>
@@ -275,7 +275,7 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<div class="modal modal-warning" id="modal_agregar_cliente">
+<div class="modal modal-danger" id="modal_agregar_cliente">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -284,13 +284,13 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="dni_cuit_cuil_agregar_cliente">Dni - Cuit - Cuil: </label>
                             <input class="form-control" type="number" id="dni_cuit_cuil_agregar_cliente" name="dni_cuit_cuil_agregar_cliente" value=""/>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="razon_social_agregar_cliente">Razon Social: </label>
                             <input class="form-control" type="text" id="razon_social_agregar_cliente" name="razon_social_agregar_cliente" value=""/>
@@ -323,8 +323,31 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
+                            <label for="limite_cuenta_agregar_cliente">Limite Cuenta: </label>
+                            <input class="form-control" type="number" step="0.5" value="0" id="limite_cuenta_agregar_cliente" name="limite_cuenta_agregar_cliente" value=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="lista_agregar_cliente">Lista: </label>
+                            <select class="form-control" id="lista_agregar_cliente" name="lista_agregar_cliente">
+                                <option value="lista_1">lista_1</option>
+                                <option value="lista_2">lista_2</option>
+                                <option value="lista_3">lista_3</option>
+                                <option value="lista_4">lista_4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
                             <label for="direccion_agregar_cliente">Direccion: </label>
                             <input class="form-control" type="text" id="direccion_agregar_cliente" name="direccion_agregar_cliente" value=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="contrasenia_agregar_cliente">Contraseña web (OP)</label>
+                            <input class="form-control" type="text" id="contrasenia_agregar_cliente" name="contrasenia_agregar_cliente" value=""/>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -340,14 +363,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="ingresos_brutos_agregar_cliente">Ing. Brutos: </label>
-                            <input type="text" class="form-control" id="ingresos_brutos_agregar_cliente" name="ingresos_brutos_agregar_cliente">
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="col-md-4">
+
+                    
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="localidad_agregar_cliente">Localidad: </label>
                             <select class="form-control  select2" style="width: 100% !important;" id="localidad_agregar_cliente" name="localidad_agregar_cliente">
@@ -361,7 +379,14 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="ingresos_brutos_agregar_cliente">Ing. Brutos: </label>
+                            <input type="text" class="form-control" id="ingresos_brutos_agregar_cliente" name="ingresos_brutos_agregar_cliente">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="tipo_inscripcion_agregar_cliente">Tipo Inscripcion: </label>
                             <select class="form-control select2" style="width: 100% !important;" id="tipo_inscripcion_agregar_cliente" name="tipo_inscripcion_agregar_cliente">
@@ -374,24 +399,29 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="estado_agregar_cliente">Estado</label>
-                            <select class="form-control select2" style="width: 100% !important;" id="estado_agregar_cliente" name="estado_agregar_cliente">
+                            <select class="form-control" id="estado_agregar_cliente" name="estado_agregar_cliente" value="1">
                                 <?php
                                     foreach($lista_estados_cliente as $value)
                                     {
-                                        if($value["estado"] == "operativo")
+                                        if((int)$value["id"] == 1)
                                         {
                                             echo "<option value='".$value["id"]."' selected>".$value["estado"]."</option>";
                                         }
+                                        else
+                                        {
+                                            echo "<option value='".$value["id"]."'>".$value["estado"]."</option>";
+                                        }
                                     }
+                                            
                                 ?>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <p id="mensaje_error_agregar_cliente" style="font-weight: bold;color: #f00;font-size: 15px;"></p>
+                        <p id="mensaje_error_agregar_cliente" style="font-weight: bold;color: #00F;font-size: 15px;"></p>
                     </div>
                     <div class="clearfix"></div>
                     
@@ -399,7 +429,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="agregar_cliente()"><i class='fa fa-save'></i> Guardar Cliente</button>
+                    <button class="btn btn-danger" onClick="agregar_cliente()"><i class='fa fa-save'></i> Guardar Cliente</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -413,7 +443,7 @@
             <div class="modal-header">
                 <h3>
                     Seleccione un cliente
-                    <button class="btn btn-warning pull-right" onClick="$('#modal_buscar_cliente').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger pull-right" onClick="$('#modal_buscar_cliente').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                     
                 </h3>
             </div>
@@ -441,7 +471,7 @@
                                             <td>".$value["telefono"]."</td>
                                             <td>".$value["desc_estado"]."</td>
                                             <td>
-                                                <button class='btn btn-warning' data-toggle='tooltip' title='' data-original-title='Seleccionar' onClick='seleccionar_cliente(".$value["id"].",&#34;".$value["dni_cuit_cuil"]."&#34;,&#34;".$value["nombre"]."&#34;,&#34;".$value["apellido"]."&#34;,&#34;".$value["localidad"]."&#34;,&#34;".$value["direccion"]."&#34;,&#34;".$value["ingresos_brutos"]."&#34;,".$value["descuento_gral"].",".$value["limite_cuenta"].")'><i class='fa fa-plus'></i></button>
+                                                <button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Seleccionar' onClick='seleccionar_cliente(".$value["id"].",&#34;".$value["dni_cuit_cuil"]."&#34;,&#34;".$value["nombre"]."&#34;,&#34;".$value["apellido"]."&#34;,&#34;".$value["localidad"]."&#34;,&#34;".$value["direccion"]."&#34;,&#34;".$value["ingresos_brutos"]."&#34;,".$value["descuento_gral"].",".$value["limite_cuenta"].")'><i class='fa fa-plus'></i></button>
                                             </td>    
                                         </tr>";
                                     }
@@ -461,7 +491,7 @@
             <div class="modal-header">
                 <h3>
                     Seleccionar Pedido
-                    <button class="btn btn-warning pull-right" onClick="$('#modal_asociar_pedido').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger pull-right" onClick="$('#modal_asociar_pedido').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                 
                 </h3>
             </div>
@@ -497,7 +527,7 @@
             <div class="modal-header">
                 <h3>
                     Seleccionar Remito
-                    <button class="btn btn-warning pull-right" onClick="$('#modal_asociar_remito').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger pull-right" onClick="$('#modal_asociar_remito').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                
                 </h3>
             </div>
@@ -556,7 +586,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="$('#modal_agregar_detalle_remito').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger" onClick="$('#modal_agregar_detalle_remito').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -591,7 +621,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12" style="text-align: center;">
-                    <button class="btn btn-warning" onClick="$('#modal_agregar_detalle_pedido').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger" onClick="$('#modal_agregar_detalle_pedido').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -605,7 +635,7 @@
             <div class="modal-header">
                 <h3>
                     Agrege un producto 
-                    <button class="btn btn-warning pull-right" onClick="$('#modal_lista_productos').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+                    <button class="btn btn-danger pull-right" onClick="$('#modal_lista_productos').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
                 </h3>
             </div>
             <div class="modal-body">
@@ -633,7 +663,7 @@
 </div>
 
 
-<div class="modal modal-warning" id="modal_imprimir_factura">
+<div class="modal modal-danger" id="modal_imprimir_factura">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -657,7 +687,7 @@
 </div>
 
 
-<div class="modal modal-warning" id="modal_guardar_factura">
+<div class="modal modal-danger" id="modal_guardar_factura">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -680,7 +710,7 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-<div class="modal modal-warning" id="modal_mensaje_alerta">
+<div class="modal modal-danger" id="modal_mensaje_alerta">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -826,7 +856,7 @@
         if(respuesta == false)
         {
             $("#mensaje_alerta").html(mensaje_alerta);
-            $("#modal_mensaje_alerta").show();
+            $("#modal_mensaje_alerta").modal("show");
         }
         
         return respuesta;
@@ -885,7 +915,7 @@
                             
                             $("#btn_guardar").addClass("disabled");
                             $("#btn_nuevo").removeClass("disabled");
-                            
+                            $("#modal_guardar_factura").modal("hide");
                         }
                     },
                     error: function(event){alert(event.responseText);
@@ -1016,7 +1046,7 @@
                         html+="<td>"+data[i]["stock"]+"</td>";
                         html+="<td>$"+data[i]["precio"]+"</td>";
                         html+="<td>";                                                                                              
-                            html+="<button class='btn btn-warning' data-toggle='tooltip' title='' data-original-title='Agregar' onClick='agregar_detalle("+data[i]["id"]+",0,&#34;"+data[i]["descripcion"]+"&#34;,1,"+data[i]["precio"]+")'><i class='fa fa-plus'></i></button>";
+                            html+="<button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Agregar' onClick='agregar_detalle("+data[i]["id"]+",0,&#34;"+data[i]["descripcion"]+"&#34;,1,"+data[i]["precio"]+")'><i class='fa fa-plus'></i></button>";
                         html+="</td>";
                         html+="</tr>";
 
@@ -1130,7 +1160,7 @@
                             cuerpo+="<td>"+data[i]["desc_producto"]+"</td>";
                             cuerpo+="<td>"+data[i]["cantidad"]+"</td>";
                             cuerpo+="<td>"+data[i]["precio"]+"</td>";
-                            cuerpo+="<td><button class='btn btn-warning' onClick='agregar_detalle("+data[i]["cod_producto"]+","+data[i]["codigo"]+",&#34;"+data[i]["desc_producto"]+"&#34;,"+data[i]["cantidad"]+","+data[i]["precio"]+")'>Seleccionar</button></td>";
+                            cuerpo+="<td><button class='btn btn-danger' onClick='agregar_detalle("+data[i]["cod_producto"]+","+data[i]["codigo"]+",&#34;"+data[i]["desc_producto"]+"&#34;,"+data[i]["cantidad"]+","+data[i]["precio"]+")'>Seleccionar</button></td>";
                             cuerpo+="</tr>";
                         }
                         
@@ -1180,7 +1210,7 @@
                             cuerpo+="<td>"+data[i]["desc_producto"]+"</td>";
                             cuerpo+="<td>"+data[i]["cantidad"]+"</td>";
                             cuerpo+="<td>"+data[i]["precio"]+"</td>";
-                            cuerpo+="<td><button class='btn btn-warning' onClick='agregar_detalle("+data[i]["cod_producto"]+","+data[i]["codigo"]+",&#34;"+data[i]["desc_producto"]+"&#34;,"+data[i]["cantidad"]+","+data[i]["precio"]+")'>Seleccionar</button></td>";
+                            cuerpo+="<td><button class='btn btn-danger' onClick='agregar_detalle("+data[i]["cod_producto"]+","+data[i]["codigo"]+",&#34;"+data[i]["desc_producto"]+"&#34;,"+data[i]["cantidad"]+","+data[i]["precio"]+")'>Seleccionar</button></td>";
                             cuerpo+="</tr>";
                         }
                         
@@ -1435,7 +1465,7 @@
                                cuerpo+="<td>"+data[i]["fecha"]+"</td>";
                                cuerpo+="<td>"+data[i]["fecha_entrega"]+"</td>";
                                cuerpo+="<td>"+data[i]["estado"]+"</td>";
-                               cuerpo+="<td><button class='btn btn-warning' onClick='seleccionar_pedido("+data[i]["numero"]+")'>Seleccionar</button></td>";
+                               cuerpo+="<td><button class='btn btn-danger' onClick='seleccionar_pedido("+data[i]["numero"]+")'>Seleccionar</button></td>";
                                cuerpo+="</tr>";
                            }
 
@@ -1514,7 +1544,7 @@
                                     cuerpo+="<td>"+data[i]["fecha"]+"</td>";
                                     cuerpo+="<td>"+data[i]["chasis"]+"</td>";
                                     cuerpo+="<td>"+data[i]["acoplado"]+"</td>";
-                                    cuerpo+="<td><button class='btn btn-warning' onClick='seleccionar_remito("+data[i]["numero"]+")'>Seleccionar</button></td>";
+                                    cuerpo+="<td><button class='btn btn-danger' onClick='seleccionar_remito("+data[i]["numero"]+")'>Seleccionar</button></td>";
                                     cuerpo+="</tr>";
                                 }
 
@@ -1578,11 +1608,11 @@
                 
                 var html = $("#cliente_seleccionado").html();
         
-                // DATOS CUENTA CLIENTE
+                 // DATOS CUENTA CLIENTE
                 $("#limite_cuenta").text(limite_cuenta);
-                $("#entradas_cuenta").text(data["entradas"]);
-                $("#salidas_cuenta").text(data["salidas"]);
-                $("#saldo_cuenta").text(data["saldo"]);
+                $("#entradas_cuenta").text(parseFloat(data["entradas"]).toFixed(2));
+                $("#salidas_cuenta").text(parseFloat(data["salidas"]).toFixed(2));
+                $("#saldo_cuenta").text(parseFloat(data["saldo"]).toFixed(2));
                 
                 //
                 var option = "<option value='"+id+"'>"+dni_cuit_cuil+" - "+nombre+" "+apellido+"</option>";
@@ -1620,18 +1650,21 @@
         var razon_social = $("#razon_social_agregar_cliente").val();
         var nombre = $("#nombre_agregar_cliente").val();
         var apellido = $("#apellido_agregar_cliente").val();
-        var telefono = parseInt($("#telefono_agregar_cliente").val());
+        var telefono = $("#telefono_agregar_cliente").val();
         var correo = $("#correo_agregar_cliente").val();
         var direccion = $("#direccion_agregar_cliente").val();
+        var contrasenia = $("#contrasenia_agregar_cliente").val();
         var localidad = parseInt($("#localidad_agregar_cliente").val());
         var tipo_inscripcion = parseInt($("#tipo_inscripcion_agregar_cliente").val());
         var estado = parseInt($("#estado_agregar_cliente").val());
         var descuento_gral= $("#descuento_gral_agregar_cliente").val();
         var ingresos_brutos = $("#ingresos_brutos_agregar_cliente").val();
+        var lista = $("#lista_agregar_cliente").val();
+        var limite_cuenta = parseFloat($("#limite_cuenta_agregar_cliente").val());
         
-        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) &&
-             razon_social != "" && ingresos_brutos != "" && nombre != "" && apellido != "" &&
-             telefono != "" && !isNaN(telefono) && correo != "" && validarEmail(correo) &&
+        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && limite_cuenta != "" && !isNaN(limite_cuenta) &&
+             razon_social != ""  && nombre != "" && apellido != "" &&
+             telefono != "" && correo != "" && validarEmail(correo) &&
              direccion !="" && localidad != "" && !isNaN(localidad) && localidad != 0 &&
              tipo_inscripcion != "" && !isNaN(tipo_inscripcion) && tipo_inscripcion != 0 && estado != "" && !isNaN(estado) && estado != 0
             )
@@ -1648,12 +1681,14 @@
                     telefono:telefono,
                     correo:correo,
                     direccion:direccion,
-                    contrasenia:"",
+                    contrasenia:contrasenia,
                     localidad:localidad,
                     tipo_inscripcion:tipo_inscripcion,
                     estado:estado,
                     descuento_gral:descuento_gral,
                     ingresos_brutos:ingresos_brutos,
+                    lista:lista,
+                    limite_cuenta:limite_cuenta,
                 },
                 success: function(data)
                 {
@@ -1681,7 +1716,7 @@
                         $("#btn_agregar_producto_detalle").removeClass("disabled");
                         $("#modal_agregar_cliente").modal("hide");
                         
-                        seleccionar_cliente(data["id"],dni_cuit_cuil,nombre,apellido,localidad,direccion,ingresos_brutos,descuento_gral);
+                        seleccionar_cliente(data["id"],dni_cuit_cuil,nombre,apellido,localidad,direccion,ingresos_brutos,descuento_gral,limite_cuenta);
                     }
                     else
                     {
@@ -1708,7 +1743,6 @@
         var telefono = $("#telefono_agregar_cliente").val();
         var correo = $("#correo_agregar_cliente").val();
         var direccion = $("#direccion_agregar_cliente").val();
-        var ingresos_brutos = $("#ingresos_brutos_agregar_cliente").val();
         
         var localidad = parseInt($("#localidad_agregar_cliente").val());
         var tipo_inscripcion = parseInt($("#tipo_inscripcion_agregar_cliente").val());
@@ -1718,8 +1752,6 @@
         if(razon_social==""){activar_error("razon_social_agregar_cliente");}
         else{desactivar_error("razon_social_agregar_cliente");}
         
-        if(ingresos_brutos==""){activar_error("ingresos_brutos_agregar_cliente");}
-        else{desactivar_error("ingresos_brutos_agregar_cliente");}
         
         if(nombre==""){activar_error("nombre_agregar_cliente");}
         else{desactivar_error("nombre_agregar_cliente");}
