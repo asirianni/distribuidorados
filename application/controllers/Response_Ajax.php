@@ -277,11 +277,12 @@ class Response_Ajax extends CI_Controller
             $ingresos_brutos= $this->input->post("ingresos_brutos");
             $lista= $this->input->post("lista");
             
+            $limite_cuenta= $this->input->post("limite_cuenta");
             $this->load->library("Md5");
             $contrasenia= Md5::cifrar($contrasenia);
             
             $this->load->model("Registro_de_clientes_model");
-            $respuesta = $this->Registro_de_clientes_model->agregar_cliente($dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos,$lista);
+            $respuesta = $this->Registro_de_clientes_model->agregar_cliente($dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos,$lista,$limite_cuenta);
             
             echo json_encode($respuesta);
         }
@@ -310,6 +311,7 @@ class Response_Ajax extends CI_Controller
             $estado2=(int)$this->input->post("estado2");
             $ingresos_brutos= $this->input->post("ingresos_brutos");
             $lista= $this->input->post("lista");
+            $limite_cuenta= $this->input->post("limite_cuenta");
             
             if($estado2 != 0 && $estado2 != $estado)
             {
@@ -331,7 +333,7 @@ class Response_Ajax extends CI_Controller
             $contrasenia= Md5::cifrar($contrasenia);
             
             $this->load->model("Registro_de_clientes_model");
-            $respuesta = $this->Registro_de_clientes_model->editar_cliente($id,$dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos,$lista);
+            $respuesta = $this->Registro_de_clientes_model->editar_cliente($id,$dni_cuit_cuil,$razon_social,$nombre,$apellido,$telefono,$correo,$direccion,$contrasenia,$localidad,$tipo_inscripcion,$estado,$descuento_gral,$ingresos_brutos,$lista,$limite_cuenta);
             
             echo json_encode($respuesta);
         }
@@ -652,6 +654,24 @@ class Response_Ajax extends CI_Controller
             
             $this->load->model("Registro_de_clientes_model");
             $respuesta = $this->Registro_de_clientes_model->agregar_movimiento_cuenta_cliente($cliente,$fecha,$tipo_factura,$numero_factura,$importe_factura,$importe_recibo,$usuario);
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function get_datos_cuenta_cliente_para_facturacion()
+    {
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
+        {
+            $cliente = $this->input->post("cliente");
+            
+            $this->load->model("Registro_de_clientes_model");
+            
+            $entradas = $this->Registro_de_clientes_model->get_total_entradas_por_cliente($cliente);
+            $salidas = $this->Registro_de_clientes_model->get_total_salidas_por_cliente($cliente);
+            $saldo = $entradas-$salidas;
+            
+            $respuesta = Array("entradas"=>$entradas,"salidas"=>$salidas,"saldo"=>$saldo);
+            
             echo json_encode($respuesta);
         }
     }

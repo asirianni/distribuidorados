@@ -35,9 +35,9 @@
     
         <div class="col-xs-5">
             <img  height="100" src="<?php echo base_url()?>recursos/images/impresion-remito/<?php echo $logo?>">
-            <p style="font-size: 10px;">COMERCIALIZACIÓN DE CEREALES Y SUBPRODUCTOS</p>
-            <p style="font-size: 10px;">EXPORTACIÓN E IMPORTACIÓN - LOGÍSTICA NACIONAL E INTERNACIONAL</p>
-            <p style="font-size: 10px;" >Ruta Nacional 19 - Km. 219 - 2434 - ARROYITO - (CBA)</p>
+            <p style="font-size: 10px;"></p>
+            <p style="font-size: 10px;"></p>
+            <p style="font-size: 10px;" ></p>
         </div>
         <div class="col-xs-2">
             <!--<img class="img-responsive" src="<?php echo base_url()?>recursos/images/impresion-remito/logo-remito.jpg">-->
@@ -46,29 +46,18 @@
             <p><strong>N° <?php echo $factura["numero"]?></strong></p>
             <p><strong>FECHA <?php $date = date_create($factura["fecha"]);
                                 echo date_format($date, 'd-m-Y');?></strong></p>
-            <p style="font-size: 22px;"><strong>FACTURA <?php echo $factura["desc_tipo_factura"]?></strong></p>
+            <p style="font-size: 22px;"><strong>NO VALIDO COMO FACTURA</strong></p>
         </div> 
 
+        
         <div class="col-xs-12">
-            <div class="col-xs-6">
-                <p><strong>&nbsp;</strong></p>
-                <p><strong><?php echo $tipo_de_inscripcion?></strong></p>
-                <p><strong>&nbsp;</strong></p>
-            </div> 
-            <div class="col-xs-6">
-                <p>C.U.I.T: N° <?php echo $cuit?></p>
-                <p>ING BRUTOS CM N° <?php echo $ingresos_brutos?></p>
-                <p>INICIO ACTIVIDAD <?php echo $inicio_actividad?></p>
-            </div> 
-        </div>
-        <div class="col-xs-12 linea">
             &nbsp;
         </div>
     </div>   
 
 
 
-    <div class="row">
+    <div class="row linea">
         <div class="col-xs-6">
             <div class="col-xs-4">
                 <p>Cliente</p>
@@ -102,7 +91,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-xs-12 lineas">
             <div class="col-xs-offset-1 col-xs-5">

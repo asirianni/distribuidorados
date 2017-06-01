@@ -576,8 +576,8 @@ class MY_Controller extends CI_Controller
             
             $desde_consultar=null;
             $hasta_consultar=null;
-            $cliente_consultar=null;
-            $estado_consultar=null;
+            $cliente_consultar=0;
+            $estado_consultar="todos";
             
             $output["listado_pedidos"]=null;
             
@@ -610,6 +610,78 @@ class MY_Controller extends CI_Controller
         else
         {
             redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    function exportar_pedidos_excel()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(4);
+        
+        if($permiso)
+        {
+            header("Content-type: application/vnd.ms-excel; name='excel'");
+            header("Content-Disposition: filename=Lista-de-Pedidos.xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+            $desde_consultar=$this->input->post("desde_consultar");
+            $hasta_consultar=$this->input->post("hasta_consultar");
+            $cliente_consultar=$this->input->post("cliente_consultar");
+            $estado_consultar=$this->input->post("estado_consultar");
+            
+            $this->load->model("Registro_de_pedidos_model");
+            $listado_pedidos=$this->Registro_de_pedidos_model->get_listado_pedidos_consulta($desde_consultar,$hasta_consultar,$cliente_consultar,$estado_consultar);
+
+            $html=
+            "
+                <table>
+                    <tr>
+                        <th>Desde</th>
+                        <th>Hasta</th>
+                        <th>Cliente</th>
+                        <th>Estado</th>
+                    </tr>
+                    <tr>
+                        <td>".$desde_consultar."</td>
+                        <td>".$hasta_consultar."</td>
+                        <td>".$cliente_consultar."</td>
+                        <td>".$estado_consultar."</td>
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr><td></td></tr>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>F. Entrega</th>
+                            <th>Cliente</th>
+                            <th>Cuit-Dni-cuil cliente</th>
+                            <th>Desc. gral</th>
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+            
+                    foreach($listado_pedidos as $value)
+                    {
+
+                        $html.= 
+                       "<tr>
+                            <td>".$value["fecha"]."</td>
+                            <td>".$value["fecha_entrega"]."</td>
+                            <td>".$value["nombre"]." ".$value["apellido"]."</td>
+                            <td>".$value["dni_cuit_cuil"]."</td>
+                            <td>".$value["descuento_gral"]."%</td>
+                            <td>".$value["estado"]."</td> 
+                        </tr>";
+                    }
+            
+            $html.="</tbody>
+                </table>";
+            
+            echo $html;
         }
     }
     
@@ -1298,6 +1370,62 @@ class MY_Controller extends CI_Controller
         }
     }
     
+    public function generar_reporte_de_compra_excel()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            header("Content-type: application/vnd.ms-excel; name='excel'");
+            header("Content-Disposition: filename=Reporte-de-Compras.xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+            
+            $this->load->model("Reportes_model");
+            $listado_reporte_compras=$this->Reportes_model->lista_reporte_de_compra();
+            
+            $html=
+            "
+             <table>
+                    <thead>
+                      <tr>
+                        <th>CODIGO</th>
+                        <th>PRODUCTO</th>
+                        <th>COSTO</th>
+                        <th>STOCK</th>
+                        <th>TOTAL PEDIDOS</th>
+                        <th>TOTAL</th>
+                      </tr>
+                    </thead>
+                    <tbody>";
+            $total_pesos= 0;
+            foreach($listado_reporte_compras as $value)
+            {
+                $total_registro = (float)$value["cantidad_a_pedir"] * (float)$value["costo"];
+                $total_pesos+= $total_registro;
+                $html.= 
+                    "<tr>
+                        <td>".$value["cod_producto"]."</td>
+                        <td>".$value["descripcion"]."</td>
+                        <td>".$value["costo"]."</td>
+                        <td>".$value["stock"]."</td>
+                        <td>".$value["cantidad_a_pedir"]."</td>
+                        <td>$".$total_registro."</td>
+                    </tr>";
+            }
+        $html.= "<tfoot>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><b>Total:".$total_pesos."</b></td>
+                    </tfoot></tbody>
+                  </table>";
+            
+            echo $html;
+        }
+    }
     public function reporte_de_venta()
     {
         $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
@@ -1322,10 +1450,10 @@ class MY_Controller extends CI_Controller
             $output["estados_factura"]=$this->Facturacion_model->get_estados_factura();
             
             $output["leyenda_lista"]="Lista de ventas";
-            $output["hasta_consultar"]=Date("Y-m-d");
-            $output["desde_consultar"]=Date("Y-m")."-01";
-            $output["cliente_consultar"]=null;
-            $output["estado_factura_consultar"]=null;
+            $output["hasta_consultar"]=$this->Facturacion_model->get_fecha_max();
+            $output["desde_consultar"]=$this->Facturacion_model->get_fecha_min();
+            $output["cliente_consultar"]="0";
+            $output["estado_factura_consultar"]="0";
             
             if($this->input->post())
             {
@@ -1347,6 +1475,74 @@ class MY_Controller extends CI_Controller
         else
         {
             redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    function exportar_reporte_ventas()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            $hasta=$this->input->post("hasta_imprimir");
+            $desde=$this->input->post("desde_imprimir");
+            $cliente=(int)$this->input->post("cliente_imprimir");
+            $estado=(int)$this->input->post("estado_imprimir");
+            
+            
+            $this->load->model("Facturacion_model");
+            $listado_facturas= $this->Facturacion_model->get_facturas_con_consultas($desde,$hasta,$cliente,$estado);
+            
+            header("Content-type: application/vnd.ms-excel; name='excel'");
+            header("Content-Disposition: filename=Reporte-de-Ventas.xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+            $html=
+            "
+                <table>
+                    <tr>
+                        <th>DESDE</th>
+                        <th>HASTA</th>
+                        <th>CLIENTE</th>
+                        <th>ESTADO</th>
+                    </tr>
+                    <tr>
+                        <td>".$desde."</td>
+                        <td>".$hasta."</td>
+                        <td>".$cliente."</td>
+                        <td>".$estado."</td>
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr><td></td></tr>
+                </table>
+                <table>
+                    <thead>
+                      <tr>
+                        <th>FECHA</th>
+                        <th>CLIENTE</th>
+                        <th>FACTURA</th>
+                        <th>TIPO</th>
+                        <th>IMPORTE</th>
+                        <th>ESTADO</th>
+                      </tr>
+                    </thead>
+                    <tbody>";
+            
+                foreach($listado_facturas as $value)
+                {
+                    $html.= "<tr>
+                                <td>".$value["fecha"]."</td>
+                                <td>".$value["cliente_dni_cuit_cuil"]." - ".$value["cliente_nombre"]." ".$value["cliente_apellido"]."</td>
+                                <td>".$value["numero"]."</td>
+                                <td>".$value["desc_tipo_factura"]."</td>
+                                <td>$".$value["total"]."</td>
+                                <td>".$value["desc_estado"]."</td>     
+                            </tr>";
+                }  
+                    $html.= "</tbody>
+                  </table>";
+            echo $html;
         }
     }
     

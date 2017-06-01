@@ -129,7 +129,34 @@
           
        <div class="col-md-12">
            <div class="col-md-12 marco">
-                <div class="col-md-12 fila">
+               <div class="col-md-3" style="font-size: 15px;font-weight: bold">
+                   <div style="margin-top: 0px;">&nbsp;</div>
+                   <div class="col-md-9">
+                      <p>LIMITE DE CUENTA:</p>
+                   </div>
+                   <div class="col-md-3">
+                      $<span id="limite_cuenta">0</span>
+                   </div>
+                   <div class="col-md-9">
+                       <p>ENTRADAS:</p>
+                   </div>
+                   <div class="col-md-3">
+                       $<span id="entradas_cuenta">0</span>
+                   </div>
+                   <div class="col-md-9">
+                       <p>SALIDAS:</p>
+                   </div>
+                   <div class="col-md-3">
+                       $<span id="salidas_cuenta">0</span>
+                   </div>
+                   <div class="col-md-9">
+                        <p>SALDO:</p>
+                   </div>
+                   <div class="col-md-3">
+                       $<span id="saldo_cuenta">0</span>
+                   </div>
+               </div>
+                <div class="col-md-9 fila">
                     <div class="col-md-4">
                          <label>Cliente Seleccionado</label>
                          <select type="text" class="form-control"  id="cliente_seleccionado" disabled>
@@ -414,7 +441,7 @@
                                             <td>".$value["telefono"]."</td>
                                             <td>".$value["desc_estado"]."</td>
                                             <td>
-                                                <button class='btn btn-warning' data-toggle='tooltip' title='' data-original-title='Seleccionar' onClick='seleccionar_cliente(".$value["id"].",&#34;".$value["dni_cuit_cuil"]."&#34;,&#34;".$value["nombre"]."&#34;,&#34;".$value["apellido"]."&#34;,&#34;".$value["localidad"]."&#34;,&#34;".$value["direccion"]."&#34;,&#34;".$value["ingresos_brutos"]."&#34;,".$value["descuento_gral"].")'><i class='fa fa-plus'></i></button>
+                                                <button class='btn btn-warning' data-toggle='tooltip' title='' data-original-title='Seleccionar' onClick='seleccionar_cliente(".$value["id"].",&#34;".$value["dni_cuit_cuil"]."&#34;,&#34;".$value["nombre"]."&#34;,&#34;".$value["apellido"]."&#34;,&#34;".$value["localidad"]."&#34;,&#34;".$value["direccion"]."&#34;,&#34;".$value["ingresos_brutos"]."&#34;,".$value["descuento_gral"].",".$value["limite_cuenta"].")'><i class='fa fa-plus'></i></button>
                                             </td>    
                                         </tr>";
                                     }
@@ -653,6 +680,28 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<div class="modal modal-warning" id="modal_mensaje_alerta">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3></h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" style='text-align: center;'>
+                        <p style="color: #fff;font-weight: bold;font-size: 17px;" id="mensaje_alerta"></p>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+        <div class="modal-footer">
+           <div class="col-md-12" style="text-align: center;">
+                <button class="btn btn-outline" onClick="$('#modal_mensaje_alerta').modal('hide');"><i class='fa fa-close'></i> Cerrar</button>
+            </div>
+       </div>
+    </div><!-- /.modal-dialog -->
+</div>
+
 <form id="imprimir_factura" action='<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/imprimir_factura' method="post" target="_blank" style="display: none;">
     <input type="text" id="numero_factura_imprimir" name="numero"/>
 </form>
@@ -733,7 +782,55 @@
     }
     
     
-    
+    function comprobar_estado_cuenta_cliente()
+    {
+        var limite_cuenta = parseFloat($("#limite_cuenta").text());
+        var entradas_cuenta = parseFloat($("#entradas_cuenta").text());
+        var salidas_cuenta = parseFloat($("#salidas_cuenta").text());
+        var saldo_cuenta = parseFloat($("#saldo_cuenta").text());
+        
+        var condicion_de_venta = parseInt($("#condicion_de_venta").val());
+        var importe_factura = parseFloat($("#total").text());
+        
+        var respuesta = true;
+        
+        var mensaje_alerta="";
+        
+        if(condicion_de_venta == 2) // SI ES CUENTA CORRIENTE
+        {
+            /*
+             * SI EL SALDO DE LA CUENTA + LIMITE DE LA CUENTA ES IGUAL A 0.
+                EJEMPLO:  -1500 + 1500 = 0
+             */
+            
+            var resultado = saldo_cuenta + limite_cuenta;
+            
+            if(resultado == 0)
+            {
+                respuesta= false;
+                mensaje_alerta+="- NO PUEDE SACAR MERCADERIA EN CUENTA CORRIENTE, CANCELE LO ANTERIOR O ABONE DE CONTADO <br/>";
+            }
+            
+            // SI EL IMPORTE DE LA FACTURA MAYOR QUE EL LIMITE DE LA CUENTA
+            // O
+            // SI SALDO+LIMITE-IMPORTE DE LA FACTURA ES MENOR A 0
+            
+            if(importe_factura > limite_cuenta || ((saldo_cuenta + limite_cuenta - importe_factura) < 0))
+            {
+                respuesta = false;
+                mensaje_alerta+="- NO PUEDE SACAR MERCADERIA EN CUENTA CORRIENTE,  EL IMPORTE ES SUPERIOR A SU CUENTA, HABLE CON EL ADMINISTRADOR <br/>";
+            }
+            
+        }
+        
+        if(respuesta == false)
+        {
+            $("#mensaje_alerta").html(mensaje_alerta);
+            $("#modal_mensaje_alerta").show();
+        }
+        
+        return respuesta;
+    }
     
     function guardar()
     {
@@ -748,7 +845,7 @@
             var punto_de_venta = parseInt($("#punto_de_venta").val());
             var fecha = $("#fecha").val();
             var cliente = parseInt($("#cliente_seleccionado").val());
-            var condicion_venta = $("#condicion_de_venta").val();
+            var condicion_venta = parseInt($("#condicion_de_venta").val());
             var detalle = arreglo_detalles;
             var remito_o_pedido= asociado;
             var descuento_general = $("#descuento_general").val();
@@ -781,7 +878,7 @@
                             
                             if(imprimir)
                             {
-                                alert(imprimir);
+                                
                                 $("#numero_factura_imprimir").val(data["numero"]);
                                 $("#imprimir_factura").submit();
                             }
@@ -961,7 +1058,12 @@
         
         if(tipo_factura && id_cliente)
         {
-            $('#modal_imprimir_factura').modal('show');
+            var respuesta = comprobar_estado_cuenta_cliente();
+            
+            if(respuesta)
+            {
+                $('#modal_imprimir_factura').modal('show');
+            }
         }
     }
     
@@ -1462,35 +1564,54 @@
         }
     });
     
-    function seleccionar_cliente(id,dni_cuit_cuil,nombre,apellido,localidad,direccion,ingresos_brutos,descuento_general)
+    function seleccionar_cliente(id,dni_cuit_cuil,nombre,apellido,localidad,direccion,ingresos_brutos,descuento_general,limite_cuenta)
     {
         arreglo_detalles= new Array();
         
-        var html = $("#cliente_seleccionado").html();
+        $.ajax({
+            url: "<?php echo base_url()?>index.php/Response_Ajax/get_datos_cuenta_cliente_para_facturacion",
+            type: "POST",
+            data:{cliente:id},
+            success: function(data)
+            {
+                data= JSON.parse(data);
+                
+                var html = $("#cliente_seleccionado").html();
         
-        var option = "<option value='"+id+"'>"+dni_cuit_cuil+" - "+nombre+" "+apellido+"</option>";
-        
-        html+= option;
-        
-        $("#cliente_seleccionado").html(html);
-        
-        $("#cliente_seleccionado").val(id);
-        
-        $("#btn_asociar_remito").removeClass("disabled");
-        $("#btn_asociar_pedido").removeClass("disabled");
-           
-        $("#localidad").val(localidad);
-        $("#direccion").val(direccion);
-        $("#cuit").val(dni_cuit_cuil);
-        $("#descuento_general").val(descuento_general);
-        $("#descuento_general").removeAttr("disabled");
-        $("#ingresos_brutos").val(ingresos_brutos);
-        
-        $("#btn_agregar_producto_detalle").removeClass("disabled");
-        $("#modal_buscar_cliente").modal("hide");
-        
-        cargar_listado_productos(id);
-        generar_html_tabla_listado();
+                // DATOS CUENTA CLIENTE
+                $("#limite_cuenta").text(limite_cuenta);
+                $("#entradas_cuenta").text(data["entradas"]);
+                $("#salidas_cuenta").text(data["salidas"]);
+                $("#saldo_cuenta").text(data["saldo"]);
+                
+                //
+                var option = "<option value='"+id+"'>"+dni_cuit_cuil+" - "+nombre+" "+apellido+"</option>";
+
+                html+= option;
+
+                $("#cliente_seleccionado").html(html);
+
+                $("#cliente_seleccionado").val(id);
+
+                $("#btn_asociar_remito").removeClass("disabled");
+                $("#btn_asociar_pedido").removeClass("disabled");
+
+                $("#localidad").val(localidad);
+                $("#direccion").val(direccion);
+                
+                $("#cuit").val(dni_cuit_cuil);
+                $("#descuento_general").val(descuento_general);
+                $("#descuento_general").removeAttr("disabled");
+                $("#ingresos_brutos").val(ingresos_brutos);
+
+                $("#btn_agregar_producto_detalle").removeClass("disabled");
+                $("#modal_buscar_cliente").modal("hide");
+
+                cargar_listado_productos(id);
+                generar_html_tabla_listado();
+            },
+            error: function(event){alert(event.responseText);},
+        }); 
     }
     
     function agregar_cliente()

@@ -20,6 +20,20 @@ class Facturacion_model extends CI_Model
         return (int)$r["total"];
     }
     
+    public function get_fecha_min()
+    {
+       $r = $this->db->query("select min(fecha) as fecha from factura");
+       $r= $r->row_array();
+       return $r["fecha"];
+    }
+    
+    public function get_fecha_max()
+    {
+       $r = $this->db->query("select max(fecha) as fecha from factura");
+       $r= $r->row_array();
+       return $r["fecha"];
+    }
+    
     public function get_remitos_cliente_pendientes($id)
     {
         $r = $this->db->query("SELECT * FROM remito where cliente = $id and estado ='pendiente'");
@@ -65,6 +79,11 @@ class Facturacion_model extends CI_Model
     
     public function crear_factura($punto_venta,$fecha,$cliente,$remito_o_pedido,$numero_remito_pedido,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle)
     {
+        if((int)$condicion_venta == 2) // SI ES CUENTA CORRIENTE, EL ESTADO ES CUENTA CORRIENTE
+        {
+            $estado = 4;
+        }
+        
         $datos = array(
             "punto_venta"=>$punto_venta,
             "fecha"=>$fecha,
@@ -115,7 +134,7 @@ class Facturacion_model extends CI_Model
             
             if((int)$condicion_venta == 1) // SI ES DE CONTADO
             {
-               
+               // AGREGA A LA CAJA
                 $this->load->model("Caja_model");
                 $numero= $this->Caja_model->obtener_ultimo_movimiento();
                 $fecha=date('Y-m-d');
@@ -170,6 +189,24 @@ class Facturacion_model extends CI_Model
 
                 $this->Caja_model->registrar_movimiento_caja($numero, $fecha, $concepto, $importe, $detalle, $empleado,1,$concepto);
                
+                // FIN AGREGAR A CAJA
+                
+                // REGISTRA EN CUENTA CLIENTE COMO ENTRADA
+                
+                $this->load->model("Registro_de_clientes_model");
+                
+                $usuario = $this->session->userdata("id");
+                
+                $this->Registro_de_clientes_model->agregar_cuenta_cliente($cliente,$fecha,null,null,null,$total,$usuario);
+                $this->Registro_de_clientes_model->agregar_cuenta_cliente($cliente,$fecha,$tipo_factura,$numero_factura,$total,null,$usuario);
+            }
+            else if((int)$condicion_venta == 2) // SI ES CUENTA CORRIENTE
+            {
+                $this->load->model("Registro_de_clientes_model");
+                
+                $usuario = $this->session->userdata("id");
+                
+                $this->Registro_de_clientes_model->agregar_cuenta_cliente($cliente,$fecha,$tipo_factura,$numero_factura,$total,null,$usuario);
             }
         }
         
@@ -240,12 +277,12 @@ class Facturacion_model extends CI_Model
     {
         $sql = "SELECT factura.*, punto_venta.punto as desc_punto_venta, cliente.dni_cuit_cuil as cliente_dni_cuit_cuil, cliente.nombre as cliente_nombre, cliente.apellido as cliente_apellido, cliente.ingresos_brutos as cliente_ingresos_brutos, cliente.direccion as cliente_direccion, localidades.localidad as cliente_desc_localidad, cliente.razon_social as cliente_razon_social, provincias.provincia as cliente_desc_provincia,tipo_inscripcion.inscripcion as desc_cliente_tipo_de_inscripcion, tipo_factura.tipo as desc_tipo_factura,condicion_de_venta.condicion as desc_condicion,estado_factura.estado as desc_estado, usuarios.usuario as desc_usuario FROM factura INNER JOIN punto_venta on punto_venta.codigo = factura.punto_venta INNER JOIN cliente on cliente.id = factura.cliente INNER JOIN localidades on localidades.codigo = cliente.localidad INNER JOIN provincias on provincias.id = localidades.id_provincia INNER JOIN tipo_factura on tipo_factura.codigo = factura.tipo_factura INNER JOIN condicion_de_venta on condicion_de_venta.id = factura.condicion_venta INNER JOIN estado_factura on estado_factura.codigo = factura.estado INNER JOIN tipo_inscripcion on tipo_inscripcion.id = cliente.tipo_inscripcion INNER JOIN usuarios on factura.usuario = usuarios.id where factura.fecha >= '".$desde."' and factura.fecha <= '".$hasta."'";
         
-        if($cliente != 0)
+        if((int)$cliente != 0)
         {
             $sql.=" and factura.cliente = $cliente";
         }
         
-        if($estado != 0)
+        if((int)$estado != 0)
         {
             $sql.=" and factura.estado = $estado";
         }

@@ -59,7 +59,11 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/generar_excel" method="post" target="_blank" id="FormularioExportacion">
+        <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/exportar_pedidos_excel" method="post" target="_blank" id="FormularioExportacion" hidden>
+            <input type="text" name="desde_consultar" value="<?php echo $desde_consultar?>"/>
+            <input type="text" name="hasta_consultar" value="<?php echo $hasta_consultar?>"/>
+            <input type="text" name="cliente_consultar" value="<?php echo $cliente_consultar?>"/>
+            <input type="text" name="estado_consultar" value="<?php echo $estado_consultar?>"/>
             <input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />
         </form>
       <!-- Small boxes (Stat box) -->

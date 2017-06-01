@@ -189,8 +189,11 @@
                     </div>
                 </div><!-- /.box-header -->
                 
-                <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/generar_excel" method="post" target="_blank" id="FormularioExportacion">
-                    
+                <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/exportar_reporte_ventas" method="post" target="_blank" id="FormularioExportacion" hidden="">
+                    <input type="text" name="desde_imprimir" value="<?php echo $desde_consultar?>">
+                    <input type="text" name="hasta_imprimir" value="<?php echo $hasta_consultar?>">
+                    <input type="text" name="cliente_imprimir" value="<?php echo $cliente_consultar?>">
+                    <input type="text" name="estado_imprimir" value="<?php echo $estado_factura_consultar?>">
                     <input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />
                 </form>
 

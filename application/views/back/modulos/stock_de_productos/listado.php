@@ -149,7 +149,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="descripcion_agregar_producto">Descripcion</label>
-                        <input class="form-control" type="text" id="descripcion_agregar_producto" name="descripcion_agregar_producto" value=""/>
+                        <input tabindex="1" class="form-control" type="text" id="descripcion_agregar_producto" name="descripcion_agregar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -181,26 +181,26 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="stock_agregar_producto">Stock</label>
-                        <input class="form-control" type="text" id="stock_agregar_producto" name="stock_agregar_producto" value=""/>
+                        <input tabindex="2" class="form-control" type="text" id="stock_agregar_producto" name="stock_agregar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="punto_critico_agregar_producto">Punto Critico</label>
-                        <input class="form-control" type="text" id="punto_critico_agregar_producto" name="punto_critico_agregar_producto" value=""/>
+                        <input tabindex="3" class="form-control" type="text" id="punto_critico_agregar_producto" name="punto_critico_agregar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="costo_agregar_producto">Costo</label>
-                        <input class="form-control" type="number" step="0.5" id="costo_agregar_producto" name="costo_agregar_producto" value="0" onchange="cambio_valor_agregar()"/>
+                        <input tabindex="4" class="form-control" type="number" step="0.5" id="costo_agregar_producto" name="costo_agregar_producto" value="0" onchange="cambio_valor_agregar()"/>
                     </div>
                 </div>
                 
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_1_agregar">Margen 1</label>
-                        <input class="form-control" type="number" step="0.5" id="margen_1_agregar" name="margen_1_agregar" value="0" onchange="cambio_valor_agregar()"/>
+                        <input tabindex="5" class="form-control" type="number" step="0.5" id="margen_1_agregar" name="margen_1_agregar" value="0" onchange="cambio_valor_agregar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -212,7 +212,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_2_agregar">Margen 2</label>
-                        <input class="form-control" type="number" step="0.5" id="margen_2_agregar" name="margen_2_agregar" value="0" onchange="cambio_valor_agregar()"/>
+                        <input tabindex="6" class="form-control" type="number" step="0.5" id="margen_2_agregar" name="margen_2_agregar" value="0" onchange="cambio_valor_agregar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -224,7 +224,7 @@
                  <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_3_agregar">Margen 3</label>
-                        <input class="form-control" type="number" step="0.5" id="margen_3_agregar" name="margen_3_agregar" value="0" onchange="cambio_valor_agregar()"/>
+                        <input tabindex="7"  class="form-control" type="number" step="0.5" id="margen_3_agregar" name="margen_3_agregar" value="0" onchange="cambio_valor_agregar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -236,7 +236,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_4_agregar">Margen 4</label>
-                        <input class="form-control" type="number" step="0.5" id="margen_4_agregar" name="margen_4_agregar" value="0" onchange="cambio_valor_agregar()"/>
+                        <input tabindex="8" class="form-control" type="number" step="0.5" id="margen_4_agregar" name="margen_4_agregar" value="0" onchange="cambio_valor_agregar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -269,7 +269,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="descripcion_editar_producto">Descripcion</label>
-                        <input class="form-control" type="text" id="descripcion_editar_producto" name="descripcion_editar_producto" value=""/>
+                        <input tabindex="1" class="form-control" type="text" id="descripcion_editar_producto" name="descripcion_editar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -332,67 +332,67 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="stock_editar_producto">Stock</label>
-                        <input class="form-control" type="text" id="stock_editar_producto" name="stock_editar_producto" value=""/>
+                        <input tabindex="2" class="form-control" type="text" id="stock_editar_producto" name="stock_editar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="punto_critico_editar_producto">Punto Critico</label>
-                        <input class="form-control" type="text" id="punto_critico_editar_producto" name="punto_critico_editar_producto" value=""/>
+                        <input tabindex="3" class="form-control" type="text" id="punto_critico_editar_producto" name="punto_critico_editar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="costo_editar_producto">Costo</label>
-                        <input class="form-control" type="text" id="costo_editar_producto" name="costo_editar_producto" value=""/>
+                        <input tabindex="4" class="form-control" type="text" id="costo_editar_producto" name="costo_editar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_1_editar">Margen 1</label>
-                        <input class="form-control" type="number" step="0.5" id="margen_1_editar" name="margen_1_editar" value="0" onchange="cambio_valor_editar()"/>
+                        <input tabindex="5" class="form-control" type="number" step="0.5" id="margen_1_editar" name="margen_1_editar" value="0" onchange="cambio_valor_editar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lista_1_editar">Lista 1</label>
-                        <input class="form-control" type="text" id="lista_1_editar" name="lista_1_editar" value="0" disabled/>
+                        <input tabindex="6"  class="form-control" type="text" id="lista_1_editar" name="lista_1_editar" value="0" disabled/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_2_editar">Margen 2</label>
-                        <input class="form-control" type="number" step="0.5" id="margen_2_editar" name="margen_2_editar" value="0" onchange="cambio_valor_editar()"/>
+                        <input tabindex="7"  class="form-control" type="number" step="0.5" id="margen_2_editar" name="margen_2_editar" value="0" onchange="cambio_valor_editar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lista_2_editar">Lista 2</label>
-                        <input class="form-control" type="text" id="lista_2_editar" name="lista_2_editar" value="0" disabled/>
+                        <input tabindex="8" class="form-control" type="text" id="lista_2_editar" name="lista_2_editar" value="0" disabled/>
                     </div>
                 </div>
                  <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_3_editar">Margen 3</label>
-                        <input class="form-control" type="number" step="0.5" id="margen_3_editar" name="margen_3_editar" value="0" onchange="cambio_valor_editar()"/>
+                        <input tabindex="9"  class="form-control" type="number" step="0.5" id="margen_3_editar" name="margen_3_editar" value="0" onchange="cambio_valor_editar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lista_3_editar">Lista 3</label>
-                        <input class="form-control" type="text" id="lista_3_editar" name="lista_3_editar" value="0" disabled/>
+                        <input tabindex="10" class="form-control" type="text" id="lista_3_editar" name="lista_3_editar" value="0" disabled/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_4_editar">Margen 4</label>
-                        <input class="form-control" type="number" step="0.5" id="margen_4_editar" name="margen_4_editar" value="0" onchange="cambio_valor_editar()"/>
+                        <input tabindex="11" class="form-control" type="number" step="0.5" id="margen_4_editar" name="margen_4_editar" value="0" onchange="cambio_valor_editar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lista_4_editar">Lista 4</label>
-                        <input class="form-control" type="text" id="lista_4_editar" name="lista_4_editar" value="0" disabled/>
+                        <input tabindex="12" class="form-control" type="text" id="lista_4_editar" name="lista_4_editar" value="0" disabled/>
                     </div>
                 </div>
                 

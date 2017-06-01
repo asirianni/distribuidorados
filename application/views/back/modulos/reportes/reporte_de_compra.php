@@ -60,7 +60,7 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/generar_excel" method="post" target="_blank" id="FormularioExportacion">
+      <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/generar_reporte_de_compra_excel" method="post" target="_blank" id="FormularioExportacion">
           <input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />
       </form>
       

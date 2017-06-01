@@ -98,6 +98,7 @@
                         <th>LOCALIDAD</th>
                         <th>TELEFONO</th>
                         <th>TIPO INSCRIPCION</th>
+                        <th>LIMITE CUENTA</th>
                         <th>ESTADO</th>
                         <th></th>
                       </tr>
@@ -114,6 +115,7 @@
                                     <td>".$value["desc_localidad"]."</td>
                                     <td>".$value["telefono"]."</td>
                                     <td>".$value["desc_inscripcion"]."</td>
+                                    <td>".$value["limite_cuenta"]."</td>
                                     <td>".$value["desc_estado"]."</td>
                                     <td>
                                         <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_cliente(".$value["id"].")'><i class='fa fa-edit'></i></button>
@@ -164,13 +166,13 @@
                             <input class="form-control" type="text" id="razon_social_editar_cliente" name="razon_social_editar_cliente" value=""/>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="nombre_editar_cliente">Nombre: </label>
                             <input class="form-control" type="text" id="nombre_editar_cliente" name="nombre_editar_cliente" value=""/>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="apellido_editar_cliente">Apellido: </label>
                             <input class="form-control" type="text" id="apellido_editar_cliente" name="apellido_editar_cliente" value=""/>
@@ -187,6 +189,12 @@
                         <div class="form-group">
                             <label for="correo_editar_cliente">Correo: </label>
                             <input class="form-control" type="text" id="correo_editar_cliente" name="correo_editar_cliente" value=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="limite_cuenta_editar_cliente">Limite Cuenta: </label>
+                            <input class="form-control" type="number" step="0.5" value="0" id="limite_cuenta_editar_cliente" name="limite_cuenta_editar_cliente" value=""/>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -353,13 +361,13 @@
                             <input class="form-control" type="text" id="razon_social_agregar_cliente" name="razon_social_agregar_cliente" value=""/>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="nombre_agregar_cliente">Nombre: </label>
                             <input class="form-control" type="text" id="nombre_agregar_cliente" name="nombre_agregar_cliente" value=""/>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="apellido_agregar_cliente">Apellido: </label>
                             <input class="form-control" type="text" id="apellido_agregar_cliente" name="apellido_agregar_cliente" value=""/>
@@ -376,6 +384,12 @@
                         <div class="form-group">
                             <label for="correo_agregar_cliente">Correo: </label>
                             <input class="form-control" type="text" id="correo_agregar_cliente" name="correo_agregar_cliente" value=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="limite_cuenta_agregar_cliente">Limite Cuenta: </label>
+                            <input class="form-control" type="number" step="0.5" value="0" id="limite_cuenta_agregar_cliente" name="limite_cuenta_agregar_cliente" value=""/>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -559,6 +573,7 @@
                 $("#descuento_gral_editar_cliente").val(data["descuento_gral"]);
                 $("#ingresos_brutos_editar_cliente").val(data["ingresos_brutos"]);
                 $("#lista_editar_cliente").val(data["lista"]);
+                $("#limite_cuenta_editar_cliente").val(data["limite_cuenta"]);
                 $("#modal_editar_cliente").modal("show");
             },
             error: function(event){alert(event.responseText);
@@ -586,10 +601,10 @@
         var descuento_gral=$("#descuento_gral_editar_cliente").val();
         var ingresos_brutos = $("#ingresos_brutos_editar_cliente").val();
         var lista = $("#lista_editar_cliente").val()
+        var limite_cuenta = parseFloat($("#limite_cuenta_editar_cliente").val());
         
         
-        
-        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) &&
+        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && limite_cuenta != "" && !isNaN(limite_cuenta) &&
              razon_social != "" && nombre != "" && apellido != "" &&
              telefono != "" && correo != "" && validarEmail(correo) &&
              direccion !="" && localidad != "" && !isNaN(localidad) && localidad != 0 &&
@@ -618,7 +633,8 @@
                     estado2:estado2,
                     descuento_gral:descuento_gral,
                     ingresos_brutos:ingresos_brutos,
-                    lista:lista
+                    lista:lista,
+                    limite_cuenta:limite_cuenta,
                     
                 },
                 success: function(data)
@@ -661,8 +677,9 @@
         var descuento_gral= $("#descuento_gral_agregar_cliente").val();
         var ingresos_brutos = $("#ingresos_brutos_agregar_cliente").val();
         var lista = $("#lista_agregar_cliente").val();
+        var limite_cuenta = parseFloat($("#limite_cuenta_agregar_cliente").val());
         
-        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) &&
+        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && limite_cuenta != "" && !isNaN(limite_cuenta) &&
              razon_social != ""  && nombre != "" && apellido != "" &&
              telefono != "" && correo != "" && validarEmail(correo) &&
              direccion !="" && localidad != "" && !isNaN(localidad) && localidad != 0 &&
@@ -687,7 +704,8 @@
                     estado:estado,
                     descuento_gral:descuento_gral,
                     ingresos_brutos:ingresos_brutos,
-                    lista:lista
+                    lista:lista,
+                    limite_cuenta:limite_cuenta,
                 },
                 success: function(data)
                 {
@@ -728,7 +746,8 @@
         var tipo_inscripcion = parseInt($("#tipo_inscripcion_agregar_cliente").val());
         var estado = parseInt($("#estado_agregar_cliente").val());
         var dni_cuit_cuil = parseInt($("#dni_cuit_cuil_agregar_cliente").val());
-        
+        var limite_cuenta = parseFloat($("#limite_cuenta_agregar_cliente").val());
+         
         if(razon_social==""){activar_error("razon_social_agregar_cliente");}
         else{desactivar_error("razon_social_agregar_cliente");}
         
@@ -762,6 +781,9 @@
         
         if(dni_cuit_cuil=="" || isNaN(dni_cuit_cuil) ){activar_error("dni_cuit_cuil_agregar_cliente");}
         else{desactivar_error("dni_cuit_cuil_agregar_cliente");}
+        
+        if(limite_cuenta=="" || isNaN(limite_cuenta) ){activar_error("limite_cuenta_agregar_cliente");}
+        else{desactivar_error("limite_cuenta_agregar_cliente");}
     }
     
     function gestiona_errores_editar()
@@ -778,7 +800,8 @@
         var tipo_inscripcion = parseInt($("#tipo_inscripcion_editar_cliente").val());
         var estado = parseInt($("#estado_editar_cliente").val());
         var dni_cuit_cuil = parseInt($("#dni_cuit_cuil_editar_cliente").val());
-        
+        var limite_cuenta = parseFloat($("#limite_cuenta_editar_cliente").val());
+         
         if(razon_social==""){activar_error("razon_social_editar_cliente");}
         else{desactivar_error("razon_social_editar_cliente");}
         
@@ -813,6 +836,9 @@
         
         if(dni_cuit_cuil=="" || isNaN(dni_cuit_cuil) ){activar_error("dni_cuit_cuil_editar_cliente");}
         else{desactivar_error("dni_cuit_cuil_editar_cliente");}
+        
+        if(limite_cuenta=="" || isNaN(limite_cuenta)){activar_error("limite_cuenta_editar_cliente");}
+        else{desactivar_error("limite_cuenta_editar_cliente");}
     }
     //
     
