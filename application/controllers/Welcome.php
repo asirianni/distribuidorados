@@ -23,8 +23,7 @@ class Welcome extends CI_Controller {
             $salida["mensajes_error"]=Array();
             $salida["mensaje_success"]="";
            
-            if($this->session->userdata("ingresado") != true && $this->session->userdata("tipo_usuario") != "cliente")
-            {
+            $this->ci->session->sess_destroy();
                 if($this->input->post())
                 {
 
@@ -65,11 +64,6 @@ class Welcome extends CI_Controller {
                 {
                     $this->load->view('back/cliente/iniciar_sesion',$salida);
                 }
-            }
-            else
-            {
-                redirect("Welcome/principal_cliente");
-            }
 	}
         
         
