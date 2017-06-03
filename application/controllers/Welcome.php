@@ -193,7 +193,7 @@ class Welcome extends CI_Controller {
                 <p></p>
             ";
             
-            Correo::enviar_correo($mensaje_cliente, "Datos del pedido registrado", $emisor, $this->session->userdata("correo"));
+            //Correo::enviar_correo($mensaje_cliente, "Datos del pedido registrado", $emisor, $this->session->userdata("correo"));
             
             $mensaje_administrador =
             "
@@ -201,7 +201,7 @@ class Welcome extends CI_Controller {
                 <p>Para ver los detalles del pedido <a href='".base_url()."index.php/Administrador/registro_de_pedidos_editar/".$numero_pedido."'>haga click aquí</a></p>
             ";
             
-            Correo::enviar_correo($mensaje_administrador, "El cliente ".$nombre_cliente." ha registrado un pedido", $emisor, $this->session->userdata("correo"));
+            //Correo::enviar_correo($mensaje_administrador, "El cliente ".$nombre_cliente." ha registrado un pedido", $emisor, $this->session->userdata("correo"));
            
         }
         

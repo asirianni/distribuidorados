@@ -220,7 +220,6 @@
                 data:{detalle:productos_agregados,fecha_entrega:fecha_entrega},
                 success: function(data)
                 {
-                    alert(data);
                     data= JSON.parse(data);
                     
                     if(data)
