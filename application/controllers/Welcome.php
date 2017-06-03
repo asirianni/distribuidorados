@@ -26,7 +26,6 @@ class Welcome extends CI_Controller {
             
                 if($this->input->post())
                 {
-                    $this->session->sess_destroy();
                     $this->load->model("Clientes_model");
                     $this->load->library("Correo");
                     $this->load->library("Md5");
@@ -66,7 +65,11 @@ class Welcome extends CI_Controller {
                 }
 	}
         
-        
+        public function cerrar_sesion()
+        {
+            $this->session->sess_destroy();
+            redirect("Welcome");
+        }
         public function principal_cliente()
         {
             if($this->validar_acceso())

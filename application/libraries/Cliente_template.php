@@ -48,7 +48,7 @@ class Cliente_template
                   <ul class='nav navbar-nav navbar-right'>
                     <!--<li class='active'><a href='./'>Default <span class='sr-only'>(current)</span></a></li>
                     <li><a href='../navbar-static-top/'>Static top</a></li>-->
-                    <li><a href='".base_url()."index.php/Welcome'><i style='color: #dd4b39' class='fa fa-power-off'></i> <strong>Cerrar Sesion</strong></a></li>
+                    <li><a href='".base_url()."index.php/Welcome/cerrar_sesion'><i style='color: #dd4b39' class='fa fa-power-off'></i> <strong>Cerrar Sesion</strong></a></li>
                   </ul>
                 </div><!--/.nav-collapse -->
               </div><!--/.container-fluid -->
@@ -65,8 +65,8 @@ class Cliente_template
             <div class='navbar navbar-default navbar-fixed-bottom'>
                 <div class='container'>
                     <div class='navbar-header'>
-                        <ul class='nav navbar-nav'>
-                            <li class='pull-right' style='font-size: 16px;font-weight: bold;text-align: right;'>Sistema desarrollado por <span style='color: #3c8dbc;'>Adrian Sirianni</span> de <span style='color: #3c8dbc;'>ordenesunegocio</span></li>
+                        <ul class=''>
+                            <li class='pull-right' style='list-style:none;font-size: 16px;font-weight: bold;text-align: right;'>Sistema desarrollado por <a target='_blank' href='https://www.facebook.com/Ordene-su-negocio-737763829635258' style='color: #3c8dbc;'>Adrian Sirianni</a> de <a target='_blank' href='https://www.facebook.com/Ordene-su-negocio-737763829635258' style='color: #3c8dbc;'>ordenesunegocio</a></li>
                         </ul>
                     </div>
                 </div>
