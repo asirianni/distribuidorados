@@ -23,10 +23,10 @@ class Welcome extends CI_Controller {
             $salida["mensajes_error"]=Array();
             $salida["mensaje_success"]="";
            
-            $this->session->sess_destroy();
+            
                 if($this->input->post())
                 {
-
+                    $this->session->sess_destroy();
                     $this->load->model("Clientes_model");
                     $this->load->library("Correo");
                     $this->load->library("Md5");
