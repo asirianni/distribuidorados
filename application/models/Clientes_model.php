@@ -48,6 +48,8 @@ class Clientes_model extends CI_Model
         
         $respuesta=$this->db->insert("pedidos",$datos);
         
+        $numero = 0;
+        
         if($respuesta)
         {
             $numero = $this->db->query("SELECT max(pedidos.numero) as numero FROM pedidos");
@@ -69,7 +71,7 @@ class Clientes_model extends CI_Model
             }
         }
         
-        return $respuesta;
+        return $numero;
     }
 }
 

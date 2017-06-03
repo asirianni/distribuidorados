@@ -70,6 +70,7 @@ class Welcome extends CI_Controller {
             $this->session->sess_destroy();
             redirect("Welcome");
         }
+        
         public function principal_cliente()
         {
             if($this->validar_acceso())
@@ -148,10 +149,6 @@ class Welcome extends CI_Controller {
         }
         
         
-        public function ver_catalogo()
-	{
-            $this->load->view('welcome_message');
-	}
         
         public function agregar_pedido()
         {
@@ -167,12 +164,45 @@ class Welcome extends CI_Controller {
                 
                 $respuesta = $this->Clientes_model->agregar_pedido_y_detalle($fecha_entrega,$detalle);
             
+                if($respuesta != 0)
+                {
+                    $this->enviar_correo_pedido_registrado($respuesta);
+                }
+                
                 echo json_encode((boolean)$respuesta);
             }
             else
             {
                 redirect("Welcome");
             }
+        }
+        
+        private function enviar_correo_pedido_registrado($numero_pedido)
+        {
+            $this->load->library("Correo");
+
+            $nombre_cliente = $this->session->userdata("nombre")." ".$this->session->userdata("apellido");
+            $emisor = ""; // AQUI VA EL EMAIL DEL SERVER, O DE LA EMPRESA EN SI
+            
+            $pedido= $this->Clientes_model->get_pedido($numero_pedido);
+            $detalle= $this->Clientes_model->get_detalle_pedido($numero_pedido);
+
+            $mensaje_cliente =
+            "
+                <p>Pedido registrado correctamente<p>
+                <p></p>
+            ";
+            
+            Correo::enviar_correo($mensaje_cliente, "Datos del pedido registrado", $emisor, $this->session->userdata("correo"));
+            
+            $mensaje_administrador =
+            "
+                <p>El Cliente ".$nombre_cliente." registro un pedido<p>
+                <p>Para ver los detalles del pedido <a href='".base_url()."index.php/Administrador/registro_de_pedidos_editar/".$numero_pedido."'>haga click aquí</a></p>
+            ";
+            
+            Correo::enviar_correo($mensaje_administrador, "El cliente ".$nombre_cliente." ha registrado un pedido", $emisor, $this->session->userdata("correo"));
+           
         }
         
         public function exportar_mi_lista_productos()
