@@ -23,7 +23,7 @@ class Welcome extends CI_Controller {
             $salida["mensajes_error"]=Array();
             $salida["mensaje_success"]="";
            
-            $this->ci->session->sess_destroy();
+            $this->session->sess_destroy();
                 if($this->input->post())
                 {
 
