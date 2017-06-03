@@ -38,113 +38,104 @@
     ?>
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
-            <h2>Bienvenido <?php echo $this->session->userdata("nombre")." ".$this->session->userdata("apellido")?></h2>
-            <p>Esta es nuestra lista de productos con sus respectivos precios, aquí puede crear su pedido</p>
+            <h2>Detalle del Pedido N°: <?php echo $pedido["numero"];?></h2>
+            <p>A continuacion se detalla los datos de su pedido, y el detalle del mismo</p>
         </div>
     </div>
+    
     <div class="row">
-        <div class="col-md-offset-1 col-md-10">
-            <button style="margin-top: 20px;margin-bottom: 20px;" id="btn_exportar_excel" type="button" class="btn btn-success botonExcel" onclick="$('#FormularioExportacion').submit();"><i class="fa fa-file-excel-o"></i> Exportar</button>
-            <form action="<?php echo base_url()?>index.php/Welcome/exportar_mi_lista_productos" method="post" target="_blank" id="FormularioExportacion" hidden="">
-            </form>
-            <div class='pull-right'>
-                <div class="cart">
-                    <a href="#" onclick="mostrarModal();">
-                        <h3> 
-                            <div class="total">
-                                <!-- <span class='simpleCart_total'></span>	(<span id='simpleCart_quantity' class='simpleCart_quantity'></span> )-->
-                                <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> $ <span id="total_final_menu">0</span>
-                            </div>
-                        </h3>
-                    </a>
-                </div>
+        <div class="col-md-offset-1 col-md-10" style="margin-top: 20px;">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="fecha_agregar_pedido">FECHA DE CREACION: </label>
+                            <input class="form-control" type="text" id="fecha_agregar_pedido" value="<?php echo $pedido["fecha"]?>" readonly=""/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="fecha_entrega_agregar_pedido">FECHA DE ENTREGA: </label>
+                            <input class="form-control" type="text" id="fecha_entrega_agregar_pedido" value="<?php echo $pedido["fecha_entrega"]?>" readonly=""/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="estado_agregar_pedido">Estado: </label>
+                            <input class="form-control" type="text" id="estado_agregar_pedido" value="<?php echo $pedido["estado"]?>" readonly=""/>
+                            
+                        </div>
+                    </div>
+                    
+            
+            
+            <div class="col-md-12" style="margin-top: 20px;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>PRODUCTO</th>     
+                            <th>CANTIDAD</th>
+                            <th>PRECIO</th>
+                            <th>DESCUENTO</th>
+                            <th>TOTAL</th>
+                            <th>ESTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            $total = 0.0;
+                            
+                            foreach($detalle as $value)
+                            {
+                                $total_producto= (float)$value["precio"] * (float)$value["cantidad"];
+                                $total_producto= ($total_producto * (float)$value["descuento"] / 100) + $total_producto;
+                              echo "<tr>
+                                        <td>".$value["desc_producto"]."</td>
+                                        <td>".$value["cantidad"]."</td>
+                                        <td>$".$value["precio"]."</td>
+                                        <td>".$value["descuento"]."%</td>
+                                        <td>$".$total_producto."</td>";
+                                        
+                                        if($value["estado"] == "pendiente")
+                                        {
+                                            echo "<td style='color: #dd4b39;'>".$value["estado"]."</td>";
+                                        }
+                                        else if($value["estado"] == "cumplido")
+                                        {
+                                            echo "<td style='color: #449d44;'>".$value["estado"]."</td>";
+                                        }
+                                        
+                                echo"</tr>";
+                                
+                                $total+=$total_producto;
+                            }
+                        ?>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>     
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>TOTAL</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>$<?php echo $total_producto?></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-1 col-md-10">
-            <table id="listado" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>PRODUCTO</th>
-                        <th>PRECIO</th>
-                        <th style='width: 50px;'></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        foreach($listado_productos as $value)
-                        {
-                          echo "<tr>
-                                    <td>".$value["descripcion"]."</td>
-                                    <td>$".$value["precio"]."</td>
-                                    <td>
-                                        <button class='btn btn-primary' onClick='agregar_producto(".$value["id"].",&#34;".$value["descripcion"]."&#34;,".$value["precio"].")'><i class='fa fa-cart-arrow-down'></i> Agregar</button>
-                                    </td>
-                                </tr>";
-                        }
-                    ?>
-                </tbody>
-                
-            </table>
         </div>
     </div>
     <?php
         echo $footer;
     ?>
-    
-    
-    
-<div class="modal fade" id="modalCarrito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-	<div class="modal-content">
-            <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span> Cerrar</button>
-		<h4 class="modal-title" id="exampleModalLabel">TOTAL $ <span id="total_final">0</span> </h4>
-            </div>
-            <div class="modal-body">
-		<div class="row">	
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="fecha_de_entrega">FECHA DE ENTREGA</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-calendar-plus-o"></i></span>
-                                <input type='text' id="fecha_de_entrega" class="datetimepicker" readonly=""/>
-                            </div>
-                        </div>
-			<table id="cart" class="table table-hover table-condensed">
-                            <thead>
-				<tr>
-<!--                                <th style="">CODIGO</th>  -->
-                                    <th style="">PRODUCTO</th>
-                                    <th style="">CANT.</th>
-                                    <th style="">$</th>
-                                    <th style="" class="text-center">SUBTOTAL</th>
-                                    <th style="" class="text-center"></th>
-                                    <th style="" class="text-center"></th>
-				</tr>
-                            </thead>
-                            <tbody id="table_body">
-																                                      
-                            </tbody>
-			</table>
-                    </div>
-		</div>
-		<div class="modal-footer">				
-	            <div class="form-group">
-                        
-                        <p class='text-left' style='font-size: 16px;color: #F00;' id='mensaje_error_confirmar'></p>
-	                <div class="col-md-12 text-right">
-                            <button class='btn btn-medium btn-default btn-square' onClick='guardar_pedido()'>Confirmar</button>
-                        </div>
-	            </div> 	
-				         	
-		</div>
-            </div>
-	</div>
-    </div>
-</div>
-
+     
 <!-- jQuery UI 1.11.4 -->
 <script src="<?php echo base_url(); ?>recursos/plugins/jQuery/jQuery-2.1.4.min.js"></script> 
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>

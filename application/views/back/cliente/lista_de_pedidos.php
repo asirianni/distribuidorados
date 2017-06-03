@@ -38,54 +38,48 @@
     ?>
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
-            <h2>Bienvenido <?php echo $this->session->userdata("nombre")." ".$this->session->userdata("apellido")?></h2>
-            <p>Esta es nuestra lista de productos con sus respectivos precios, aquí puede crear su pedido</p>
+            <h2>Esta es su lista de pedidos <?php echo $this->session->userdata("nombre")?></h2>
+            <p>Puede ver los detalle de cada pedido, ver que pedido esta <span style='color: #dd4b39;'>pendiente</span> o  <span style='color: #449d44;'>cumplido</span></p>
         </div>
     </div>
+    
     <div class="row">
-        <div class="col-md-offset-1 col-md-10">
-            <button style="margin-top: 20px;margin-bottom: 20px;" id="btn_exportar_excel" type="button" class="btn btn-success botonExcel" onclick="$('#FormularioExportacion').submit();"><i class="fa fa-file-excel-o"></i> Exportar</button>
-            <form action="<?php echo base_url()?>index.php/Welcome/exportar_mi_lista_productos" method="post" target="_blank" id="FormularioExportacion" hidden="">
-            </form>
-            <div class='pull-right'>
-                <div class="cart">
-                    <a href="#" onclick="mostrarModal();">
-                        <h3> 
-                            <div class="total">
-                                <!-- <span class='simpleCart_total'></span>	(<span id='simpleCart_quantity' class='simpleCart_quantity'></span> )-->
-                                <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> $ <span id="total_final_menu">0</span>
-                            </div>
-                        </h3>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-1 col-md-10">
+        <div class="col-md-offset-1 col-md-10" style="margin-top: 20px;">
             <table id="listado" class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>PRODUCTO</th>
-                        <th>PRECIO</th>
+                        <th>N° PEDIDO:</th>
+                        <th>FECHA DE CREACION</th>
+                        <th>FECHA DE ENTREGA</th>
+                        <th>ESTADO</th>
                         <th style='width: 50px;'></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                        foreach($listado_productos as $value)
+                        foreach($listado_pedidos as $value)
                         {
+                            
                           echo "<tr>
-                                    <td>".$value["descripcion"]."</td>
-                                    <td>$".$value["precio"]."</td>
-                                    <td>
-                                        <button class='btn btn-primary' onClick='agregar_producto(".$value["id"].",&#34;".$value["descripcion"]."&#34;,".$value["precio"].")'><i class='fa fa-cart-arrow-down'></i> Agregar</button>
+                                    <td>".$value["numero"]."</td>
+                                    <td>".$value["fecha"]."</td>
+                                    <td>".$value["fecha_entrega"]."</td>";
+                                    if($value["estado"] == "pendiente")
+                                    {
+                                        echo "<td style='color: #dd4b39;'>".$value["estado"]."</td>";
+                                    }
+                                    else if($value["estado"] == "cumplido")
+                                    {
+                                        echo "<td  style='color: #449d44;'>".$value["estado"]."</td>";
+                                    }
+                                    
+                               echo "<td>
+                                        <a href='".base_url()."index.php/Welcome/ver_detalle_de_mi_pedido/".$value["numero"]."' class='btn btn-default'>Ver Detalle</a>
                                     </td>
                                 </tr>";
                         }
                     ?>
                 </tbody>
-                
             </table>
         </div>
     </div>
