@@ -601,10 +601,18 @@
         var descuento_gral=$("#descuento_gral_editar_cliente").val();
         var ingresos_brutos = $("#ingresos_brutos_editar_cliente").val();
         var lista = $("#lista_editar_cliente").val()
-        var limite_cuenta = parseFloat($("#limite_cuenta_editar_cliente").val());
+        var limite_cuenta = $("#limite_cuenta_editar_cliente").val();
         
+        if(limite_cuenta == "")
+        {
+            limite_cuenta=0;
+        }
+        else
+        {
+            limite_cuenta = parseFloat($("#limite_cuenta_editar_cliente").val());
+        }
         
-        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && limite_cuenta != "" && !isNaN(limite_cuenta) &&
+        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && !isNaN(limite_cuenta) &&
              razon_social != "" && nombre != "" && apellido != "" &&
              telefono != "" && correo != "" && validarEmail(correo) &&
              direccion !="" && localidad != "" && !isNaN(localidad) && localidad != 0 &&
@@ -677,9 +685,18 @@
         var descuento_gral= $("#descuento_gral_agregar_cliente").val();
         var ingresos_brutos = $("#ingresos_brutos_agregar_cliente").val();
         var lista = $("#lista_agregar_cliente").val();
-        var limite_cuenta = parseFloat($("#limite_cuenta_agregar_cliente").val());
+        var limite_cuenta = $("#limite_cuenta_agregar_cliente").val();
         
-        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && limite_cuenta != "" && !isNaN(limite_cuenta) &&
+        if(limite_cuenta == "")
+        {
+            limite_cuenta =0;
+        }
+        else
+        {
+            limite_cuenta = parseFloat($("#limite_cuenta_agregar_cliente").val());
+        }
+        
+        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && !isNaN(limite_cuenta) &&
              razon_social != ""  && nombre != "" && apellido != "" &&
              telefono != "" && correo != "" && validarEmail(correo) &&
              direccion !="" && localidad != "" && !isNaN(localidad) && localidad != 0 &&
@@ -782,7 +799,7 @@
         if(dni_cuit_cuil=="" || isNaN(dni_cuit_cuil) ){activar_error("dni_cuit_cuil_agregar_cliente");}
         else{desactivar_error("dni_cuit_cuil_agregar_cliente");}
         
-        if(limite_cuenta=="" || isNaN(limite_cuenta) ){activar_error("limite_cuenta_agregar_cliente");}
+        if(isNaN(limite_cuenta) ){activar_error("limite_cuenta_agregar_cliente");}
         else{desactivar_error("limite_cuenta_agregar_cliente");}
     }
     
@@ -837,7 +854,7 @@
         if(dni_cuit_cuil=="" || isNaN(dni_cuit_cuil) ){activar_error("dni_cuit_cuil_editar_cliente");}
         else{desactivar_error("dni_cuit_cuil_editar_cliente");}
         
-        if(limite_cuenta=="" || isNaN(limite_cuenta)){activar_error("limite_cuenta_editar_cliente");}
+        if(isNaN(limite_cuenta)){activar_error("limite_cuenta_editar_cliente");}
         else{desactivar_error("limite_cuenta_editar_cliente");}
     }
     //

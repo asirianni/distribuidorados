@@ -188,12 +188,13 @@ class AdminLTE extends Config
                                   </span>
                                 </a>
                                 <ul class='treeview-menu'>
-                                  <li><a href='".base_url()."index.php/".$controller_user."/stock_de_productos_listado'><i class='fa fa-circle-o'></i>Listado</a></li>
+                                    <li><a href='".base_url()."index.php/".$controller_user."/stock_de_productos_listado'><i class='fa fa-circle-o'></i>Listado</a></li>
                                     <li><a href='".base_url()."index.php/".$controller_user."/stock_de_productos_rubros'><i class='fa fa-circle-o'></i>Rubros</a></li>
+                                    <li><a href='".base_url()."index.php/".$controller_user."/stock_de_productos_subrubros'><i class='fa fa-circle-o'></i>Sub-Rubros</a></li>
                                     <!--<li><a href='".base_url()."index.php/".$controller_user."/registro_de_pedidos'><i class='fa fa-circle-o'></i> Precios</a></li>-->
                                     <li><a href='".base_url()."index.php/".$controller_user."/stock_de_productos_ubicaciones'><i class='fa fa-circle-o'></i> Ubicaciones</a></li>
                                     <li><a href='".base_url()."index.php/".$controller_user."/stock_de_productos_medidas'><i class='fa fa-circle-o'></i> Medidas</a></li>
-                                    <!--<li><a href='".base_url()."index.php/".$controller_user."/stock_de_productos_movimientos'><i class='fa fa-circle-o'></i> Movimientos</a></li>-->
+                                    <li><a href='".base_url()."index.php/".$controller_user."/stock_de_productos_codigos_de_barra'><i class='fa fa-circle-o'></i> Codigo de barras</a></li>
                                 </ul>
                              </li>";
                     break;
@@ -241,6 +242,7 @@ class AdminLTE extends Config
                                       <li><a href='".base_url()."index.php/".$controller_user."/reporte_de_pedidos'><i class='fa fa-circle-o'></i>Reporte de pedidos</a></li>
                                       <li><a href='".base_url()."index.php/".$controller_user."/reporte_de_compras'><i class='fa fa-circle-o'></i>Reporte de compras</a></li>
                                       <li><a href='".base_url()."index.php/".$controller_user."/reporte_de_venta'><i class='fa fa-circle-o'></i>Reporte de venta</a></li>
+                                      <li><a href='".base_url()."index.php/".$controller_user."/reporte_de_productos'><i class='fa fa-circle-o'></i>Reporte de productos</a></li>
                                     </ul>
                                  </li>";
                     break;

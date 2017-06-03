@@ -157,6 +157,67 @@ class MY_Controller extends CI_Controller
         }
     }
     
+    function exportar_productos_excel()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(4);
+        
+        if($permiso)
+        {
+            header("Content-type: application/vnd.ms-excel; name='excel'");
+            header("Content-Disposition: filename=Lista-de-Productos.xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+            $this->load->model("Stock_productos_model");
+            $listado_productos= $this->Stock_productos_model->get_listado_productos();
+            
+            $html=
+            "
+                <table>
+                    <thead>
+                      <tr>
+                        <th>Codigo</th>
+                        <th>Descripcion</th>
+                        <th>Costo</th>
+                        <th>List 1</th>
+                        <th>List 2</th>
+                        <th>List 3</th>
+                        <th>List 4</th>
+                        <th>Stock</th>
+                        <th>Punto Critico</th>
+                        <th>Rubro</th>
+                        <th>Unidad de medida</th>
+                      </tr>
+                    </thead>
+                    <tbody>";
+            
+                foreach($listado_productos as $value)
+                            {
+                                
+                                $html.= 
+                                "<tr>
+                                    <td>".$value["id"]."</td>
+                                    <td>".$value["descripcion"]."</td>
+                                    <td>$".$value["costo"]."</td>
+                                    <td>$".$value["lista_1"]."</td>
+                                    <td>$".$value["lista_2"]."</td>
+                                    <td>$".$value["lista_3"]."</td>
+                                    <td>$".$value["lista_4"]."</td>
+                                    <td>".$value["stock"]."</td>
+                                    <td>".$value["punto_critico"]."</td>
+                                   <td>".$value["desc_rubro"]."</td>
+                                   <td>".$value["medida_desc"]."</td>
+                                       
+                                </tr>";
+                            }
+                    $html.="</tbody>
+                  </table>
+            ";
+            
+            echo $html;
+        }
+    }
+    
     public function precios_vigentes_de_producto($id_producto = null)
     {
         $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
@@ -239,6 +300,64 @@ class MY_Controller extends CI_Controller
             $output["listado_rubros"]=$this->Stock_productos_model->get_rubros();
             $output["controller_usuario"]=$this->controller_usuario;
             $this->load->view("back/modulos/stock_de_productos/abm_rubros",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    public function stock_de_productos_subrubros()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
+        
+        if($permiso)
+        {
+            $this->load->model("Stock_productos_model");
+            
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["js"]=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            
+            // LOGIC
+            $output["listado_subrubros"]=$this->Stock_productos_model->get_subrubros();
+            $output["listado_rubros"]=$this->Stock_productos_model->get_rubros();
+            $output["controller_usuario"]=$this->controller_usuario;
+            $this->load->view("back/modulos/stock_de_productos/abm_subrubros",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    public function stock_de_productos_codigos_de_barra()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(3);
+        
+        if($permiso)
+        {
+            $this->load->model("Stock_productos_model");
+            
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["js"]=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            
+            // LOGIC
+            $output["listado_codigos_de_barra"]=$this->Stock_productos_model->get_codigos_de_barra();
+            $output["listado_productos"]= $this->Stock_productos_model->get_listado_productos();
+            $output["controller_usuario"]=$this->controller_usuario;
+            $this->load->view("back/modulos/stock_de_productos/abm_codigos_barra",$output);
         }
         else
         {
@@ -1695,6 +1814,87 @@ class MY_Controller extends CI_Controller
             $output["listado_facturas"]= $this->Facturacion_model->get_facturas_compras_con_consultas($desde,$hasta,$estado);
            
             $this->load->view("back/modulos/reportes/impresor-facturas-compras",$output);
+        }
+    }
+    
+    public function reporte_de_productos()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            $this->load->model("Stock_productos_model");
+            
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["js"]=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            $output["controller_usuario"]=$this->controller_usuario;
+            // LOGIC
+            
+            $output["listado_productos"]= $this->Stock_productos_model->get_listado_reporte_productos();
+            $this->load->view("back/modulos/reportes/reporte_productos",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    
+    
+    function exportar_reporte_productos_excel()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            $this->load->model("Stock_productos_model");
+            $listado_productos= $this->Stock_productos_model->get_listado_reporte_productos();
+            
+            header("Content-type: application/vnd.ms-excel; name='excel'");
+            header("Content-Disposition: filename=Reporte-de-Productos.xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+            $html=
+            "
+                <table>
+                    <thead>
+                      <tr>
+                        <th>CODIGO PRODUCTO</th>
+                        <th>DESCRIPCION</th>
+                        <th>RUBRO</th>
+                        <th>SUBRUBRO</th>
+                        <th>LISTA 1</th>
+                        <th>LISTA 2</th>
+                        <th>LISTA 3</th>
+                        <th>LISTA 4</th>
+                      </tr>
+                    </thead>
+                    <tbody>";
+            
+                foreach($listado_productos as $value)
+                {
+                    $html.= "
+                            <tr>
+                                <td>".$value["codigo_producto"]."</td>
+                                <td>".$value["descripcion"]."</td>
+                                <td>$".$value["desc_rubro"]."</td>
+                                <td>$".$value["desc_subrubro"]."</td>
+                                <td>$".$value["lista_1"]."</td>
+                                <td>$".$value["lista_2"]."</td>
+                                <td>$".$value["lista_3"]."</td>
+                                 <td>".$value["lista_4"]."</td>
+                            </tr>";
+                            }
+                    $html.= "</tbody>
+                  </table>";
+            echo $html;
         }
     }
     

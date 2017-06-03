@@ -21,6 +21,7 @@ class Response_Ajax extends CI_Controller
             $punto_critico= $this->input->post("punto_critico");
             $rubro= $this->input->post("rubro");
             $unidad_medida= $this->input->post("unidad_medida");
+            $codigo= $this->input->post("codigo");
             $costo= (float)$this->input->post("costo");
             
             $margen_1= (float)$this->input->post("margen_1_agregar");
@@ -34,7 +35,7 @@ class Response_Ajax extends CI_Controller
             $lista_4 = (($costo * $margen_4) / 100) + $costo;
             
             $this->load->model("Stock_productos_model");
-            $respuesta = $this->Stock_productos_model->agregar_producto($descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4);
+            $respuesta = $this->Stock_productos_model->agregar_producto($descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo);
         
             echo json_encode($respuesta);
         }
@@ -52,6 +53,7 @@ class Response_Ajax extends CI_Controller
             $unidad_medida= (int)$this->input->post("unidad_medida");
             $rubro2= (int)$this->input->post("rubro2");
             $unidad_medida2= (int)$this->input->post("unidad_medida2");
+            $codigo= $this->input->post("codigo");
             $costo= (float)$this->input->post("costo");
             
             $margen_1= (float)$this->input->post("margen_1");
@@ -75,7 +77,7 @@ class Response_Ajax extends CI_Controller
             }
             
             $this->load->model("Stock_productos_model");
-            $respuesta = $this->Stock_productos_model->editar_producto($id_producto,$descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4);
+            $respuesta = $this->Stock_productos_model->editar_producto($id_producto,$descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo);
         
             echo json_encode($respuesta);
         }
@@ -688,6 +690,68 @@ class Response_Ajax extends CI_Controller
         $r = $this->db->query("SELECT sum(importe_factura) as salidas FROM cuenta_cliente where cliente = $cliente ");
         $r=$r->row_array();
         return (float)$r["salidas"];
+    }
+    
+    public function agregar_subrubro()
+    {
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
+        {
+            $descripcion = $this->input->post("descripcion");
+            $rubro = $this->input->post("rubro");
+            
+            $this->load->model("Stock_productos_model");
+            
+            $respuesta= $this->Stock_productos_model->agregar_subrubro($descripcion,$rubro);
+            
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_subrubro()
+    {
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
+        {
+            $id= $this->input->post("id");
+            $descripcion = $this->input->post("descripcion");
+            $rubro = $this->input->post("rubro");
+            
+            $this->load->model("Stock_productos_model");
+            
+            $respuesta= $this->Stock_productos_model->editar_subrubro($id,$descripcion,$rubro);
+            
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function agregar_codigo_de_barra()
+    {
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
+        {
+            $cod_producto= $this->input->post("cod_producto");
+            $codigo_barra = $this->input->post("codigo_barra");
+            
+            $this->load->model("Stock_productos_model");
+            
+            $respuesta= $this->Stock_productos_model->agregar_codigo_de_barra($cod_producto,$codigo_barra);
+            
+            echo json_encode($respuesta);
+        }
+    }
+    
+    public function editar_codigo_de_barra()
+    {
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
+        {
+            $id= $this->input->post("id");
+            $cod_producto= $this->input->post("cod_producto");
+            $codigo_barra = $this->input->post("codigo_barra");
+            
+            $this->load->model("Stock_productos_model");
+            
+            $respuesta= $this->Stock_productos_model->editar_codigo_de_barra($id,$cod_producto,$codigo_barra);
+            
+            echo json_encode($respuesta);
+        }
     }
 }
 

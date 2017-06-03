@@ -62,8 +62,13 @@
       <div class="row">
         <div class="col-md-12">
             <div class="box">
+                <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/exportar_productos_excel" method="post" target="_blank" id="FormularioExportacion" hidden>
+                </form>
                 <div class="box-header">
                     <button class="btn btn-danger" onClick="$('#modal_agregar_producto').modal('show');"><i class='fa fa-plus'></i> Agregar Producto</button>
+                    <div class="pull-right">
+                            <button id="btn_exportar_excel" type="button" class="btn btn-success botonExcel" onclick="$('#FormularioExportacion').submit();"><i class="fa fa-file-excel-o"></i> Exportar</button>
+                    </div>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="tabla_listado" class="table table-bordered table-hover">
@@ -112,7 +117,7 @@
                                    <!-- <td>".$value["desc_rubro"]."</td>
                                    <td>".$value["medida_desc"]."</td>-->
                                     <td>
-                                        <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_producto(".$value["id"].",&#34;".$value["descripcion"]."&#34;,".$value["stock"].",".$value["punto_critico"].",".$value["rubro"].",".$value["unidad_medida"].",".$value["costo"].",".$value["margen_1"].",".$value["lista_1"].",".$value["margen_2"].",".$value["lista_2"].",".$value["margen_3"].",".$value["lista_3"].",".$value["margen_4"].",".$value["lista_4"].")'><i class='fa fa-edit'></i></button>
+                                        <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_producto(".$value["id"].",&#34;".$value["descripcion"]."&#34;,".$value["stock"].",".$value["punto_critico"].",".$value["rubro"].",".$value["unidad_medida"].",".$value["costo"].",".$value["margen_1"].",".$value["lista_1"].",".$value["margen_2"].",".$value["lista_2"].",".$value["margen_3"].",".$value["lista_3"].",".$value["margen_4"].",".$value["lista_4"].",&#34;".$value["codigo_producto"]."&#34;)'><i class='fa fa-edit'></i></button>
                                         <a href='".base_url()."index.php/".$controller_usuario."/ubicaciones_de_producto/".$value["id"]."' class='btn btn-default' data-toggle='tooltip' title='' data-original-title='Ubicaciones'><i class='fa fa-send-o'></i></a>
                                     </td>    
                                 </tr>";
@@ -146,10 +151,16 @@
                 <h4 class="modal-title">Agregar un nuevo producto:</h4>
             </div>
             <div class="modal-body">
-                <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="codigo_agregar_producto">Codigo</label>
+                        <input tabindex="1" class="form-control" type="text" id="codigo_agregar_producto" name="codigo_agregar_producto" value=""/>
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="descripcion_agregar_producto">Descripcion</label>
-                        <input tabindex="1" class="form-control" type="text" id="descripcion_agregar_producto" name="descripcion_agregar_producto" value=""/>
+                        <input tabindex="2" class="form-control" type="text" id="descripcion_agregar_producto" name="descripcion_agregar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -181,26 +192,26 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="stock_agregar_producto">Stock</label>
-                        <input tabindex="2" class="form-control" type="text" id="stock_agregar_producto" name="stock_agregar_producto" value=""/>
+                        <input tabindex="3" class="form-control" type="text" id="stock_agregar_producto" name="stock_agregar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="punto_critico_agregar_producto">Punto Critico</label>
-                        <input tabindex="3" class="form-control" type="text" id="punto_critico_agregar_producto" name="punto_critico_agregar_producto" value=""/>
+                        <input tabindex="4" class="form-control" type="text" id="punto_critico_agregar_producto" name="punto_critico_agregar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="costo_agregar_producto">Costo</label>
-                        <input tabindex="4" class="form-control" type="number" step="0.5" id="costo_agregar_producto" name="costo_agregar_producto" value="0" onchange="cambio_valor_agregar()"/>
+                        <input tabindex="5" class="form-control" type="number" step="0.5" id="costo_agregar_producto" name="costo_agregar_producto" value="0" onchange="cambio_valor_agregar()"/>
                     </div>
                 </div>
                 
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_1_agregar">Margen 1</label>
-                        <input tabindex="5" class="form-control" type="number" step="0.5" id="margen_1_agregar" name="margen_1_agregar" value="0" onchange="cambio_valor_agregar()"/>
+                        <input tabindex="6" class="form-control" type="number" step="0.5" id="margen_1_agregar" name="margen_1_agregar" value="0" onchange="cambio_valor_agregar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -212,7 +223,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_2_agregar">Margen 2</label>
-                        <input tabindex="6" class="form-control" type="number" step="0.5" id="margen_2_agregar" name="margen_2_agregar" value="0" onchange="cambio_valor_agregar()"/>
+                        <input tabindex="7" class="form-control" type="number" step="0.5" id="margen_2_agregar" name="margen_2_agregar" value="0" onchange="cambio_valor_agregar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -224,7 +235,7 @@
                  <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_3_agregar">Margen 3</label>
-                        <input tabindex="7"  class="form-control" type="number" step="0.5" id="margen_3_agregar" name="margen_3_agregar" value="0" onchange="cambio_valor_agregar()"/>
+                        <input tabindex="8"  class="form-control" type="number" step="0.5" id="margen_3_agregar" name="margen_3_agregar" value="0" onchange="cambio_valor_agregar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -236,7 +247,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_4_agregar">Margen 4</label>
-                        <input tabindex="8" class="form-control" type="number" step="0.5" id="margen_4_agregar" name="margen_4_agregar" value="0" onchange="cambio_valor_agregar()"/>
+                        <input tabindex="9" class="form-control" type="number" step="0.5" id="margen_4_agregar" name="margen_4_agregar" value="0" onchange="cambio_valor_agregar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -266,10 +277,16 @@
             </div>
             <div class="modal-body">
                 <input type="text" id="id_producto_a_editar" hidden="true">
-                <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="codigo_editar_producto">Codigo</label>
+                        <input tabindex="1" class="form-control" type="text" id="codigo_editar_producto" name="codigo_editar_producto" value=""/>
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="descripcion_editar_producto">Descripcion</label>
-                        <input tabindex="1" class="form-control" type="text" id="descripcion_editar_producto" name="descripcion_editar_producto" value=""/>
+                        <input tabindex="2" class="form-control" type="text" id="descripcion_editar_producto" name="descripcion_editar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -332,67 +349,67 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="stock_editar_producto">Stock</label>
-                        <input tabindex="2" class="form-control" type="text" id="stock_editar_producto" name="stock_editar_producto" value=""/>
+                        <input tabindex="3" class="form-control" type="text" id="stock_editar_producto" name="stock_editar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="punto_critico_editar_producto">Punto Critico</label>
-                        <input tabindex="3" class="form-control" type="text" id="punto_critico_editar_producto" name="punto_critico_editar_producto" value=""/>
+                        <input tabindex="4" class="form-control" type="text" id="punto_critico_editar_producto" name="punto_critico_editar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="costo_editar_producto">Costo</label>
-                        <input tabindex="4" class="form-control" type="text" id="costo_editar_producto" name="costo_editar_producto" value=""/>
+                        <input tabindex="5" class="form-control" type="text" id="costo_editar_producto" name="costo_editar_producto" value=""/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_1_editar">Margen 1</label>
-                        <input tabindex="5" class="form-control" type="number" step="0.5" id="margen_1_editar" name="margen_1_editar" value="0" onchange="cambio_valor_editar()"/>
+                        <input tabindex="6" class="form-control" type="number" step="0.5" id="margen_1_editar" name="margen_1_editar" value="0" onchange="cambio_valor_editar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lista_1_editar">Lista 1</label>
-                        <input tabindex="6"  class="form-control" type="text" id="lista_1_editar" name="lista_1_editar" value="0" disabled/>
+                        <input tabindex="7"  class="form-control" type="text" id="lista_1_editar" name="lista_1_editar" value="0" disabled/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_2_editar">Margen 2</label>
-                        <input tabindex="7"  class="form-control" type="number" step="0.5" id="margen_2_editar" name="margen_2_editar" value="0" onchange="cambio_valor_editar()"/>
+                        <input tabindex="8"  class="form-control" type="number" step="0.5" id="margen_2_editar" name="margen_2_editar" value="0" onchange="cambio_valor_editar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lista_2_editar">Lista 2</label>
-                        <input tabindex="8" class="form-control" type="text" id="lista_2_editar" name="lista_2_editar" value="0" disabled/>
+                        <input tabindex="9" class="form-control" type="text" id="lista_2_editar" name="lista_2_editar" value="0" disabled/>
                     </div>
                 </div>
                  <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_3_editar">Margen 3</label>
-                        <input tabindex="9"  class="form-control" type="number" step="0.5" id="margen_3_editar" name="margen_3_editar" value="0" onchange="cambio_valor_editar()"/>
+                        <input tabindex="10"  class="form-control" type="number" step="0.5" id="margen_3_editar" name="margen_3_editar" value="0" onchange="cambio_valor_editar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lista_3_editar">Lista 3</label>
-                        <input tabindex="10" class="form-control" type="text" id="lista_3_editar" name="lista_3_editar" value="0" disabled/>
+                        <input tabindex="11" class="form-control" type="text" id="lista_3_editar" name="lista_3_editar" value="0" disabled/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="margen_4_editar">Margen 4</label>
-                        <input tabindex="11" class="form-control" type="number" step="0.5" id="margen_4_editar" name="margen_4_editar" value="0" onchange="cambio_valor_editar()"/>
+                        <input tabindex="12" class="form-control" type="number" step="0.5" id="margen_4_editar" name="margen_4_editar" value="0" onchange="cambio_valor_editar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lista_4_editar">Lista 4</label>
-                        <input tabindex="12" class="form-control" type="text" id="lista_4_editar" name="lista_4_editar" value="0" disabled/>
+                        <input tabindex="13" class="form-control" type="text" id="lista_4_editar" name="lista_4_editar" value="0" disabled/>
                     </div>
                 </div>
                 
@@ -601,7 +618,7 @@
         
     }
     
-    function modal_editar_producto(id,descripcion,stock,punto_critico,rubro,unidad_medida,costo,margen_1,lista_1,margen_2,lista_2,margen_3,lista_3,margen_4,lista_4)
+    function modal_editar_producto(id,descripcion,stock,punto_critico,rubro,unidad_medida,costo,margen_1,lista_1,margen_2,lista_2,margen_3,lista_3,margen_4,lista_4,codigo_producto)
     {
         $("#titulo_modal_editar_producto").text(descripcion);
         $("#id_producto_a_editar").val(id);
@@ -611,6 +628,7 @@
         $("#rubro_editar_producto").val(rubro);
         $("#unidad_medida_editar_producto").val(unidad_medida);
         $("#costo_editar_producto").val(costo);
+        $("#codigo_editar_producto").val(codigo_producto);
         
         $("#margen_1_editar").val(margen_1);
         $("#lista_1_editar").val(lista_1);
@@ -639,6 +657,7 @@
         var margen_2_editar = parseFloat($("#margen_2_editar").val());
         var margen_3_editar = parseFloat($("#margen_3_editar").val());
         var margen_4_editar = parseFloat($("#margen_4_editar").val());
+        var codigo = $("#codigo_editar_producto").val();
         
         if(descripcion != "" && stock != "" && !isNaN(stock)  && 
            punto_critico != "" && !isNaN(punto_critico) 
@@ -648,7 +667,7 @@
             $.ajax({
                 url: "<?php echo base_url()?>index.php/Response_Ajax/editar_producto",
                 type: "POST",
-                data:{id_producto:id_producto,descripcion:descripcion,stock:stock,punto_critico:punto_critico,rubro:rubro,unidad_medida:unidad_medida,rubro2:rubro2,unidad_medida2:unidad_medida2,costo:costo,margen_1:margen_1_editar,margen_2:margen_2_editar,margen_3:margen_3_editar,margen_4:margen_4_editar},
+                data:{id_producto:id_producto,descripcion:descripcion,stock:stock,punto_critico:punto_critico,rubro:rubro,unidad_medida:unidad_medida,rubro2:rubro2,unidad_medida2:unidad_medida2,costo:costo,margen_1:margen_1_editar,margen_2:margen_2_editar,margen_3:margen_3_editar,margen_4:margen_4_editar,codigo:codigo},
                 success: function(data)
                 {
                     data= JSON.parse(data);
@@ -713,6 +732,7 @@
         var margen_2_agregar = parseFloat($("#margen_2_agregar").val());
         var margen_3_agregar = parseFloat($("#margen_3_agregar").val());
         var margen_4_agregar = parseFloat($("#margen_4_agregar").val());
+        var codigo= $("#codigo_agregar_producto").val();
         
         if(descripcion != "" && stock != "" && !isNaN(stock) &&
            punto_critico != "" && !isNaN(punto_critico) 
@@ -721,7 +741,7 @@
             $.ajax({
                 url: "<?php echo base_url()?>index.php/Response_Ajax/agregar_producto",
                 type: "POST",
-                data:{descripcion:descripcion,stock:stock,punto_critico:punto_critico,rubro:rubro,unidad_medida:unidad_medida,costo:costo,margen_1_agregar:margen_1_agregar,margen_2_agregar:margen_2_agregar,margen_3_agregar:margen_3_agregar,margen_4_agregar:margen_4_agregar},
+                data:{descripcion:descripcion,stock:stock,punto_critico:punto_critico,rubro:rubro,unidad_medida:unidad_medida,costo:costo,margen_1_agregar:margen_1_agregar,margen_2_agregar:margen_2_agregar,margen_3_agregar:margen_3_agregar,margen_4_agregar:margen_4_agregar,codigo:codigo},
                 success: function(data)
                 {
                     data= JSON.parse(data);

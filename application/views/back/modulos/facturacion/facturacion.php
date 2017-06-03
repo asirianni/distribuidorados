@@ -1660,9 +1660,20 @@
         var descuento_gral= $("#descuento_gral_agregar_cliente").val();
         var ingresos_brutos = $("#ingresos_brutos_agregar_cliente").val();
         var lista = $("#lista_agregar_cliente").val();
-        var limite_cuenta = parseFloat($("#limite_cuenta_agregar_cliente").val());
+        var limite_cuenta = $("#limite_cuenta_agregar_cliente").val();
         
-        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && limite_cuenta != "" && !isNaN(limite_cuenta) &&
+        if(limite_cuenta == "")
+        {
+            limite_cuenta=0;
+        }
+        else
+        {
+            limite_cuenta = parseFloat($("#limite_cuenta_agregar_cliente").val());
+        }
+        
+        if(isNaN(limite_cuenta)){limite_cuenta=0;}
+        
+        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && !isNaN(limite_cuenta) &&
              razon_social != ""  && nombre != "" && apellido != "" &&
              telefono != "" && correo != "" && validarEmail(correo) &&
              direccion !="" && localidad != "" && !isNaN(localidad) && localidad != 0 &&
