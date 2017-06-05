@@ -20,6 +20,7 @@ class Response_Ajax extends CI_Controller
             $stock= $this->input->post("stock");
             $punto_critico= $this->input->post("punto_critico");
             $rubro= $this->input->post("rubro");
+            $subrubro= $this->input->post("subrubro");
             $unidad_medida= $this->input->post("unidad_medida");
             $codigo= $this->input->post("codigo");
             $costo= (float)$this->input->post("costo");
@@ -35,7 +36,7 @@ class Response_Ajax extends CI_Controller
             $lista_4 = (($costo * $margen_4) / 100) + $costo;
             
             $this->load->model("Stock_productos_model");
-            $respuesta = $this->Stock_productos_model->agregar_producto($descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo);
+            $respuesta = $this->Stock_productos_model->agregar_producto($descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo,$subrubro);
         
             echo json_encode($respuesta);
         }
@@ -55,6 +56,7 @@ class Response_Ajax extends CI_Controller
             $unidad_medida2= (int)$this->input->post("unidad_medida2");
             $codigo= $this->input->post("codigo");
             $costo= (float)$this->input->post("costo");
+            $subrubro= $this->input->post("subrubro");
             
             $margen_1= (float)$this->input->post("margen_1");
             $margen_2= (float)$this->input->post("margen_2");
@@ -77,7 +79,7 @@ class Response_Ajax extends CI_Controller
             }
             
             $this->load->model("Stock_productos_model");
-            $respuesta = $this->Stock_productos_model->editar_producto($id_producto,$descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo);
+            $respuesta = $this->Stock_productos_model->editar_producto($id_producto,$descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo,$subrubro);
         
             echo json_encode($respuesta);
         }

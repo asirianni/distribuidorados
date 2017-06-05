@@ -31,6 +31,9 @@
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <?php echo $css?>
+  <style>
+      body{ font-family: "OPEN SANS"}
+  </style>
 </head>
 <body>
     <?php 

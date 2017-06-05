@@ -117,7 +117,7 @@
                                    <!-- <td>".$value["desc_rubro"]."</td>
                                    <td>".$value["medida_desc"]."</td>-->
                                     <td>
-                                        <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_producto(".$value["id"].",&#34;".$value["descripcion"]."&#34;,".$value["stock"].",".$value["punto_critico"].",".$value["rubro"].",".$value["unidad_medida"].",".$value["costo"].",".$value["margen_1"].",".$value["lista_1"].",".$value["margen_2"].",".$value["lista_2"].",".$value["margen_3"].",".$value["lista_3"].",".$value["margen_4"].",".$value["lista_4"].",&#34;".$value["codigo_producto"]."&#34;)'><i class='fa fa-edit'></i></button>
+                                        <button class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' onClick='modal_editar_producto(".$value["id"].",&#34;".$value["descripcion"]."&#34;,".$value["stock"].",".$value["punto_critico"].",".$value["rubro"].",".$value["unidad_medida"].",".$value["costo"].",".$value["margen_1"].",".$value["lista_1"].",".$value["margen_2"].",".$value["lista_2"].",".$value["margen_3"].",".$value["lista_3"].",".$value["margen_4"].",".$value["lista_4"].",&#34;".$value["codigo_producto"]."&#34;,".$value["subrubro"].")'><i class='fa fa-edit'></i></button>
                                         <a href='".base_url()."index.php/".$controller_usuario."/ubicaciones_de_producto/".$value["id"]."' class='btn btn-default' data-toggle='tooltip' title='' data-original-title='Ubicaciones'><i class='fa fa-send-o'></i></a>
                                     </td>    
                                 </tr>";
@@ -163,20 +163,8 @@
                         <input tabindex="2" class="form-control" type="text" id="descripcion_agregar_producto" name="descripcion_agregar_producto" value=""/>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="rubro_agregar_producto">Rubro</label>
-                        <select class="form-control select2" style="width: 100%;" type="text" id="rubro_agregar_producto" name="rubro_agregar_producto">
-                            <?php
-                                foreach($rubros as $value)
-                                {
-                                    echo "<option value='".$value["id"]."'>".$value["descripcion"]."</option>";
-                                }
-                            ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
+                
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="unidad_medida_agregar_producto">Unidad de medida</label>
                         <select class="form-control select2" style="width: 100%;" id="unidad_medida_agregar_producto" name="unidad_medida_agregar_producto">
@@ -186,6 +174,28 @@
                                 echo "<option value='".$value["id"]."'>".$value["descripcion"]." - ".$value["cantidad"]." - ".$value["medida"]."</option>";
                             }
                         ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="rubro_agregar_producto">Rubro: </label>
+                        <select class="form-control" id="rubro_agregar_producto" onchange="cambio_valor_agregar_rubro()">
+                            <option value="0">Seleccione rubro</option>
+                            <?php
+                                foreach ($rubros as $value)
+                                {
+                                    echo "<option value='".$value["id"]."'>".$value["descripcion"]."</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="subrubro_agregar_producto">Subrubro</label>
+                        <select class="form-control" id="subrubro_agregar_producto" disabled>
+                            <option value="0">Seleccione rubro</option>
                         </select>
                     </div>
                 </div>
@@ -289,12 +299,14 @@
                         <input tabindex="2" class="form-control" type="text" id="descripcion_editar_producto" name="descripcion_editar_producto" value=""/>
                     </div>
                 </div>
+                
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="rubro_editar_producto">Rubro</label>
-                        <select class="form-control" type="text" id="rubro_editar_producto" name="rubro_editar_producto" disabled>
+                        <label for="rubro_editar_producto">Rubro: </label>
+                        <select class="form-control" id="rubro_editar_producto" onchange="cambio_valor_editar_rubro()">
+                            <option value="0">Seleccione rubro</option>
                             <?php
-                                foreach($rubros as $value)
+                                foreach ($rubros as $value)
                                 {
                                     echo "<option value='".$value["id"]."'>".$value["descripcion"]."</option>";
                                 }
@@ -304,15 +316,9 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="rubro2_editar_producto">Seleccione nuevo rubro:</label>
-                        <select class="select2 form-control" id="rubro2_editar_producto" name="rubro2_editar_producto" style="width: 100%;">
-                            <option value="0">Seleccione si desea cambiar</option>
-                            <?php
-                                foreach($rubros as $value)
-                                {
-                                    echo "<option value='".$value["id"]."'>".$value["descripcion"]."</option>";
-                                }
-                            ?>
+                        <label for="subrubro_editar_producto">Subrubro</label>
+                        <select class="form-control" id="subrubro_editar_producto" disabled>
+                            <option value="0">Seleccione rubro</option>
                         </select>
                     </div>
                 </div>
@@ -449,11 +455,11 @@
                       </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="small-box bg-green" style="cursor:pointer" onClick="ir_a_precios_producto_agregado()">
+                    <div class="small-box bg-green" style="cursor:pointer" onClick="reiniciar_modal_agregar();">
                         <div class="inner">
                           <h3><i class="fa fa-plus" style="font-size: 20px"></i></h3>
 
-                          <p>Precios Vigentes</p>
+                          <p>Agregar otro producto</p>
                         </div>
                         <div class="icon">
                           <i class="fa fa-dollar"></i>
@@ -518,6 +524,112 @@
 
 <script>
     
+    var sub_rubros = JSON.parse('<?php echo json_encode($subrubros)?>');
+    
+    function reiniciar_modal_agregar()
+    {
+
+        $("#codigo_agregar_producto").val("");
+        $("#descripcion_agregar_producto").val("");
+        $("#rubro_agregar_producto").val(0);
+        $("#unidad_medida_agregar_producto").val(0);
+        $("#stock_agregar_producto").val(0);
+
+        $("#punto_critico_agregar_producto").val(0);
+        $("#costo_agregar_producto").val(0);
+        $("#margen_1_agregar").val(0);
+        $("#lista_1_agregar").val(0);
+        $("#margen_2_agregar").val(0);
+        $("#lista_2_agregar").val(0);
+        $("#margen_3_agregar").val(0);
+        $("#lista_3_agregar").val(0);
+        $("#margen_4_agregar").val(0);
+        $("#lista_4_agregar").val(0);
+        $("#rubro_agregar_producto").val(0);
+        cambio_valor_agregar();
+        $("#subrubro_agregar_producto").val(0);
+        
+        $("#modal_producto_agregado").modal("hide");
+        $("#modal_agregar_producto").modal("show");
+    }
+    function cambio_valor_agregar_rubro()
+    {
+        var rubro_selecionado = parseInt($("#rubro_agregar_producto").val());
+        
+        var select2_subrubro= "";
+        
+        if(rubro_selecionado != 0)
+        {
+            var agregado =false;
+            
+            for(var i=0; i < sub_rubros.length;i++)
+            {
+                
+                if(parseInt(sub_rubros[i]["rubro"]) == rubro_selecionado)
+                {
+                    select2_subrubro+= "<option value='"+sub_rubros[i]["codigo"]+"'>"+sub_rubros[i]["subrubro"]+"</option>";
+                    agregado=true;
+                }
+            }
+            
+            if(!agregado)
+            {
+                select2_subrubro= "<option value='0'>Seleccione rubro</option>";
+                $("#subrubro_agregar_producto").attr("disabled","disabled");
+            }
+            else
+            {
+                $("#subrubro_agregar_producto").removeAttr("disabled");
+            }
+        }
+        else
+        {
+            select2_subrubro= "<option value='0'>Seleccione rubro</option>";
+            $("#subrubro_agregar_producto").attr("disabled","disabled");
+        }
+        
+        $("#subrubro_agregar_producto").html(select2_subrubro);
+    }
+    
+    function cambio_valor_editar_rubro()
+    {
+        var rubro_selecionado = parseInt($("#rubro_editar_producto").val());
+        
+        var select2_subrubro= "";
+        
+        if(rubro_selecionado != 0)
+        {
+            var agregado =false;
+            
+            for(var i=0; i < sub_rubros.length;i++)
+            {
+                
+                if(parseInt(sub_rubros[i]["rubro"]) == rubro_selecionado)
+                {
+                    select2_subrubro+= "<option value='"+sub_rubros[i]["codigo"]+"'>"+sub_rubros[i]["subrubro"]+"</option>";
+                    agregado=true;
+                }
+            }
+            
+            if(!agregado)
+            {
+                select2_subrubro= "<option value='0'>Seleccione rubro</option>";
+                $("#subrubro_editar_producto").attr("disabled","disabled");
+            }
+            else
+            {
+                $("#subrubro_editar_producto").removeAttr("disabled");
+            }
+        }
+        else
+        {
+            select2_subrubro= "<option value='0'>Seleccione rubro</option>";
+            $("#subrubro_editar_producto").attr("disabled","disabled");
+        }
+        
+        $("#subrubro_editar_producto").html(select2_subrubro);
+    }
+   
     function cambio_valor_agregar()
     {
         var costo = parseFloat($("#costo_agregar_producto").val());
@@ -618,7 +730,7 @@
         
     }
     
-    function modal_editar_producto(id,descripcion,stock,punto_critico,rubro,unidad_medida,costo,margen_1,lista_1,margen_2,lista_2,margen_3,lista_3,margen_4,lista_4,codigo_producto)
+    function modal_editar_producto(id,descripcion,stock,punto_critico,rubro,unidad_medida,costo,margen_1,lista_1,margen_2,lista_2,margen_3,lista_3,margen_4,lista_4,codigo_producto,subrubro)
     {
         $("#titulo_modal_editar_producto").text(descripcion);
         $("#id_producto_a_editar").val(id);
@@ -639,6 +751,9 @@
         $("#margen_4_editar").val(margen_4);
         $("#lista_4_editar").val(lista_4);
         
+        cambio_valor_editar_rubro();
+        $("#subrubro_agregar_producto").val(subrubro);
+        
         $("#modal_editar_producto").modal("show");
     }
     
@@ -658,6 +773,7 @@
         var margen_3_editar = parseFloat($("#margen_3_editar").val());
         var margen_4_editar = parseFloat($("#margen_4_editar").val());
         var codigo = $("#codigo_editar_producto").val();
+        var subrubro= $("#subrubro_editar_producto").val();
         
         if(descripcion != "" && stock != "" && !isNaN(stock)  && 
            punto_critico != "" && !isNaN(punto_critico) 
@@ -667,7 +783,7 @@
             $.ajax({
                 url: "<?php echo base_url()?>index.php/Response_Ajax/editar_producto",
                 type: "POST",
-                data:{id_producto:id_producto,descripcion:descripcion,stock:stock,punto_critico:punto_critico,rubro:rubro,unidad_medida:unidad_medida,rubro2:rubro2,unidad_medida2:unidad_medida2,costo:costo,margen_1:margen_1_editar,margen_2:margen_2_editar,margen_3:margen_3_editar,margen_4:margen_4_editar,codigo:codigo},
+                data:{id_producto:id_producto,descripcion:descripcion,stock:stock,punto_critico:punto_critico,rubro:rubro,unidad_medida:unidad_medida,rubro2:rubro2,unidad_medida2:unidad_medida2,costo:costo,margen_1:margen_1_editar,margen_2:margen_2_editar,margen_3:margen_3_editar,margen_4:margen_4_editar,codigo:codigo,subrubro:subrubro},
                 success: function(data)
                 {
                     data= JSON.parse(data);
@@ -733,6 +849,8 @@
         var margen_3_agregar = parseFloat($("#margen_3_agregar").val());
         var margen_4_agregar = parseFloat($("#margen_4_agregar").val());
         var codigo= $("#codigo_agregar_producto").val();
+        var subrubro= $("#subrubro_agregar_producto").val();
+        
         
         if(descripcion != "" && stock != "" && !isNaN(stock) &&
            punto_critico != "" && !isNaN(punto_critico) 
@@ -741,7 +859,7 @@
             $.ajax({
                 url: "<?php echo base_url()?>index.php/Response_Ajax/agregar_producto",
                 type: "POST",
-                data:{descripcion:descripcion,stock:stock,punto_critico:punto_critico,rubro:rubro,unidad_medida:unidad_medida,costo:costo,margen_1_agregar:margen_1_agregar,margen_2_agregar:margen_2_agregar,margen_3_agregar:margen_3_agregar,margen_4_agregar:margen_4_agregar,codigo:codigo},
+                data:{descripcion:descripcion,stock:stock,punto_critico:punto_critico,rubro:rubro,unidad_medida:unidad_medida,costo:costo,margen_1_agregar:margen_1_agregar,margen_2_agregar:margen_2_agregar,margen_3_agregar:margen_3_agregar,margen_4_agregar:margen_4_agregar,codigo:codigo,subrubro:subrubro,rubro:rubro},
                 success: function(data)
                 {
                     data= JSON.parse(data);

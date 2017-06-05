@@ -148,6 +148,7 @@ class MY_Controller extends CI_Controller
             
             $output["listado_productos"]= $this->Stock_productos_model->get_listado_productos();
             $output["rubros"]=$this->Stock_productos_model->get_rubros();
+            $output["subrubros"]=$this->Stock_productos_model->get_subrubros();
             $output["unidades_medidas"]=$this->Stock_productos_model->get_unidades_medidas();
             $this->load->view("back/modulos/stock_de_productos/listado",$output);
         }

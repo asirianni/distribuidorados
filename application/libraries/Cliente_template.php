@@ -27,8 +27,8 @@ class Cliente_template
                 </div>
                 <div id='navbar' class='navbar-collapse collapse'>
                   <ul class='nav navbar-nav'>
-                    <li class=''><a href='".base_url()."index.php/Welcome/principal_cliente'>Creador de pedidos</a></li>
-                    <li class=''><a href='".base_url()."index.php/Welcome/mi_lista_de_pedidos'>Mi lista de pedidos</a></li>
+                    <li class=''><a href='".base_url()."index.php/Welcome/principal_cliente'><i class='fa fa-edit'></i> Creador de pedidos</a></li>
+                    <li class=''><a href='".base_url()."index.php/Welcome/mi_lista_de_pedidos'><i class='fa fa-eye'></i> Mi lista de pedidos</a></li>
                     
                     <!--<li><a href='#'>About</a></li>
                     <li><a href='#'>Contact</a></li>
@@ -64,9 +64,9 @@ class Cliente_template
         "<footer>
             <div class='navbar navbar-default navbar-fixed-bottom'>
                 <div class='container'>
-                    <div class='navbar-header'>
+                    <div class='navbar-header' style='width: 100%;'>
                         <ul class=''>
-                            <li class='pull-right' style='list-style:none;font-size: 16px;font-weight: bold;text-align: right;'>Sistema desarrollado por <a target='_blank' href='https://www.facebook.com/Ordene-su-negocio-737763829635258' style='color: #3c8dbc;'>Adrian Sirianni</a> de <a target='_blank' href='https://www.facebook.com/Ordene-su-negocio-737763829635258' style='color: #3c8dbc;'>ordenesunegocio</a></li>
+                            <li class='pull-right' style='list-style:none;font-size: 16px;font-weight: bold;text-align: right;margin-top: 15px;'><i class='fa fa-facebook'></i>&nbsp;&nbsp;Sistema desarrollado por <a target='_blank' href='https://www.facebook.com/Ordene-su-negocio-737763829635258' style='color: #3c8dbc;'>Adrian Sirianni</a> de <a target='_blank' href='https://www.facebook.com/Ordene-su-negocio-737763829635258' style='color: #3c8dbc;'>ordenesunegocio</a></li>
                         </ul>
                     </div>
                 </div>

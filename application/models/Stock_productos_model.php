@@ -22,7 +22,7 @@ class Stock_productos_model extends CI_Model
     
     public function get_listado_productos()
     {
-        $r = $this->db->query("select productos.id,productos.descripcion,productos.costo,productos.codigo_producto,productos.margen_1,productos.lista_1,productos.margen_2,productos.lista_2,productos.margen_3,productos.lista_3,productos.margen_4,productos.lista_4,productos.rubro,productos.stock,productos.punto_critico,productos.unidad_medida,rubros.descripcion as desc_rubro,unidad_medida.descripcion as medida_desc from productos INNER JOIN rubros on rubros.id = productos.rubro INNER JOIN unidad_medida on unidad_medida.id = productos.unidad_medida ");
+        $r = $this->db->query("select productos.id,productos.subrubro,productos.descripcion,productos.costo,productos.codigo_producto,productos.margen_1,productos.lista_1,productos.margen_2,productos.lista_2,productos.margen_3,productos.lista_3,productos.margen_4,productos.lista_4,productos.rubro,productos.stock,productos.punto_critico,productos.unidad_medida,rubros.descripcion as desc_rubro,unidad_medida.descripcion as medida_desc from productos INNER JOIN rubros on rubros.id = productos.rubro INNER JOIN unidad_medida on unidad_medida.id = productos.unidad_medida ");
         return $r->result_array();
     }
     
@@ -84,7 +84,7 @@ class Stock_productos_model extends CI_Model
         return $r->result_array();
     }
     
-    public function agregar_producto($descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo)
+    public function agregar_producto($descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo,$subrubro)
     {
         $datos = Array(
             "descripcion"=>$descripcion,
@@ -102,6 +102,7 @@ class Stock_productos_model extends CI_Model
             "margen_4"=>$margen_4,
             "lista_4"=>$lista_4,
             "codigo_producto"=>$codigo,
+            "subrubro"=>$subrubro,
         );
         
         $this->db->insert("productos",$datos);
@@ -112,7 +113,7 @@ class Stock_productos_model extends CI_Model
         
     }
     
-    public function editar_producto($id_producto,$descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo)
+    public function editar_producto($id_producto,$descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo,$subrubro)
     {
         $datos = Array(
             "descripcion"=>$descripcion,
@@ -130,6 +131,7 @@ class Stock_productos_model extends CI_Model
             "margen_4"=>$margen_4,
             "lista_4"=>$lista_4,
             "codigo_producto"=>$codigo,
+            "subrubro"=>$subrubro,
         );
         
         $this->db->where("id",$id_producto);

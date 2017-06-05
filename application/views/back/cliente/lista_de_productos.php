@@ -31,6 +31,9 @@
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <?php echo $css?>
+  <style>
+      body{ font-family: "OPEN SANS"}
+  </style>
 </head>
 <body>
     <?php 
@@ -38,7 +41,7 @@
     ?>
     <div class="row">
         <div class="col-md-offset-1 col-md-10">
-            <h2>Bienvenido <?php echo $this->session->userdata("nombre")." ".$this->session->userdata("apellido")?></h2>
+            <h2><i class='fa fa-user'></i> Bienvenido <?php echo $this->session->userdata("nombre")." ".$this->session->userdata("apellido")?></h2>
             <p>Esta es nuestra lista de productos con sus respectivos precios, aquí puede crear su pedido</p>
         </div>
     </div>

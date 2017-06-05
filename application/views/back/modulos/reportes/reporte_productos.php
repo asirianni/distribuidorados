@@ -94,11 +94,11 @@
                                 <tr>
                                     <td>".$value["codigo_producto"]."</td>
                                     <td>".$value["descripcion"]."</td>
-                                    <td>$".$value["desc_rubro"]."</td>
-                                    <td>$".$value["desc_subrubro"]."</td>
-                                    <td>$".$value["lista_1"]."</td>
-                                    <td>$".$value["lista_2"]."</td>
-                                    <td>$".$value["lista_3"]."</td>
+                                    <td>".$value["desc_rubro"]."</td>
+                                    <td>".$value["desc_subrubro"]."</td>
+                                    <td>".$value["lista_1"]."</td>
+                                    <td>".$value["lista_2"]."</td>
+                                    <td>".$value["lista_3"]."</td>
                                     <td>".$value["lista_4"]."</td>
                                       
                                 </tr>";
