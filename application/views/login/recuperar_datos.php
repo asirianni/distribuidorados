@@ -16,7 +16,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="<?php echo base_url()?>index.php/Login/olvide_mis_datos"><strong>Distribuidores S.R.L</strong></a>
+            <a href="<?php echo base_url()?>index.php/Login/olvide_mis_datos"><strong>Distribuidores</strong></a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">

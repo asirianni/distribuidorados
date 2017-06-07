@@ -212,7 +212,7 @@
                                           <td>".$value["estado"]."</td> 
                                           <td>
                                               <a href='".base_url()."index.php/".$controller_usuario."/registro_de_pedidos_editar/".$value["numero"]."' class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' ><i class='fa fa-edit'></i></a>
-                                              <!--<button class='btn btn-danger' data-toggle='tooltip' title='' data-original-title='Eliminar' onClick='abrir_modal_eliminar_transportista()'>X</button>-->
+                                              <a target='_blank' href='".base_url()."index.php/".$controller_usuario."/imprimir_pedido/".$value["numero"]."' class='btn btn-warning' data-toggle='tooltip' title='' data-original-title='Imprimir'><i class='fa fa-print'></i></a>
                                           </td>    
                                       </tr>";
                                   }

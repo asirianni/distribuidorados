@@ -13,10 +13,10 @@
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/plugins/iCheck/square/blue.css">
   <link rel="stylesheet" href="<?php echo base_url()?>recursos/css/login.css">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-color: #dd4b39;">
     <div class="login-box">
         <div class="login-logo">
-            <a href="<?php echo base_url()?>index.php/Login/olvide_mis_datos"><strong>Distribuidores S.R.L</strong></a>
+            <a href="<?php echo base_url()?>index.php/Login/olvide_mis_datos"><strong style="color: #fff;">Distribuidores</strong></a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
@@ -25,9 +25,9 @@
                     <img width="200" src="<?php echo base_url()?>recursos/images/login/logo-empresa.png"/>
                 </a>
             </p>-->
-            <p class="login-box-msg">Ingrese su usuario o correo, los datos de su cuenta serán enviados al correo que tenga configurado</p>
+            <p class="login-box-msg">Ingrese su correo, los datos de su cuenta serán enviados al correo que tenga configurado</p>
 
-            <form action="<?php echo base_url()?>index.php/Login/olvide_mis_datos" method="post">
+            <form action="<?php echo base_url()?>index.php/Welcome/olvide_mis_datos" method="post">
                 <div class="form-group has-feedback">
                     <input type="text" name="usuario_correo" class="form-control" placeholder="Correo o Usuario">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -60,7 +60,7 @@
             </div>-->
             <!-- /.social-auth-links -->
             <br/>
-            <a href="<?php echo base_url()?>index.php/Login">Iniciar sesion</a><br>
+            <a href="<?php echo base_url()?>index.php/Welcome">Iniciar sesion</a><br>
             <!--<a href="register.html" class="text-center">Register a new membership</a>-->
         </div>
     <!-- /.login-box-body -->

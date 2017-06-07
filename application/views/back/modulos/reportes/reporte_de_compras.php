@@ -181,7 +181,9 @@
                         <th>FACTURA</th>
                         <th>TIPO</th>
                         <th>IMPORTE</th>
+                        <th>PROVEEDOR</th>
                         <th>ESTADO</th>
+                        <th>CONTROLES</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -209,8 +211,11 @@
                                     <td>".$value["numero"]."</td>
                                     <td>".$value["desc_tipo_factura"]."</td>
                                     <td>$".$value["total"]."</td>
+                                    <td>".$value["proveedor_razon_social"]."</td>
                                     <td>".$value["desc_estado"]."</td>     
-                                       
+                                    <td>
+                                        <a class='btn btn-success' target='_blank' href='".base_url()."index.php/".$controller_usuario."/ver_factura/".$value["numero"]."'><i class='fa fa-search'></i> </a>
+                                    </td>   
                                 </tr>";
                             }
                         ?>   

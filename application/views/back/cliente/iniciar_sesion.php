@@ -16,7 +16,7 @@
 <body class="hold-transition login-page" style="background-color: #dd4b39;">
     <div class="login-box">
         <div class="login-logo">
-            <a href="<?php echo base_url()?>index.php/Login"><strong style="color: #fff;">Bienvenido cliente</strong></a>
+            <a href="<?php echo base_url()?>index.php/Welcome"><strong style="color: #fff;">Bienvenido cliente</strong></a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
@@ -70,7 +70,7 @@
             </div>-->
             <!-- /.social-auth-links -->
             <br/>
-            <a href="<?php echo base_url()?>index.php/Login/olvide_mis_datos">Olvide mi datos</a><br>
+            <a href="<?php echo base_url()?>index.php/Welcome/olvide_mis_datos">Olvide mi datos</a><br>
             <!--<a href="register.html" class="text-center">Register a new membership</a>-->
         </div>
     <!-- /.login-box-body -->

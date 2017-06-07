@@ -66,7 +66,7 @@ class Registro_de_clientes_model extends CI_Model
     
     public function get_cliente($id)
     {
-        $r = $this->db->query("select * from cliente where id=$id");
+        $r = $this->db->query("select cliente.*,localidades.localidad as desc_localidad, provincias.provincia as desc_provincia from cliente INNER JOIN localidades on localidades.codigo = cliente.localidad INNER JOIN provincias on provincias.id = localidades.id_provincia where cliente.id=$id");
         return $r->row_array();
     }
     

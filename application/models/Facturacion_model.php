@@ -340,7 +340,7 @@ class Facturacion_model extends CI_Model
     
     public function get_facturas_compras_con_consultas($desde,$hasta,$estado)
     {
-        $sql = "SELECT factura_compra.*, punto_venta.punto as desc_punto_venta, tipo_factura.tipo as desc_tipo_factura,condicion_de_venta.condicion as desc_condicion,estado_factura.estado as desc_estado, usuarios.usuario as desc_usuario FROM factura_compra INNER JOIN punto_venta on punto_venta.codigo = factura_compra.punto_venta INNER JOIN tipo_factura on tipo_factura.codigo = factura_compra.tipo_factura INNER JOIN condicion_de_venta on condicion_de_venta.id = factura_compra.condicion_venta INNER JOIN estado_factura on estado_factura.codigo = factura_compra.estado INNER JOIN usuarios on factura_compra.usuario = usuarios.id where factura_compra.fecha >= '".$desde."' and factura_compra.fecha <= '".$hasta."'";
+        $sql = "SELECT factura_compra.*, punto_venta.punto as desc_punto_venta, tipo_factura.tipo as desc_tipo_factura,condicion_de_venta.condicion as desc_condicion,estado_factura.estado as desc_estado, usuarios.usuario as desc_usuario, proveedor.razon_social as proveedor_razon_social FROM factura_compra INNER JOIN punto_venta on punto_venta.codigo = factura_compra.punto_venta INNER JOIN tipo_factura on tipo_factura.codigo = factura_compra.tipo_factura INNER JOIN condicion_de_venta on condicion_de_venta.id = factura_compra.condicion_venta INNER JOIN estado_factura on estado_factura.codigo = factura_compra.estado INNER JOIN usuarios on factura_compra.usuario = usuarios.id INNER JOIN proveedor on proveedor.id = factura_compra.proveedor where factura_compra.fecha >= '".$desde."' and factura_compra.fecha <= '".$hasta."'";
         
         
         if((int)$estado != 0)

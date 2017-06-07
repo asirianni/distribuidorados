@@ -873,6 +873,34 @@ class MY_Controller extends CI_Controller
         }
     }
     
+    public function imprimir_pedido($numero_pedido = null)
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(4);
+        
+        if($permiso && $numero_pedido != null)
+        {
+            $this->load->model("Registro_de_pedidos_model");
+            $this->load->model("Configuracion_empresa_model");
+            $this->load->model("Registro_de_clientes_model");
+            
+            $output["pedido"]=$pedido= $this->Registro_de_pedidos_model->get_pedido($numero_pedido);
+            $output["detalle_pedido"]=$this->Registro_de_pedidos_model->get_detalle_pedido($numero_pedido);
+            $output["cliente"]=$this->Registro_de_clientes_model->get_cliente($pedido["cliente"]);
+                    
+            $output["logo"]=$this->Configuracion_empresa_model->get_configuracion(3);
+            $output["tipo_de_inscripcion"]=$this->Configuracion_empresa_model->get_configuracion(4);
+            $output["cuit"]=$this->Configuracion_empresa_model->get_configuracion(1);
+            $output["ingresos_brutos"]=$this->Configuracion_empresa_model->get_configuracion(2);
+            $output["inicio_actividad"]=$this->Configuracion_empresa_model->get_configuracion(5);
+            
+            $this->load->view("back/modulos/registro_de_pedidos/imprimir-pedido",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
     // FIN MODULO REGISTRO DE PEDIDOS
     
     // COMIENDO MODULO FACTURACION

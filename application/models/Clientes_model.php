@@ -13,6 +13,12 @@ class Clientes_model extends CI_Model
         return $r->row_array();
     }
     
+    public function get_cliente_por_correo($correo)
+    {
+        $r= $this->db->query("SELECT cliente.* from cliente where cliente.correo = '".$correo."'");
+        return $r->row_array();
+    }
+    
     public function get_lista_productos($lista_cliente)
     {
         $r = $this->db->query("select productos.id,productos.descripcion,productos.$lista_cliente as precio from productos where productos.$lista_cliente > 0");

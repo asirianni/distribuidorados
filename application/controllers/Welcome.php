@@ -18,6 +18,7 @@ class Welcome extends CI_Controller {
             $this->adminlte= new AdminLTE();
             $this->template= new Cliente_template();
         }
+        
         public function index()
 	{
             $salida["mensajes_error"]=Array();
@@ -249,6 +250,59 @@ class Welcome extends CI_Controller {
             }
         }
         
+    public function olvide_mis_datos()
+    {
+        $salida["mensaje_aviso"]="";
+        
+        if($this->input->post())
+        {
+            $this->load->model("Clientes_model");
+            $this->load->library("Correo");
+            
+            $correo = $this->input->post("usuario_correo");
+            
+            $response_user = $this->Clientes_model->get_cliente_por_correo($usuario_correo);
+                
+           
+            
+            if($response_user)
+            {
+                $correo_usuario = $response_user["correo"];
+                $password  = $response_user["password"];
+                
+                $this->load->library("Recuperacion_cuenta");
+                
+                $mensaje = Recuperacion_cuenta::getHtmlMensajeDatosCuentaCliente($correo_usuario,$password);
+                $asunto = "Datos de su cuenta en Distribuidores";
+                $emisor= "mario.olivera96@gmail.com";
+                
+                if(Correo::enviar_correo($mensaje, $asunto, $emisor, $correo_usuario))
+                {
+                    $salida["mensajes_error"]=Array();
+                    $salida["mensaje_success"]="Se han en enviado los datos de su cuenta, revise su correo";
+                    $this->load->view("Welcome/iniciar_sesion",$salida);
+                }
+                else
+                {
+                    $salida["mensaje_aviso"]="Ha ocurrido un error y no se han podido mandar los datos";
+                    $this->load->view("Welcome/recuperar_datos",$salida);
+                }
+            }
+            else
+            {
+                if($es_correo){$salida["mensaje_aviso"]="No se encontró ningun usuario con el correo ingresado";}
+                else{$salida["mensaje_aviso"]="No se encontró el usuario ingresado";}
+                $this->load->view("Welcome/recuperar_datos",$salida);
+            }
+        }
+        else
+        {
+            $this->load->view("back/cliente/recuperar_datos",$salida);
+        }
+        
+        
+    }
+    
         private function validar_acceso()
         {
             $respuesta = false;
