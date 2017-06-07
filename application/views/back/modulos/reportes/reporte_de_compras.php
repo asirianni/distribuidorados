@@ -214,7 +214,7 @@
                                     <td>".$value["proveedor_razon_social"]."</td>
                                     <td>".$value["desc_estado"]."</td>     
                                     <td>
-                                        <a class='btn btn-success' target='_blank' href='".base_url()."index.php/".$controller_usuario."/ver_factura/".$value["numero"]."'><i class='fa fa-search'></i> </a>
+                                        <a class='btn btn-success' target='_blank' href='".base_url()."index.php/".$controller_usuario."/ver_factura_compra/".$value["numero"]."'><i class='fa fa-search'></i> </a>
                                     </td>   
                                 </tr>";
                             }

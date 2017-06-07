@@ -60,10 +60,15 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
+        <?php
+            // lista colores para los modulos
+            $colores = Array("red","green","aqua","yellow","fuchsia","orange");
+            $indice = 0;
+        ?>
         <div class="col-md-12">
             <?php if($permiso_productos){?>
             <div class="col-md-4">
-                <div class="small-box bg-red">
+                <div class="small-box bg-<?php echo $colores[$indice];$indice++;?>">
                     <div class="inner">
                       <h3>PRODUCTOS</h3>
 
@@ -78,7 +83,7 @@
             <?php } ?>
             <?php if($permiso_clientes){?>
             <div class="col-md-4">
-                <div class="small-box bg-green">
+                <div class="small-box bg-<?php echo $colores[$indice];$indice++;?>">
                     <div class="inner">
                       <h3>CLIENTES</h3>
 
@@ -93,7 +98,7 @@
             <?php } ?>
             <?php if($permiso_facturacion){?>
             <div class="col-md-4">
-                <div class="small-box bg-aqua">
+                <div class="small-box bg-<?php echo $colores[$indice];$indice++;?>">
                     <div class="inner">
                       <h3>FACTURACION</h3>
 
@@ -108,7 +113,7 @@
             <?php } ?>
             <?php if($permiso_reportes){?>
             <div class="col-md-4">
-                <div class="small-box bg-yellow">
+                <div class="small-box bg-<?php echo $colores[$indice];$indice++;?>">
                     <div class="inner">
                       <h3>REPORTES</h3>
 
@@ -123,7 +128,7 @@
             <?php } ?>
             <?php if($permiso_pedidos){?>
             <div class="col-md-4">
-                <div class="small-box bg-fuchsia">
+                <div class="small-box bg-<?php echo $colores[$indice];$indice++;?>">
                     <div class="inner">
                       <h3>PEDIDOS</h3>
 
@@ -138,7 +143,7 @@
             <?php } ?>
             <?php if($permiso_compras){?>
             <div class="col-md-4">
-                <div class="small-box bg-orange">
+                <div class="small-box bg-<?php echo $colores[$indice];$indice++;?>">
                     <div class="inner">
                       <h3>COMPRAS</h3>
 
@@ -151,6 +156,23 @@
                  </div>
             </div>
             <?php } ?>
+            <?php if($indice >= count($colores)){$indice=0;}?>
+            <?php if($permiso_estados_cuentas){?>
+            <div class="col-md-4">
+                <div class="small-box bg-<?php echo $colores[$indice];$indice++;?>">
+                    <div class="inner">
+                      <h3>Estado de Ctas</h3>
+
+                      <p></p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-bar-chart"></i>
+                    </div>
+                    <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/estados_de_cuentas" class="small-box-footer">Ir a la seccion <i class="fa fa-arrow-circle-right"></i></a>
+                 </div>
+            </div>
+            <?php } ?>
+            <?php if($indice >= count($colores)){$indice=0;}?>
          </div>
       </div>
     </section>

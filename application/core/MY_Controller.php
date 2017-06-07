@@ -1764,6 +1764,42 @@ class MY_Controller extends CI_Controller
         }
     }
     
+    public function ver_factura_compra($numero_factura = null)
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(7);
+        
+        
+        if($permiso && $numero_factura != null)
+        {
+            $this->load->model("Facturacion_model");
+            $this->load->model("Configuracion_empresa_model");
+            
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["js"]=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            
+            // LOGIC
+            $output["controller_usuario"]=$this->controller_usuario;
+            $output["factura"]=$this->Facturacion_model->get_factura_compra($numero_factura);
+            $output["detalle_factura"]=$this->Facturacion_model->get_detalle_factura_compra($numero_factura);
+            $output["tipo_de_inscripcion"]=$this->Configuracion_empresa_model->get_configuracion(4);
+            $output["cuit"]=$this->Configuracion_empresa_model->get_configuracion(1);
+            $output["ingresos_brutos"]=$this->Configuracion_empresa_model->get_configuracion(2);
+            $output["inicio_actividad"]=$this->Configuracion_empresa_model->get_configuracion(5);
+            
+            $this->load->view("back/modulos/reportes/ver_factura_compra",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
     function exportar_reporte_compras()
     {
         $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
