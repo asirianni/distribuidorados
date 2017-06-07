@@ -47,12 +47,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard
-        <small>Control panel</small>
+        Escritorio
+        <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li><a href="#"><i class="fa fa-desktop"></i> Escritorio</a></li>
+        <!--<li class="active">Dashboard</li>-->
       </ol>
     </section>
 
@@ -61,7 +61,96 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-md-12">
-            CONTENIDO
+            <?php if($permiso_productos){?>
+            <div class="col-md-4">
+                <div class="small-box bg-red">
+                    <div class="inner">
+                      <h3>PRODUCTOS</h3>
+
+                      <p></p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-cube"></i>
+                    </div>
+                    <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/stock_de_productos_listado" class="small-box-footer">Ir a la seccion <i class="fa fa-arrow-circle-right"></i></a>
+                 </div>
+            </div>
+            <?php } ?>
+            <?php if($permiso_clientes){?>
+            <div class="col-md-4">
+                <div class="small-box bg-green">
+                    <div class="inner">
+                      <h3>CLIENTES</h3>
+
+                      <p></p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-users"></i>
+                    </div>
+                    <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_clientes" class="small-box-footer">Ir a la seccion <i class="fa fa-arrow-circle-right"></i></a>
+                 </div>
+            </div>
+            <?php } ?>
+            <?php if($permiso_facturacion){?>
+            <div class="col-md-4">
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                      <h3>FACTURACION</h3>
+
+                      <p></p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-calculator"></i>
+                    </div>
+                    <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/facturacion" class="small-box-footer">Ir a la seccion <i class="fa fa-arrow-circle-right"></i></a>
+                 </div>
+            </div>
+            <?php } ?>
+            <?php if($permiso_reportes){?>
+            <div class="col-md-4">
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                      <h3>REPORTES</h3>
+
+                      <p></p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-book"></i>
+                    </div>
+                    <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/reporte_de_pedidos" class="small-box-footer">Ir a la seccion <i class="fa fa-arrow-circle-right"></i></a>
+                 </div>
+            </div>
+            <?php } ?>
+            <?php if($permiso_pedidos){?>
+            <div class="col-md-4">
+                <div class="small-box bg-fuchsia">
+                    <div class="inner">
+                      <h3>PEDIDOS</h3>
+
+                      <p></p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-edit"></i>
+                    </div>
+                    <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/registro_de_pedidos" class="small-box-footer">Ir a la seccion <i class="fa fa-arrow-circle-right"></i></a>
+                 </div>
+            </div>
+            <?php } ?>
+            <?php if($permiso_compras){?>
+            <div class="col-md-4">
+                <div class="small-box bg-orange">
+                    <div class="inner">
+                      <h3>COMPRAS</h3>
+
+                      <p></p>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-bar-chart"></i>
+                    </div>
+                    <a href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/factura_compra" class="small-box-footer">Ir a la seccion <i class="fa fa-arrow-circle-right"></i></a>
+                 </div>
+            </div>
+            <?php } ?>
          </div>
       </div>
     </section>

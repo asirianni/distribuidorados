@@ -27,6 +27,14 @@ class Vendedor extends MY_Controller
             $output["header"]=$this->adminlte->getHeader();
             $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
             $output["footer"]=$this->adminlte->getFooter();
+            $output["controller_usuario"]=$this->controller_usuario;
+            
+            $output["permiso_productos"]= $this->funciones_generales->dar_permiso_a_modulo(3);
+            $output["permiso_clientes"]= $this->funciones_generales->dar_permiso_a_modulo(2);
+            $output["permiso_facturacion"]= $this->funciones_generales->dar_permiso_a_modulo(5);
+            $output["permiso_reportes"]=$this->funciones_generales->dar_permiso_a_modulo(8);
+            $output["permiso_pedidos"]= $this->funciones_generales->dar_permiso_a_modulo(4);
+            $output["permiso_compras"]= $this->funciones_generales->dar_permiso_a_modulo(7);
             $this->load->view("back/vendedor/escritorio",$output);
         }
         else
