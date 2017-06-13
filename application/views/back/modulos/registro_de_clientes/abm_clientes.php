@@ -612,13 +612,13 @@
             limite_cuenta = parseFloat($("#limite_cuenta_editar_cliente").val());
         }
         
-        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && !isNaN(limite_cuenta) &&
+        /*if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && !isNaN(limite_cuenta) &&
              razon_social != "" && nombre != "" && apellido != "" &&
              telefono != "" && correo != "" && validarEmail(correo) &&
              direccion !="" && localidad != "" && !isNaN(localidad) && localidad != 0 &&
              tipo_inscripcion != "" && !isNaN(tipo_inscripcion) && tipo_inscripcion != 0 && estado != "" && !isNaN(estado) && estado != 0
             )
-        {
+        {*/
             $.ajax({
                 url: "<?php echo base_url()?>index.php/Response_Ajax/editar_cliente",
                 type: "POST",
@@ -661,12 +661,12 @@
                 error: function(event){alert(event.responseText);
                 },
             });    
-        }
+        /*}
         else
         {
             gestiona_errores_editar();
             $("#mensaje_error_editar_cliente").text("Por favor complete todos los campos");
-        }
+        }*/
     }
     
     function agregar_cliente()
@@ -696,13 +696,13 @@
             limite_cuenta = parseFloat($("#limite_cuenta_agregar_cliente").val());
         }
         
-        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && !isNaN(limite_cuenta) &&
+        /*if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && !isNaN(limite_cuenta) &&
              razon_social != ""  && nombre != "" && apellido != "" &&
              telefono != "" && correo != "" && validarEmail(correo) &&
              direccion !="" && localidad != "" && !isNaN(localidad) && localidad != 0 &&
              tipo_inscripcion != "" && !isNaN(tipo_inscripcion) && tipo_inscripcion != 0 && estado != "" && !isNaN(estado) && estado != 0
             )
-        {
+        {*/
             $.ajax({
                 url: "<?php echo base_url()?>index.php/Response_Ajax/agregar_cliente",
                 type: "POST",
@@ -741,12 +741,12 @@
                 error: function(event){alert(event.responseText);
                 },
             });    
-        }
+        /*}
         else
         {
             gestiona_errores_agregar();
             $("#mensaje_error_agregar_cliente").text("Por favor complete todos los campos");
-        }
+        }*/
     }
     
     function gestiona_errores_agregar()

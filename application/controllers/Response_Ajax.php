@@ -24,19 +24,25 @@ class Response_Ajax extends CI_Controller
             $unidad_medida= $this->input->post("unidad_medida");
             $codigo= $this->input->post("codigo");
             $costo= (float)$this->input->post("costo");
+            $activo= $this->input->post("activo");
             
             $margen_1= (float)$this->input->post("margen_1_agregar");
             $margen_2= (float)$this->input->post("margen_2_agregar");
             $margen_3= (float)$this->input->post("margen_3_agregar");
             $margen_4= (float)$this->input->post("margen_4_agregar");
                
-            $lista_1 = (($costo * $margen_1) / 100) + $costo;
+            /*$lista_1 = (($costo * $margen_1) / 100) + $costo;
             $lista_2 = (($costo * $margen_2) / 100) + $costo;
             $lista_3 = (($costo * $margen_3) / 100) + $costo;
-            $lista_4 = (($costo * $margen_4) / 100) + $costo;
+            $lista_4 = (($costo * $margen_4) / 100) + $costo;*/
+            
+            $lista_1 = (float)$this->input->post("lista_1");
+            $lista_2 = (float)$this->input->post("lista_2");
+            $lista_3 = (float)$this->input->post("lista_3");
+            $lista_4 = (float)$this->input->post("lista_4");
             
             $this->load->model("Stock_productos_model");
-            $respuesta = $this->Stock_productos_model->agregar_producto($descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo,$subrubro);
+            $respuesta = $this->Stock_productos_model->agregar_producto($descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo,$subrubro,$activo);
         
             echo json_encode($respuesta);
         }
@@ -57,16 +63,24 @@ class Response_Ajax extends CI_Controller
             $codigo= $this->input->post("codigo");
             $costo= (float)$this->input->post("costo");
             $subrubro= $this->input->post("subrubro");
+            $activo= $this->input->post("activo");
             
             $margen_1= (float)$this->input->post("margen_1");
             $margen_2= (float)$this->input->post("margen_2");
             $margen_3= (float)$this->input->post("margen_3");
             $margen_4= (float)$this->input->post("margen_4");
-               
+             
+            /*
             $lista_1 = (($costo * $margen_1) / 100) + $costo;
             $lista_2 = (($costo * $margen_2) / 100) + $costo;
             $lista_3 = (($costo * $margen_3) / 100) + $costo;
-            $lista_4 = (($costo * $margen_4) / 100) + $costo;
+            $lista_4 = (($costo * $margen_4) / 100) + $costo;*/
+            
+            $lista_1 = (float)$this->input->post("lista_1");
+            $lista_2 = (float)$this->input->post("lista_2");
+            $lista_3 = (float)$this->input->post("lista_3");
+            $lista_4 = (float)$this->input->post("lista_4");
+            
             
             if($rubro2 != 0 && $rubro2!=$rubro)
             {
@@ -79,7 +93,7 @@ class Response_Ajax extends CI_Controller
             }
             
             $this->load->model("Stock_productos_model");
-            $respuesta = $this->Stock_productos_model->editar_producto($id_producto,$descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo,$subrubro);
+            $respuesta = $this->Stock_productos_model->editar_producto($id_producto,$descripcion,$stock,$punto_critico,$rubro,$unidad_medida,$costo,$margen_1,$lista_1,$margen_2,$lista_2,$margen_3,$lista_3,$margen_4,$lista_4,$codigo,$subrubro,$activo);
         
             echo json_encode($respuesta);
         }
@@ -366,12 +380,13 @@ class Response_Ajax extends CI_Controller
             $cliente= $this->input->post("cliente");
             $estado= $this->input->post("estado");
             $detalle= $this->input->post("detalle");
+            $usuario= $this->session->userdata("id");
             $descuento_general= $this->input->post("descuento_general");
             $this->load->model("Registro_de_pedidos_model");
             
             
             
-            $respuesta = $this->Registro_de_pedidos_model->agregar_pedido_y_detalle($fecha,$fecha_entrega,$cliente,$estado,$detalle,$descuento_general);
+            $respuesta = $this->Registro_de_pedidos_model->agregar_pedido_y_detalle($fecha,$fecha_entrega,$cliente,$estado,$detalle,$descuento_general,$usuario);
             echo json_encode($respuesta);
         }
     }
@@ -500,8 +515,10 @@ class Response_Ajax extends CI_Controller
             $this->load->model("Facturacion_model");
             $respuesta = $this->Facturacion_model->crear_factura($punto_venta,$fecha,$cliente,$remito_o_pedido,$numero_remito_pedido,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle);
             
+            // PONIENDO PEDIDO EN CUMPLIDO
             
-            
+            $this->load->model("Registro_de_pedidos_model");
+            $this->Registro_de_pedidos_model->cambiar_estado_pedido($numero_remito_pedido,"cumplido");
             
             echo json_encode($respuesta);
         }

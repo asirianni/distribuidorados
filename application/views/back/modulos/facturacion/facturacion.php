@@ -1317,7 +1317,7 @@
                 var cantidad =arreglo_detalles[i]["cantidad"];
                 var precio =arreglo_detalles[i]["precio"];
                 var descuento =arreglo_detalles[i]["descuento"];
-                var subtotal= arreglo_detalles[i]["subtotal"];
+                var subtotal= parseFloat(arreglo_detalles[i]["subtotal"]);
                 var total=arreglo_detalles[i]["total"];
                 
                 
@@ -1414,13 +1414,45 @@
     {
         $("#btn_asociar_remito").addClass("disabled");
         asociado="pedido";
-        $("#btn_asociar_pedido").html("Detalles <br/> Pedido");
+        $("#btn_asociar_pedido").html("Pedido Asociado: N° "+numero);
                             
-                            
+        $("#btn_asociar_pedido").addClass("disabled");                
         tipo_detalle= "pedido";
         numero_remito_pedido=numero;
         $("#modal_asociar_pedido").modal("hide");
-        ver_tabla_detalles();
+        //ver_tabla_detalles();
+        
+        
+        
+        var numero_pedido = numero_remito_pedido;
+        
+        $.ajax({
+                url: "<?php echo base_url()?>index.php/Response_Ajax/get_detalle_pedido_sin_cobrar",
+                type: "POST",
+                data:{numero_pedido:numero_pedido},
+                success: function(data)
+                {
+                    data= JSON.parse(data);
+                    
+                    if(data)
+                    {
+                       for(var i=0; i < data.length;i++)
+                       {
+                            var cod_producto= data[i]["cod_producto"];
+                            var codigo= data[i]["codigo"];
+                            var descripcion=data[i]["desc_producto"] ;
+                            var cantidad= data[i]["cantidad"];
+                            var precio= data[i]["precio"];
+                            agregar_detalle(cod_producto,codigo,descripcion,cantidad,precio);
+
+                        }
+                    }
+                    else
+                    {alert("No posee pedidos");}
+                },
+                error: function(event){alert(event.responseText);
+                },
+            }); 
         
     }
     
@@ -1673,13 +1705,13 @@
         
         if(isNaN(limite_cuenta)){limite_cuenta=0;}
         
-        if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && !isNaN(limite_cuenta) &&
+        /*if  (dni_cuit_cuil != "" && !isNaN(dni_cuit_cuil) && !isNaN(limite_cuenta) &&
              razon_social != ""  && nombre != "" && apellido != "" &&
              telefono != "" && correo != "" && validarEmail(correo) &&
              direccion !="" && localidad != "" && !isNaN(localidad) && localidad != 0 &&
              tipo_inscripcion != "" && !isNaN(tipo_inscripcion) && tipo_inscripcion != 0 && estado != "" && !isNaN(estado) && estado != 0
             )
-        {
+        {*/
             $.ajax({
                 url: "<?php echo base_url()?>index.php/Response_Ajax/agregar_cliente",
                 type: "POST",
@@ -1737,12 +1769,12 @@
                 error: function(event){alert(event.responseText);
                 },
             });    
-        }
+        /*}
         else
         {
             gestiona_errores_agregar();
             $("#mensaje_error_agregar_cliente").text("Por favor complete todos los campos");
-        }
+        }*/
     }
     
     function gestiona_errores_agregar()

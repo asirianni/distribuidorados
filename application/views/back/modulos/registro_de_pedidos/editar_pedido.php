@@ -89,11 +89,19 @@
                                     {
                                         echo "<option value='cumplido' selected>cumplido</option>";
                                         echo "<option value='pendiente'>pendiente</option>";
+                                        echo "<option value='anulado'>anulado</option>";
+                                    }
+                                    else if($pedido["estado"] == "pendiente")
+                                    {
+                                        echo "<option value='cumplido'>cumplido</option>";
+                                        echo "<option value='pendiente' selected>pendiente</option>";
+                                        echo "<option value='anulado'>anulado</option>";
                                     }
                                     else
                                     {
                                         echo "<option value='cumplido'>cumplido</option>";
-                                        echo "<option value='pendiente' selected>pendiente</option>";
+                                        echo "<option value='pendiente'>pendiente</option>";
+                                        echo "<option value='anulado' selected>anulado</option>";
                                     }
                                 ?>
                                 

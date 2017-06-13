@@ -1574,6 +1574,7 @@ class MY_Controller extends CI_Controller
             echo $html;
         }
     }
+    
     public function reporte_de_venta()
     {
         $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
@@ -1623,6 +1624,130 @@ class MY_Controller extends CI_Controller
         else
         {
             redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    public function reporte_de_caja()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            $this->load->model("Reportes_model");
+            
+            $output["css"]=$this->adminlte->get_css_datatables();
+            $output["css"].=$this->adminlte->get_css_select2();
+            $output["css"].=$this->adminlte->get_css_datetimepicker();
+            $output["js"]=$this->adminlte->get_js_datatables();
+            $output["js"].=$this->adminlte->get_js_select2();
+            $output["js"].=$this->adminlte->get_js_datetimepicker();
+            $output["menu"]=$this->adminlte->getMenu();
+            $output["header"]=$this->adminlte->getHeader();
+            $output["menu_configuracion"]=$this->adminlte->getMenuConfiguracion();
+            $output["footer"]=$this->adminlte->getFooter();
+            $output["controller_usuario"]=$this->controller_usuario;
+            
+            
+            $desde=$this->Reportes_model->get_caja_fecha_min();
+            $hasta=$this->Reportes_model->get_caja_fecha_max();
+            
+            if($this->input->post())
+            {
+                $desde = $this->input->post("desde_consultar");
+                $hasta = $this->input->post("hasta_consultar");
+            }
+            
+            $output["listado_caja"]= $this->Reportes_model->get_listado_caja($desde,$hasta);
+            
+            $output["desde_consultar"]= $desde;
+            $output["hasta_consultar"]= $hasta;
+            $this->load->view("back/modulos/reportes/reporte_de_caja",$output);
+        }
+        else
+        {
+            redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    function exportar_reporte_caja()
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            $hasta=$this->input->post("hasta_imprimir");
+            $desde=$this->input->post("desde_imprimir");
+           
+            
+            
+            $this->load->model("Reportes_model");
+            $listado_caja= $this->Reportes_model->get_listado_caja($desde,$hasta);
+            
+            header("Content-type: application/vnd.ms-excel; name='excel'");
+            header("Content-Disposition: filename=Reporte-de-Caja.xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+            $html=
+            "
+                <table>
+                    <tr>
+                        <th>DESDE</th>
+                        <th>HASTA</th>
+                        
+                    </tr>
+                    <tr>
+                        <td>".$desde."</td>
+                        <td>".$hasta."</td>
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr><td></td></tr>
+                </table>
+                <table>
+                    <thead>
+                      <tr>
+                        th>FECHA</th>
+                        <th>ENTRADAS</th>
+                        <th>SALIDAS</th>
+                        <th>SALDO</th>
+                        <th>ESTADO</th>
+                      </tr>
+                    </thead>
+                    <tbody>";
+            
+                foreach($listado_caja as $value)
+                {
+                    $html.= "
+                    <tr>
+                        <td>".$value["fecha"]."</td>
+                        <td>".$value["entradas"]."</td>
+                        <td>".$value["salidas"]."</td>
+                        <td>".$value["saldo"]."</td>
+                        <td>".$value["estado"]."</td>
+                    </tr>";
+                }
+                    $html.= "</tbody>
+                  </table>";
+            echo $html;
+        }
+    }
+    
+    function imprimir_reporte_caja()
+    {
+        
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(8);
+        
+        if($permiso)
+        {
+            $hasta=$this->input->post("hasta_imprimir");
+            $desde=$this->input->post("desde_imprimir");
+            
+            
+            $this->load->model("Facturacion_model");
+            $this->load->model("Reportes_model");
+            $output["listado_caja"]= $this->Reportes_model->get_listado_caja($desde,$hasta);
+            
+            $this->load->view("back/modulos/reportes/imprimir_reporte_caja",$output);
         }
     }
     

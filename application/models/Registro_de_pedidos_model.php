@@ -70,13 +70,14 @@ class Registro_de_pedidos_model extends CI_Model
         return $r->result_array();
     }
     
-    public function agregar_pedido_y_detalle($fecha,$fecha_entrega,$cliente,$estado,$detalle)
+    public function agregar_pedido_y_detalle($fecha,$fecha_entrega,$cliente,$estado,$detalle,$descuento_general,$usuario)
     {
         $datos = Array(
             "fecha"=>$fecha,
             "fecha_entrega"=>$fecha_entrega,
             "cliente"=>$cliente,
             "estado"=>$estado,
+            "usuario"=>$usuario,
         );
         
         $respuesta=$this->db->insert("pedidos",$datos);
@@ -164,6 +165,13 @@ class Registro_de_pedidos_model extends CI_Model
     {
         $r = $this->db->query("select productos.id,productos.descripcion,productos.costo,productos.margen_1,productos.$lista as precio,productos.rubro,productos.stock,productos.punto_critico,productos.unidad_medida,rubros.descripcion as desc_rubro,unidad_medida.descripcion as medida_desc from productos INNER JOIN rubros on rubros.id = productos.rubro INNER JOIN unidad_medida on unidad_medida.id = productos.unidad_medida ");
         return $r->result_array();
+    }
+    
+    public function cambiar_estado_pedido($numero,$estado)
+    {
+        $datos = Array("estado"=>$estado);
+        $this->db->where("numero",$numero);
+        return $this->db->update("pedidos",$datos);
     }
     
 }
