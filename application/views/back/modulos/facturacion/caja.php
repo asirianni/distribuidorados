@@ -67,15 +67,10 @@
                                     <div class='margin'>
                                         <div class='btn-group'>
                                             <label class='control-label'>Fecha</label>
-                                            <input type='text' class='form-control fecha' name='fecha'value='<?php echo $fecha?>' id='datepicker' >
+                                            <input type='text' class='form-control fecha' name='fecha' value='<?php echo $fecha?>' id='datepicker' >
                                             <button type='button' class='btn btn-info' onclick='listar();'> Listar </button>
-                                            <?php 
-                                            $activar_movimiento = "disabled";
-                                            if($fecha == Date("Y-m-d"))
-                                            {
-                                                $activar_movimiento = "";
-                                            }?>
-                                            <button type='button' class='btn btn-info' onclick='modal_movimiento_caja();' <?php echo $activar_movimiento?>>
+                                            
+                                            <button type='button' class='btn btn-info' onclick='modal_movimiento_caja();'>
                                                 Movimiento (+ / -) 
                                             </button>
                                         </div>
@@ -249,6 +244,9 @@
                             <?php
                                 $attributes = array('id' => 'registrar_gasto', 'name' => 'formulario_registrar_gasto');
                                 echo form_open("$controller_usuario/registrar_movimiento", $attributes);
+                                    echo "<label>Fecha</label>";
+                                    echo "<input type='text' id='fecha_agregar_mov' name='fecha' class='form-control fecha'>";
+                                    echo "<br/>";
                                     echo "<select name='concepto' class='form-group' required='required'>";
                                     echo "	<option value ='e'>Entrada de Caja</option>";
                                     echo "	<option value ='s'>Salida de caja</option>";
@@ -331,6 +329,7 @@
                     
         function modal_movimiento_caja()
         {
+            $("#fecha_agregar_mov").val($("#datepicker").val());
             $("#myModalMovimientoCaja").modal("show");
         }
         

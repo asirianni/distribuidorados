@@ -142,8 +142,15 @@
                     </thead>
                     <tbody>
                         <?php
+                            $suma_entradas = 0.0;
+                            $suma_salidas = 0.0;
+                            $suma_saldos = 0.0;
+                            
                             foreach($listado_caja as $value)
                             {
+                                $suma_entradas+= (float)$value["entradas"];
+                                $suma_salidas+= (float)$value["salidas"];
+                                $suma_saldos+= (float)$value["saldo"];
                                 echo "
                                 <tr>
                                     <td>".$value["fecha"]."</td>
@@ -155,6 +162,16 @@
                             }
                         ?>  
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <th><?php echo $suma_entradas?></th>
+                            <th><?php echo $suma_salidas?></th>
+                            <th><?php echo $suma_saldos?></th>
+                            <td></td>
+                        </tr>
+                      
+                    </tfoot>
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

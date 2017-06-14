@@ -40,9 +40,9 @@ class Registro_de_clientes_model extends CI_Model
        return $r["fecha"];
     }
     
-    public function get_cuentas_clientes_con_consulta($desde,$hasta,$tipo,$cliente_consultar)
+    public function get_cuentas_clientes_con_consulta($desde,$hasta,$tipo,$cliente_consultar,$localidad_consultar,$usuario)
     {
-       $sql="SELECT cuenta_cliente.*, cliente.dni_cuit_cuil as cliente_dni_cuit_cuil, cliente.nombre as cliente_nombre, cliente.apellido as cliente_apellido,usuarios.usuario as desc_usuario FROM cuenta_cliente INNER JOIN cliente on cliente.id = cuenta_cliente.cliente INNER JOIN usuarios on usuarios.id = cuenta_cliente.usuario where cuenta_cliente.fecha >= '".$desde."' and cuenta_cliente.fecha <= '".$hasta."' ";
+       $sql="SELECT cuenta_cliente.*, cliente.dni_cuit_cuil as cliente_dni_cuit_cuil, cliente.nombre as cliente_nombre, cliente.apellido as cliente_apellido,usuarios.usuario as desc_usuario FROM cuenta_cliente INNER JOIN cliente on cliente.id = cuenta_cliente.cliente INNER JOIN usuarios on usuarios.id = cuenta_cliente.usuario INNER JOIN localidades on localidades.codigo = cliente.localidad where cuenta_cliente.fecha >= '".$desde."' and cuenta_cliente.fecha <= '".$hasta."' ";
        
        if($tipo == "entrada")
        {
@@ -57,6 +57,15 @@ class Registro_de_clientes_model extends CI_Model
        if($cliente_consultar != "todos")
        {
            $sql.= " and cuenta_cliente.cliente = $cliente_consultar";
+       }
+       else if($localidad_consultar != 0)
+       {
+           $sql.= " and cliente.localidad = $localidad_consultar";
+       }
+       
+       if($usuario != 0)
+       {
+           $sql.= " and cuenta_cliente.usuario = $usuario";
        }
        
        $r = $this->db->query($sql);

@@ -29,6 +29,8 @@
             <tbody>
             <?php
             
+            $suma_entradas=0.0;
+            $suma_salidas=0.0;
             
             foreach($listado_cuentas_clientes as $value)
                             {
@@ -39,11 +41,13 @@
                                     ";
                                     if((float)$value["importe_recibo"] != 0)
                                     {
+                                        $suma_entradas+=(float)$value["importe_recibo"];
                                         echo "<td>".$value["importe_recibo"]."</td>";
                                         echo "<td></td>";
                                     }
                                     else if((float)$value["importe_factura"] != 0)
                                     {
+                                        $suma_salidas+=(float)$value["importe_factura"];
                                         echo "<td></td>";
                                         echo "<td>".$value["importe_factura"]."</td>";
                                     }
@@ -57,6 +61,18 @@
                             }
             ?>
             </tbody>
+            <?php if($cliente_consultar != 0){ ?>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th><?php echo $suma_entradas?></th>
+                        <th><?php echo $suma_salidas?></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            <?php } ?>
             </table>
     </div>
 </div>

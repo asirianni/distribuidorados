@@ -35,19 +35,29 @@ class Registro_de_pedidos_model extends CI_Model
         return $r["fecha"];
     }
     
-    public function get_listado_pedidos_consulta($fecha_desde,$fecha_hasta,$cliente,$estado)
+    public function get_listado_pedidos_consulta($fecha_desde,$fecha_hasta,$cliente,$estado,$localidad,$usuario)
     {
-        $sql= "SELECT pedidos.*, cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.descuento_gral FROM pedidos INNER JOIN cliente on cliente.id = pedidos.cliente where pedidos.fecha >= '".$fecha_desde."' and pedidos.fecha <= '".$fecha_hasta."'";
+        $sql= "SELECT pedidos.*, cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.descuento_gral FROM pedidos INNER JOIN cliente on cliente.id = pedidos.cliente INNER JOIN localidades on localidades.codigo = cliente.localidad where pedidos.fecha >= '".$fecha_desde."' and pedidos.fecha <= '".$fecha_hasta."'";
         
         if((int)$cliente != 0)
         {
             $sql.=" and pedidos.cliente = $cliente";
+        }
+        else if((int)$localidad != 0)
+        {
+           $sql.=" and cliente.localidad = $localidad"; 
         }
         
         if($estado != "todos")
         {
             $sql.=" and pedidos.estado = '".$estado."'";
         }
+        
+        if($usuario != 0)
+        {
+            $sql.=" and pedidos.usuario = $usuario";
+        }
+        
         $r = $this->db->query($sql);
         return $r->result_array();
     }

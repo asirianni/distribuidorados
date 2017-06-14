@@ -64,6 +64,8 @@
             <input type="text" name="hasta_consultar" value="<?php echo $hasta_consultar?>"/>
             <input type="text" name="cliente_consultar" value="<?php echo $cliente_consultar?>"/>
             <input type="text" name="estado_consultar" value="<?php echo $estado_consultar?>"/>
+            <input type="text" name="localidad_consultar" value="<?php echo $localidad_consultar?>"/>
+            <input type="text" name="usuario_consultar" value="<?php echo $usuario_consultar?>"/>
             <input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />
         </form>
       <!-- Small boxes (Stat box) -->
@@ -111,9 +113,9 @@
                                 }
                             ?>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label>Cliente</label>
-                            <select class="form-control select2" style="width: 100%" id="cliente_consultar" name="cliente_consultar">
+                            <select class="form-control select2" style="width: 100%" id="cliente_consultar" name="cliente_consultar" onChange="cambio_cliente()">
                             <?php
                                 if($cliente_consultar != null)
                                 {
@@ -143,7 +145,50 @@
                             ?>                     
                             </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
+                            <label>Localidad</label>
+                            <select class="form-control select2" style="width: 100%" id="localidad_consultar" name="localidad_consultar">
+                            <?php
+                                
+                                echo "<option value='0'>Todas</option>";
+                                
+                                foreach($listado_localidades as $value)
+                                {
+                                    if($localidad_consultar == (int)$value["codigo"])
+                                    {
+                                       echo "<option value='".$value["codigo"]."' selected>".$value["localidad"]." - ".$value["desc_provincia"]."</option>";
+                                    }
+                                    else
+                                    {
+                                       echo "<option value='".$value["codigo"]."'>".$value["localidad"]." - ".$value["desc_provincia"]."</option>";
+                                    }
+                                }
+                            ?>                     
+                            </select>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-4">
+                            <label>Usuario</label>
+                            <select class="form-control select2" style="width: 100%" id="usuario_consultar" name="usuario_consultar">
+                            <?php
+                                 echo "<option value='0'>Todos</option>";
+                                            
+                                    foreach($listado_usuarios as $value)
+                                    {
+                                        if($usuario_consultar == (int)$value["id"])
+                                        {
+                                            echo "<option value='".$value["id"]."' selected>".$value["usuario"]."</option>";
+                                        }
+                                        else
+                                        {
+                                            echo "<option value='".$value["id"]."'>".$value["usuario"]."</option>";
+                                        }
+                                    }
+                                
+                            ?>                     
+                            </select>
+                        </div>
+                        <div class="col-md-4">
                             <label>Estado</label>
                             <select class="form-control" id="estado_consultar" name="estado_consultar">
                                 <?php
@@ -163,8 +208,7 @@
                                 ?>
                             </select>
                         </div>
-                            
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <label>&nbsp;</label>
                             <button class="form-control btn btn-danger" id="btn_consultar"><i class="fa fa-search-minus"></i> Consultar</button>
                         </div>
@@ -425,6 +469,20 @@
     
     ////
     
+    function cambio_cliente()
+    {
+        var cliente_consultar= parseInt($("#cliente_consultar").val());
+        
+        if(cliente_consultar == 0)
+        {
+            $("#localidad_consultar").removeAttr("disabled");
+        }
+        else
+        {
+            $("#localidad_consultar").attr("disabled","disabled");
+        }
+        
+    }
     function abrir_modal_editar_pedido(numero,fecha,fecha_entrega,cliente,estado)
     {
         $("#numero_editar_pedido").val(numero);

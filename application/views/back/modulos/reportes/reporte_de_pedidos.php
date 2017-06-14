@@ -60,55 +60,56 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/generar_reporte_de_pedido_excel" method="post" target="_blank" id="FormularioExportacion">
-          <input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />
+      <form action="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/generar_reporte_de_pedido_excel" method="post" target="_blank" id="FormularioExportacion" hidden>
+          <input type="text" name="desde_consultar" value="<?php echo $desde_consultar?>"/>
+          <input type="text" name="hasta_consultar" value="<?php echo $hasta_consultar?>"/>
       </form>
       
       <div class="row">
+          
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
                     <button id="btn_exportar_excel" type="button" class="btn btn-success botonExcel pull-right" onclick="exportar_excel()"><i class="fa fa-file-excel-o"></i> Exportar</button>
                 </div><!-- /.box-header -->
                 <div class="box-body">
+                    <div class="col-md-12">
+                        <form action='<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/reporte_de_pedidos' method='post'>
+                            <div class="col-md-4">
+                                <label>Fecha desde</label>
+                                <input type="text" class="form-control datetimepicker" name="desde_consultar" value="<?php echo $desde_consultar?>"/>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Fecha hasta</label>
+                                <input type="text" class="form-control datetimepicker" name="hasta_consultar" value="<?php echo $hasta_consultar?>"/>
+                            </div>
+                            <div class="col-md-4">
+                                <label></label>
+                                <button class="form-control btn btn-danger" id="btn_consultar"><i class="fa fa-search-minus"></i> Consultar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div style="margin-top: 20px">&nbsp;</div>
                   <table id="Exportar_a_Excel" class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>CODIGO</th>
+                        <th>ID</th>
                         <th>PRODUCTO</th>
-                        <th>COSTO</th>
-                        <th>STOCK</th>
-                        <th>TOTAL PEDIDOS</th>
                         <th>TOTAL</th>
                       </tr>
                     </thead>
                     <tbody>
                         <?php
-                            $total_pesos= 0;
-                            foreach($listado_reporte_compras as $value)
+                        foreach($listado_pedidos as $value)
                             {
-                                $total_registro = (float)$value["cantidad_a_pedir"] * (float)$value["costo"];
-                                $total_pesos+= $total_registro;
-                                echo 
-                                "<tr>
-                                    <td>".$value["cod_producto"]."</td>
+                               echo  "<tr>
+                                    <td>".$value["id"]."</td>
                                     <td>".$value["descripcion"]."</td>
-                                    <td>".$value["costo"]."</td>
-                                    <td>".$value["stock"]."</td>
-                                    <td>".$value["cantidad_a_pedir"]."</td>
-                                    <td>$".$total_registro."</td>
+                                    <td>".$value["cantidad"]."</td>
                                 </tr>";
                             }
                         ?>  
                     </tbody>
-                    <tfoot>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td style="font-size: 15px;font-weight: bold;">Total: <?php echo $total_pesos?></td>
-                    </tfoot>
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

@@ -69,7 +69,7 @@
                             <div class="col-md-12">
                                 <p style="color: #333;font-size: 19px;font-weight: bold;margin-bottom: 12px;">CONSULTE HISTORIAL</p>
                             </div>
-                            <div class="col-md-4 col-sm-4">
+                            <div class="col-md-2 col-sm-2">
                                 <div class="form-group">
                                     <label for="desde_consultar">Desde</label>
                                     <?php
@@ -84,7 +84,7 @@
                                     ?>
                                     </div>
                             </div>
-                            <div class="col-md-4 col-sm-4">
+                            <div class="col-md-2 col-sm-2">
                                 <div class="form-group">
                                     <label for="hasta_consultar">Hasta</label>
                                     <?php
@@ -99,6 +99,25 @@
                                     ?>
                                 </div>
                             </div>
+                            <div class="col-md-4 col-sm-4">
+                                <label>Proveedor Seleccionado</label>
+                                <select type="text" class="form-control select2" style="width: 100%"  name="proveedor_consultar">
+                                    <option value="0">Todos</option>
+                                    <?php
+                                        foreach($listado_proveedores as $value)
+                                        {
+                                            if($proveedor_consultar == $value["id"])
+                                            {
+                                                echo "<option value='".$value["id"]."' selected>".$value["cuil"]." - ".$value["razon_social"]."</option>";
+                                            }
+                                            else
+                                            {
+                                                echo "<option value='".$value["id"]."'>".$value["cuil"]." - ".$value["razon_social"]."</option>";
+                                            }
+                                        }
+                                    ?> 
+                                </select>
+                           </div>
                             <div class="col-md-4 col-sm-4">
                                 <label>Estado de factura: </label>
                                 <select type="text" class="form-control select2" style="width: 100%;"  id="estado_factura_consultar" name="estado_factura_consultar">
@@ -159,6 +178,7 @@
                     <input type="text" name="desde_imprimir" value="<?php echo $desde_consultar?>">
                     <input type="text" name="hasta_imprimir" value="<?php echo $hasta_consultar?>">
                     <input type="text" name="estado_imprimir" value="<?php echo $estado_factura_consultar?>">
+                    <input type="text" name="proveedor_imprimir" value="<?php echo $proveedor_consultar?>">
                     <input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />
                 </form>
 
@@ -167,6 +187,7 @@
                     <input type="text" name="desde_imprimir" value="<?php echo $desde_consultar?>">
                     <input type="text" name="hasta_imprimir" value="<?php echo $hasta_consultar?>">
                     <input type="text" name="estado_imprimir" value="<?php echo $estado_factura_consultar?>">
+                    <input type="text" name="proveedor_imprimir" value="<?php echo $proveedor_consultar?>">
                 </form>
                 <!-- FIN FORMULARIO PARA IMPRIMIR LISTA-->
                 
@@ -188,8 +209,12 @@
                     </thead>
                     <tbody>
                         <?php
+                            $suma_total=0.0;
+                            
                             foreach($listado_facturas as $value)
                             {
+                                $suma_total+= (float)$value["total"];
+                                
                                 if((int)$value["estado"] == 1)
                                 {
                                     echo "<tr class='bg-success'>";
@@ -220,6 +245,26 @@
                             }
                         ?>   
                     </tbody>
+                    <?php
+                        if($proveedor_consultar != 0)
+                        {
+                            echo 
+                            "
+                                <tfood>
+                                    <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>$".$suma_total."</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    </tr>
+                                </tfood>
+                            ";
+                            
+                        }
+                    ?>
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

@@ -29,8 +29,12 @@
                     </thead>
                     <tbody>
                         <?php
+                            $suma_total=0.0;
+                        
                             foreach($listado_facturas as $value)
                             {
+                                $suma_total+= (float)$value["total"];
+                                
                                 if((int)$value["estado"] == 1)
                                 {
                                     echo "<tr class='bg-success'>";
@@ -58,6 +62,26 @@
                             }
                         ?>  
                     </tbody>
+                    <?php
+                        if($proveedor != 0)
+                        {
+                            echo 
+                            "
+                                <tfood>
+                                    <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>$".$suma_total."</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    </tr>
+                                </tfood>
+                            ";
+                            
+                        }
+                    ?>
                   </table>
         </div>
     </div>
