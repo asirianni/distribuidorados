@@ -357,6 +357,10 @@
           {
               location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/ver_factura/"+num_comp;
           }
+          else if(tipo_comp == 8)
+          {
+              location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/ver_factura_compra/"+num_comp;
+          }
           else if(tipo_comp == 5)
           {
             $.ajax({

@@ -152,7 +152,7 @@ class Caja_model extends CI_Model
             "fecha"=>$fecha,
             "tipo_comp"=>"$tipo_comprobante",
             "importe"=>$importe,
-            "comprobante"=>$num_movimiento["numero"],
+            "comprobante"=>$numero,
             "tipo_mov"=>$entrada_salida,
             
         );

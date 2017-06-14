@@ -425,7 +425,7 @@ class Facturacion_model extends CI_Model
             $empleado = $this->session->userdata("id");
             $tipo_comprobante= 8;// FACTURA DE COMPRA
             $entrada_salida= "s";
-            $this->Caja_model->registrar_movimiento_caja(null, $fecha, $concepto, $importe, $detalle, $empleado,$tipo_comprobante,$entrada_salida);
+            $this->Caja_model->registrar_movimiento_caja($numero_factura, $fecha, $concepto, $importe, $detalle, $empleado,$tipo_comprobante,$entrada_salida);
         }
         
         return $insertado;
