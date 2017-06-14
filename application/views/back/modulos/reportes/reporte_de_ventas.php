@@ -69,7 +69,7 @@
                             <div class="col-md-12">
                                 <p style="color: #333;font-size: 19px;font-weight: bold;margin-bottom: 12px;">CONSULTE HISTORIAL</p>
                             </div>
-                            <div class="col-md-3 col-sm-3">
+                            <div class="col-md-2 col-sm-4">
                                 <div class="form-group">
                                     <label for="desde_consultar">Desde</label>
                                     <?php
@@ -84,7 +84,7 @@
                                     ?>
                                     </div>
                             </div>
-                            <div class="col-md-3 col-sm-3">
+                            <div class="col-md-2 col-sm-4">
                                 <div class="form-group">
                                     <label for="hasta_consultar">Hasta</label>
                                     <?php
@@ -99,7 +99,41 @@
                                     ?>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-3">
+                            
+                            <div class="col-md-2 col-sm-4">
+                                <label>Estado de factura: </label>
+                                <select type="text" class="form-control select2" style="width: 100%;"  id="estado_factura_consultar" name="estado_factura_consultar">
+                                    
+                                    <?php
+                                        if($estado_factura_consultar == null)
+                                        {
+                                            echo "<option value='0'>Todos</option>";
+                                            
+                                            foreach($estados_factura as $value)
+                                            {
+                                                echo "<option value='".$value["codigo"]."'>".$value["estado"]."</option>";
+                                            }
+                                        }
+                                        else 
+                                        {
+                                            echo "<option value='0'>Todos</option>";
+                                            
+                                            foreach($estados_factura as $value)
+                                            {
+                                                if($estado_factura_consultar == $value["codigo"])
+                                                {
+                                                    echo "<option value='".$value["codigo"]."' selected>".$value["estado"]."</option>";
+                                                }
+                                                else
+                                                {
+                                                    echo "<option value='".$value["codigo"]."'>".$value["estado"]."</option>";
+                                                }
+                                            }
+                                        }
+                                    ?> 
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
                                 <label>Cliente: </label>
                                 <select type="text" class="form-control select2" style="width: 100%;"  id="cliente_consultar" name="cliente_consultar">
                                     
@@ -133,37 +167,25 @@
                                     ?> 
                                 </select>
                             </div>
-                            <div class="col-md-3 col-sm-3">
-                                <label>Estado de factura: </label>
-                                <select type="text" class="form-control select2" style="width: 100%;"  id="estado_factura_consultar" name="estado_factura_consultar">
-                                    
-                                    <?php
-                                        if($estado_factura_consultar == null)
+                            <div class="col-md-3">
+                                <label>Usuario</label>
+                                <select class="form-control select2" style="width: 100%" id="usuario_consultar" name="usuario_consultar">
+                                <?php
+                                     echo "<option value='0'>Todos</option>";
+
+                                        foreach($listado_usuarios as $value)
                                         {
-                                            echo "<option value='0'>Todos</option>";
-                                            
-                                            foreach($estados_factura as $value)
+                                            if($usuario_consultar == (int)$value["id"])
                                             {
-                                                echo "<option value='".$value["codigo"]."'>".$value["estado"]."</option>";
+                                                echo "<option value='".$value["id"]."' selected>".$value["usuario"]."</option>";
+                                            }
+                                            else
+                                            {
+                                                echo "<option value='".$value["id"]."'>".$value["usuario"]."</option>";
                                             }
                                         }
-                                        else 
-                                        {
-                                            echo "<option value='0'>Todos</option>";
-                                            
-                                            foreach($estados_factura as $value)
-                                            {
-                                                if($estado_factura_consultar == $value["codigo"])
-                                                {
-                                                    echo "<option value='".$value["codigo"]."' selected>".$value["estado"]."</option>";
-                                                }
-                                                else
-                                                {
-                                                    echo "<option value='".$value["codigo"]."'>".$value["estado"]."</option>";
-                                                }
-                                            }
-                                        }
-                                    ?> 
+
+                                ?>                     
                                 </select>
                             </div>
                             <div class="clearfix"></div>
@@ -194,7 +216,7 @@
                     <input type="text" name="hasta_imprimir" value="<?php echo $hasta_consultar?>">
                     <input type="text" name="cliente_imprimir" value="<?php echo $cliente_consultar?>">
                     <input type="text" name="estado_imprimir" value="<?php echo $estado_factura_consultar?>">
-                    <input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />
+                    <input type="text" name="usuario_imprimir" value="<?php echo $usuario_consultar?>">
                 </form>
 
                 <!-- FORMULARIO PARA IMPRIMIR LISTA -->
@@ -203,6 +225,7 @@
                     <input type="text" name="hasta_imprimir" value="<?php echo $hasta_consultar?>">
                     <input type="text" name="cliente_imprimir" value="<?php echo $cliente_consultar?>">
                     <input type="text" name="estado_imprimir" value="<?php echo $estado_factura_consultar?>">
+                    <input type="text" name="usuario_imprimir" value="<?php echo $usuario_consultar?>">
                 </form>
                 <!-- FIN FORMULARIO PARA IMPRIMIR LISTA-->
                 
@@ -215,6 +238,7 @@
                       <tr>
                         <th>FECHA</th>
                         <th>CLIENTE</th>
+                        <th>USUARIO</th>
                         <th>FACTURA</th>
                         <th>TIPO</th>
                         <th>IMPORTE</th>
@@ -244,6 +268,7 @@
                                 echo "
                                     <td>".$value["fecha"]."</td>
                                     <td>".$value["cliente_dni_cuit_cuil"]." - ".$value["cliente_nombre"]." ".$value["cliente_apellido"]."</td>
+                                    <td>".$value["desc_usuario"]."</td>
                                     <td>".$value["numero"]."</td>
                                     <td>".$value["desc_tipo_factura"]."</td>
                                     <td>$".$value["total"]."</td>

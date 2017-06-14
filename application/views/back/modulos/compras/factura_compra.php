@@ -224,6 +224,7 @@
                         <option value="1">Contado</option>
                         <option value="2">Cuenta Corriente</option>
                     </select>
+                    <p><input type="checkbox" id="afecta_a_caja" checked/> COMPRA AFECTA CAJA DIARIA<p>
                     <p style="text-align: center;margin-top: 20px;"><button class="btn btn-danger disabled" id="btn_guardar" onclick="abrir_modal_guardar();"><i class="fa fa-save"></i><br/>GUARDAR</button></p>
                 </div>
             </div>
@@ -689,7 +690,7 @@
         if(continuar)
         {
             ccleaner_arreglo_detalle();
-            
+            //$("#afecta_a_caja").is(":checked")
             var tipo_factura = parseInt($("#tipo_factura").val());
             var punto_de_venta = parseInt($("#punto_de_venta").val());
             var fecha = $("#fecha").val();
@@ -712,6 +713,7 @@
                         descuento_general:descuento_general,
                         detalle:detalle,
                         total:$("#total").text(),
+                        registrar_en_caja:$("#afecta_a_caja").is(":checked"),
 
                     },
                     success: function(data)
@@ -865,7 +867,7 @@
         {
             var descuento = 0;
             var subtotal=precio;
-            var total=0;
+            var total=precio;
             var arreglo= {"cod_producto":cod_producto,"descripcion":descripcion,"cantidad":1,"precio":precio,"descuento":descuento,"total":total,"subtotal":subtotal};
             arreglo_detalles.push(arreglo);
 

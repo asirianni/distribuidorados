@@ -538,12 +538,12 @@ class Response_Ajax extends CI_Controller
             $estado= 1;
             $detalle= $this->input->post("detalle");
             $descuento_general= $this->input->post("descuento_general");
-            
+            $registrar_en_caja= $this->input->post("registrar_en_caja");
             
             $total= $this->input->post("total");
             
             $this->load->model("Facturacion_model");
-            $respuesta = $this->Facturacion_model->crear_factura_compra($punto_venta,$fecha,$proveedor,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle);
+            $respuesta = $this->Facturacion_model->crear_factura_compra($punto_venta,$fecha,$proveedor,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle,$registrar_en_caja);
             
             echo json_encode($respuesta);
         }

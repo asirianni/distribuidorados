@@ -320,7 +320,7 @@ class Facturacion_model extends CI_Model
         return $r->result_array();
     }
     
-    public function get_facturas_con_consultas($desde,$hasta,$cliente,$estado)
+    public function get_facturas_con_consultas($desde,$hasta,$cliente,$estado,$usuario)
     {
         $sql = "SELECT factura.*, punto_venta.punto as desc_punto_venta, cliente.dni_cuit_cuil as cliente_dni_cuit_cuil, cliente.nombre as cliente_nombre, cliente.apellido as cliente_apellido, cliente.ingresos_brutos as cliente_ingresos_brutos, cliente.direccion as cliente_direccion, localidades.localidad as cliente_desc_localidad, cliente.razon_social as cliente_razon_social, provincias.provincia as cliente_desc_provincia,tipo_inscripcion.inscripcion as desc_cliente_tipo_de_inscripcion, tipo_factura.tipo as desc_tipo_factura,condicion_de_venta.condicion as desc_condicion,estado_factura.estado as desc_estado, usuarios.usuario as desc_usuario FROM factura INNER JOIN punto_venta on punto_venta.codigo = factura.punto_venta INNER JOIN cliente on cliente.id = factura.cliente INNER JOIN localidades on localidades.codigo = cliente.localidad INNER JOIN provincias on provincias.id = localidades.id_provincia INNER JOIN tipo_factura on tipo_factura.codigo = factura.tipo_factura INNER JOIN condicion_de_venta on condicion_de_venta.id = factura.condicion_venta INNER JOIN estado_factura on estado_factura.codigo = factura.estado INNER JOIN tipo_inscripcion on tipo_inscripcion.id = cliente.tipo_inscripcion INNER JOIN usuarios on factura.usuario = usuarios.id where factura.fecha >= '".$desde."' and factura.fecha <= '".$hasta."'";
         
@@ -332,6 +332,11 @@ class Facturacion_model extends CI_Model
         if((int)$estado != 0)
         {
             $sql.=" and factura.estado = $estado";
+        }
+        
+        if($usuario != 0)
+        {
+            $sql.=" and factura.usuario = $usuario";
         }
         
         $r = $this->db->query($sql);
@@ -364,7 +369,7 @@ class Facturacion_model extends CI_Model
         return 1 + (int)$r["numero"];
     }
     
-    public function crear_factura_compra($punto_venta,$fecha,$proveedor,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle)
+    public function crear_factura_compra($punto_venta,$fecha,$proveedor,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle,$registrar_en_caja)
     {
         $datos = array(
             "punto_venta"=>$punto_venta,
@@ -411,7 +416,17 @@ class Facturacion_model extends CI_Model
             }
         }
         
-        
+        if($registrar_en_caja)
+        {
+            $this->load->model("Caja_model");
+            
+            $concepto="s"; // SALIDA
+            $importe = $total;
+            $empleado = $this->session->userdata("id");
+            $tipo_comprobante= 8;// FACTURA DE COMPRA
+            $entrada_salida= "s";
+            $this->Caja_model->registrar_movimiento_caja(null, $fecha, $concepto, $importe, $detalle, $empleado,$tipo_comprobante,$entrada_salida);
+        }
         
         return $insertado;
     }

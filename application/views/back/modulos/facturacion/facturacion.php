@@ -253,7 +253,7 @@
                         <option value="1">Contado</option>
                         <option value="2">Cuenta Corriente</option>
                     </select>
-                    <p><input type="checkbox" name="afecta_a_caja" id="afecta_a_caja"/> COMPRA AFECTA CAJA DIARIA<p>
+                    
                     <p style="text-align: center;margin-top: 20px;">
                         <button class="btn btn-danger disabled" id="btn_guardar" onclick="abrir_modal_guardar();"><i class="fa fa-save"></i><br/>GUARDAR</button>
                         <button class="btn btn-danger disabled" id="btn_nuevo" onclick=""><i class="fa fa-calculator"></i><br/>Nuevo</button>
@@ -782,9 +782,7 @@
 
 <script>
     
-    $("#afecta_a_caja").change(function(){alert($("#afecta_a_caja").val());});
-    
-    $.fn.dataTable.ext.errMode = 'none';
+   $.fn.dataTable.ext.errMode = 'none';
     
     var arreglo_detalles= new Array();
     var tipo_detalle = "";

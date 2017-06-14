@@ -1647,6 +1647,7 @@ class MY_Controller extends CI_Controller
         {
             $this->load->model("Facturacion_model");
             $this->load->model("Registro_de_clientes_model");
+            $this->load->model("Usuario_model");
             
             $output["css"]=$this->adminlte->get_css_datatables();
             $output["css"].=$this->adminlte->get_css_select2();
@@ -1667,6 +1668,7 @@ class MY_Controller extends CI_Controller
             $output["desde_consultar"]=$this->Facturacion_model->get_fecha_min();
             $output["cliente_consultar"]="0";
             $output["estado_factura_consultar"]="0";
+            $output["usuario_consultar"]=0;
             
             if($this->input->post())
             {
@@ -1675,13 +1677,17 @@ class MY_Controller extends CI_Controller
                 $output["desde_consultar"]=$this->input->post("desde_consultar");
                 $output["cliente_consultar"]=$this->input->post("cliente_consultar");
                 $output["estado_factura_consultar"]=$this->input->post("estado_factura_consultar");
-                
-                $output["listado_facturas"]= $this->Facturacion_model->get_facturas_con_consultas($this->input->post("desde_consultar"),$this->input->post("hasta_consultar"),$this->input->post("cliente_consultar"),$this->input->post("estado_factura_consultar"));
+                $output["usuario_consultar"]=$this->input->post("usuario_consultar");
+                        
+                $output["listado_facturas"]= $this->Facturacion_model->get_facturas_con_consultas($this->input->post("desde_consultar"),$this->input->post("hasta_consultar"),$this->input->post("cliente_consultar"),$this->input->post("estado_factura_consultar"),$this->input->post("usuario_consultar"));
             }
             else
             {
-                $output["listado_facturas"]= $this->Facturacion_model->get_facturas_con_consultas($output["desde_consultar"],$output["hasta_consultar"],$output["cliente_consultar"],$output["estado_factura_consultar"]);
+                $output["listado_facturas"]= $this->Facturacion_model->get_facturas_con_consultas($output["desde_consultar"],$output["hasta_consultar"],$output["cliente_consultar"],$output["estado_factura_consultar"],$output["usuario_consultar"]);
             }
+            
+            $output["listado_usuarios"]= $this->Usuario_model->get_usuarios();
+            
             
             $this->load->view("back/modulos/reportes/reporte_de_ventas",$output);
         }
@@ -1977,10 +1983,11 @@ class MY_Controller extends CI_Controller
             $desde=$this->input->post("desde_imprimir");
             $cliente=(int)$this->input->post("cliente_imprimir");
             $estado=(int)$this->input->post("estado_imprimir");
+            $usuario=(int)$this->input->post("usuario_imprimir");
             
             
             $this->load->model("Facturacion_model");
-            $listado_facturas= $this->Facturacion_model->get_facturas_con_consultas($desde,$hasta,$cliente,$estado);
+            $listado_facturas= $this->Facturacion_model->get_facturas_con_consultas($desde,$hasta,$cliente,$estado,$usuario);
             
             header("Content-type: application/vnd.ms-excel; name='excel'");
             header("Content-Disposition: filename=Reporte-de-Ventas.xls");
@@ -1995,12 +2002,14 @@ class MY_Controller extends CI_Controller
                         <th>HASTA</th>
                         <th>CLIENTE</th>
                         <th>ESTADO</th>
+                        <th>USUARIO</th>
                     </tr>
                     <tr>
                         <td>".$desde."</td>
                         <td>".$hasta."</td>
                         <td>".$cliente."</td>
                         <td>".$estado."</td>
+                        <td>".$usuario."</td>
                     </tr>
                     <tr><td></td></tr>
                     <tr><td></td></tr>
@@ -2010,6 +2019,7 @@ class MY_Controller extends CI_Controller
                       <tr>
                         <th>FECHA</th>
                         <th>CLIENTE</th>
+                        <th>USUARIO</th>
                         <th>FACTURA</th>
                         <th>TIPO</th>
                         <th>IMPORTE</th>
@@ -2023,6 +2033,7 @@ class MY_Controller extends CI_Controller
                     $html.= "<tr>
                                 <td>".$value["fecha"]."</td>
                                 <td>".$value["cliente_dni_cuit_cuil"]." - ".$value["cliente_nombre"]." ".$value["cliente_apellido"]."</td>
+                                <td>".$value["desc_usuario"]."</td>
                                 <td>".$value["numero"]."</td>
                                 <td>".$value["desc_tipo_factura"]."</td>
                                 <td>$".$value["total"]."</td>
@@ -2046,10 +2057,10 @@ class MY_Controller extends CI_Controller
             $desde=$this->input->post("desde_imprimir");
             $cliente=(int)$this->input->post("cliente_imprimir");
             $estado=(int)$this->input->post("estado_imprimir");
-            
+            $usuario=(int)$this->input->post("usuario_imprimir");
             
             $this->load->model("Facturacion_model");
-            $output["listado_facturas"]= $this->Facturacion_model->get_facturas_con_consultas($desde,$hasta,$cliente,$estado);
+            $output["listado_facturas"]= $this->Facturacion_model->get_facturas_con_consultas($desde,$hasta,$cliente,$estado,$usuario);
             
             $this->load->view("back/modulos/reportes/impresor-facturas",$output);
         }
