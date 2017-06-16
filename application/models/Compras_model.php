@@ -15,8 +15,8 @@ class Compras_model extends CI_Model
     
     public function get_proveedor($id)
     {
-        $r = $this->db->query("SELECT * FROM proveedor WHERE id != $id");
-        return $r->result_array();
+        $r = $this->db->query("SELECT * FROM proveedor WHERE id = $id");
+        return $r->row_array();
     }
     
     public function get_ultimo_proveedor()

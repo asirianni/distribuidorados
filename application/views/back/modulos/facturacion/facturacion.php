@@ -1028,7 +1028,7 @@
     function cargar_listado_productos(cliente)
     {
         $.ajax({
-            url: "<?php echo base_url()?>index.php/Response_Ajax/get_listado_productos_segun_usuario",
+            url: "<?php echo base_url()?>index.php/Response_Ajax/get_listado_productos_activos_segun_usuario",
             type: "POST",
             data:{cliente:cliente},
             success: function(data)
@@ -1767,7 +1767,7 @@
                         alert("No se ha podido agregar");
                     }
                 },
-                error: function(event){alert(event.responseText);
+                error: function(event){alert("Error: Asegurese que el cliente no haya sido agregado");
                 },
             });    
         /*}

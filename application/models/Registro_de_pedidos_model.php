@@ -17,7 +17,7 @@ class Registro_de_pedidos_model extends CI_Model
     
     public function get_listado_pedidos()
     {
-        $r = $this->db->query("SELECT pedidos.*, cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.descuento_gral FROM pedidos INNER JOIN cliente on cliente.id = pedidos.cliente ");
+        $r = $this->db->query("SELECT pedidos.*, cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.descuento_gral,usuarios.usuario as desc_usuario FROM pedidos INNER JOIN cliente on cliente.id = pedidos.cliente INNER JOIN usuarios on usuarios.id = pedidos.usuario");
         return $r->result_array();
     }
     
@@ -37,7 +37,7 @@ class Registro_de_pedidos_model extends CI_Model
     
     public function get_listado_pedidos_consulta($fecha_desde,$fecha_hasta,$cliente,$estado,$localidad,$usuario)
     {
-        $sql= "SELECT pedidos.*, cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.descuento_gral FROM pedidos INNER JOIN cliente on cliente.id = pedidos.cliente INNER JOIN localidades on localidades.codigo = cliente.localidad where pedidos.fecha >= '".$fecha_desde."' and pedidos.fecha <= '".$fecha_hasta."'";
+        $sql= "SELECT pedidos.*, cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.descuento_gral, usuarios.usuario as desc_usuario FROM pedidos INNER JOIN cliente on cliente.id = pedidos.cliente INNER JOIN localidades on localidades.codigo = cliente.localidad INNER JOIN usuarios on usuarios.id = pedidos.usuario where pedidos.fecha >= '".$fecha_desde."' and pedidos.fecha <= '".$fecha_hasta."'";
         
         if((int)$cliente != 0)
         {
@@ -171,9 +171,9 @@ class Registro_de_pedidos_model extends CI_Model
         return $r->result_array();
     }
     
-    public function get_listado_productos_segun_lista($lista)
+    public function get_listado_productos_activos_segun_lista($lista)
     {
-        $r = $this->db->query("select productos.id,productos.descripcion,productos.costo,productos.margen_1,productos.$lista as precio,productos.rubro,productos.stock,productos.punto_critico,productos.unidad_medida,rubros.descripcion as desc_rubro,unidad_medida.descripcion as medida_desc from productos INNER JOIN rubros on rubros.id = productos.rubro INNER JOIN unidad_medida on unidad_medida.id = productos.unidad_medida ");
+        $r = $this->db->query("select productos.id,productos.descripcion,productos.costo,productos.margen_1,productos.$lista as precio,productos.rubro,productos.stock,productos.punto_critico,productos.unidad_medida,rubros.descripcion as desc_rubro,unidad_medida.descripcion as medida_desc from productos INNER JOIN rubros on rubros.id = productos.rubro INNER JOIN unidad_medida on unidad_medida.id = productos.unidad_medida where productos.activar = 'si'");
         return $r->result_array();
     }
     

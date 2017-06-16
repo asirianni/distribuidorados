@@ -763,6 +763,39 @@ class MY_Controller extends CI_Controller
             $this->load->model("Registro_de_pedidos_model");
             $listado_pedidos=$this->Registro_de_pedidos_model->get_listado_pedidos_consulta($desde_consultar,$hasta_consultar,$cliente_consultar,$estado_consultar,$localidad_consultar,$usuario_consultar);
 
+            if($usuario_consultar == 0)
+            {
+                $usuario_consultar= "Todos";
+            }
+            else
+            {
+                $this->load->model("Usuario_model");
+                $user = $this->Usuario_model->get_usuario_por_id($usuario_consultar);
+                $usuario_consultar = $user["usuario"];
+            }
+            
+            if($localidad_consultar == 0)
+            {
+                $localidad_consultar= "Todas";
+            }
+            else
+            {
+                $this->load->model("Localidades_model");
+                $localidad = $this->Localidades_model->get_localidad($localidad_consultar);
+                $localidad_consultar = $localidad["localidad"];
+            }
+            
+            if($cliente_consultar == 0)
+            {
+                $cliente_consultar= "Todos";
+            }
+            else
+            {
+                $this->load->model("Registro_de_clientes_model");
+                $cliente = $this->Registro_de_clientes_model->get_cliente($cliente_consultar);
+                $cliente_consultar = $cliente["nombre"]." ".$cliente["apellido"];
+            }
+            
             $html=
             "
                 <table>
@@ -793,6 +826,7 @@ class MY_Controller extends CI_Controller
                             <th>Cliente</th>
                             <th>Cuit-Dni-cuil cliente</th>
                             <th>Desc. gral</th>
+                            <th>Usuario</th>
                             <th>Estado</th>
                             <th></th>
                         </tr>
@@ -809,6 +843,7 @@ class MY_Controller extends CI_Controller
                             <td>".$value["nombre"]." ".$value["apellido"]."</td>
                             <td>".$value["dni_cuit_cuil"]."</td>
                             <td>".$value["descuento_gral"]."%</td>
+                            <td>".$value["desc_usuario"]."</td>
                             <td>".$value["estado"]."</td> 
                         </tr>";
                     }
@@ -878,7 +913,7 @@ class MY_Controller extends CI_Controller
             $output["detalle_pedido"]=$this->Registro_de_pedidos_model->get_detalle_pedido($numero_pedido);
             $output["lista_clientes"]=$this->Registro_de_clientes_model->get_clientes_no_suspendidos();
             $output["numero_pedido"]=$numero_pedido;
-            $output["listado_productos"]= $this->Stock_productos_model->get_listado_productos();
+            $output["listado_productos"]= $this->Stock_productos_model->get_listado_productos_activos();
             $output["controller_usuario"]=$this->controller_usuario;
             $this->load->view("back/modulos/registro_de_pedidos/editar_pedido",$output);
         }
@@ -1072,7 +1107,7 @@ class MY_Controller extends CI_Controller
             $detalle= $this->input->post("detalle");
             $empleado=$this->session->userdata('id');
 
-            $caja = $this->Caja_model->obtener_caja(Date("Y-m-d"));
+            $caja = $this->Caja_model->obtener_caja($this->input->post("fecha"));
             
             if($caja)
             {
@@ -1091,12 +1126,12 @@ class MY_Controller extends CI_Controller
                    $saldo = (float)$saldo - (float)$importe;
                 }
 
-                $this->Caja_model->actualizar_caja($entradas,$salidas,$saldo,"a");
+                $this->Caja_model->actualizar_caja($this->input->post("fecha"),$entradas,$salidas,$saldo,"a");
             }
             else 
             {
-                $this->Caja_model->abrir_caja();
-                $caja = $this->Caja_model->obtener_caja(Date("Y-m-d"));
+                $this->Caja_model->abrir_caja($this->input->post("fecha"));
+                $caja = $this->Caja_model->obtener_caja($this->input->post("fecha"));
 
                 $entradas = $caja["entradas"];
                 $salidas = $caja["salidas"];
@@ -1113,7 +1148,7 @@ class MY_Controller extends CI_Controller
                    $saldo = (float)$saldo - (float)$importe;
                 }
 
-                $this->Caja_model->actualizar_caja($entradas,$salidas,$saldo,"a");
+                $this->Caja_model->actualizar_caja($this->input->post("fecha"),$entradas,$salidas,$saldo,"a");
             }
 
             $this->Caja_model->registrar_movimiento_caja($numero, $fecha, $concepto, $importe, $detalle, $empleado,7,$concepto);
@@ -1226,8 +1261,8 @@ class MY_Controller extends CI_Controller
                 $hasta = $this->input->post("hasta_consultar");
                 $tipo = $this->input->post("tipo_consultar");
                 $cliente_consultar = $this->input->post("cliente_consultar");
-                $localidad_consultar= $this->input->post("cliente_consultar");
-                $usuario=$this->input->post("usuario_consultar");;
+                $localidad_consultar= $this->input->post("localidad_consultar");
+                $usuario=$this->input->post("usuario_consultar");
             }
             else
             {
@@ -1277,7 +1312,45 @@ class MY_Controller extends CI_Controller
              
             $listado_cuentas_clientes= $this->Registro_de_clientes_model->get_cuentas_clientes_con_consulta($desde,$hasta,$tipo,$cliente_consultar,$localidad_consultar,$usuario_consultar);
             
+            if($usuario_consultar == 0)
+            {
+                $usuario_consultar= "Todos";
+            }
+            else
+            {
+                $this->load->model("Usuario_model");
+                $user = $this->Usuario_model->get_usuario_por_id($usuario_consultar);
+                $usuario_consultar = $user["usuario"];
+            }
+            
+            if($localidad_consultar == 0)
+            {
+                $localidad_consultar= "Todas";
+            }
+            else
+            {
+                $this->load->model("Localidades_model");
+                $localidad = $this->Localidades_model->get_localidad($localidad_consultar);
+                $localidad_consultar = $localidad["localidad"];
+            }
+            
+            if($cliente_consultar == 0)
+            {
+                $cliente_consultar= "Todos";
+            }
+            else
+            {
+                $this->load->model("Registro_de_clientes_model");
+                $cliente = $this->Registro_de_clientes_model->get_cliente($cliente_consultar);
+                $cliente_consultar = $cliente["nombre"]." ".$cliente["apellido"];
+            }
+            
+            $output["desde_consultar"]=$desde;
+            $output["hasta_consultar"]=$hasta;
+            $output["tipo_consultar"]=$tipo;
             $output["cliente_consultar"]=$cliente_consultar;
+            $output["localidad_consultar"]=$localidad_consultar;
+            $output["usuario_consultar"]=$usuario_consultar;
             
             $output["listado_cuentas_clientes"]=$listado_cuentas_clientes;
             $this->load->view("back/modulos/registro_de_clientes/impresor-cuentas-clientes",$output);
@@ -1320,6 +1393,39 @@ class MY_Controller extends CI_Controller
             $usuario_consultar=$this->input->post("usuario_imprimir");       
                     
             $listado_cuentas_clientes= $this->Registro_de_clientes_model->get_cuentas_clientes_con_consulta($desde,$hasta,$tipo,$cliente_consultar,$localidad_consultar,$usuario_consultar);
+            
+            if($usuario_consultar == 0)
+            {
+                $usuario_consultar= "Todos";
+            }
+            else
+            {
+                $this->load->model("Usuario_model");
+                $user = $this->Usuario_model->get_usuario_por_id($usuario_consultar);
+                $usuario_consultar = $user["usuario"];
+            }
+            
+            if($localidad_consultar == 0)
+            {
+                $localidad_consultar= "Todas";
+            }
+            else
+            {
+                $this->load->model("Localidades_model");
+                $localidad = $this->Localidades_model->get_localidad($localidad_consultar);
+                $localidad_consultar = $localidad["localidad"];
+            }
+            
+            if($cliente_consultar == 0)
+            {
+                $cliente_consultar= "Todos";
+            }
+            else
+            {
+                $this->load->model("Registro_de_clientes_model");
+                $cliente = $this->Registro_de_clientes_model->get_cliente($cliente_consultar);
+                $cliente_consultar = $cliente["nombre"]." ".$cliente["apellido"];
+            }
             
             $html=
            "<table>
@@ -2175,6 +2281,28 @@ class MY_Controller extends CI_Controller
             header("Pragma: no-cache");
             header("Expires: 0");
 
+            if($proveedor == 0)
+            {
+                $proveedor = "Todos";
+            }
+            else
+            {
+                $this->load->model("Compras_model");
+                $prov= $this->Compras_model->get_proveedor($proveedor);
+                $proveedor = $prov["razon_social"];
+            }
+            
+            if($estado == 0)
+            {
+                $estado = "Todos";
+            }
+            else
+            {
+                $this->load->model("Facturacion_model");
+                $est= $this->Facturacion_model->get_estado_factura($estado);
+                $estado= $est["estado"];
+            }
+            
             $html=
             "
                 <table>
@@ -2200,6 +2328,7 @@ class MY_Controller extends CI_Controller
                         <th>FACTURA</th>
                         <th>TIPO</th>
                         <th>IMPORTE</th>
+                        <th>PROVEEDOR</th>
                         <th>ESTADO</th>
                       </tr>
                     </thead>
@@ -2216,6 +2345,7 @@ class MY_Controller extends CI_Controller
                                 <td>".$value["numero"]."</td>
                                 <td>".$value["desc_tipo_factura"]."</td>
                                 <td>$".$value["total"]."</td>
+                                <td>".$value["proveedor_razon_social"]."</td>
                                 <td>".$value["desc_estado"]."</td>     
                             </tr>";
                 }  
@@ -2258,6 +2388,31 @@ class MY_Controller extends CI_Controller
             $this->load->model("Facturacion_model");
             $output["listado_facturas"]= $this->Facturacion_model->get_facturas_compras_con_consultas($desde,$hasta,$estado,$proveedor);
            
+            if($proveedor == 0)
+            {
+                $proveedor = "Todos";
+            }
+            else
+            {
+                $this->load->model("Compras_model");
+                $prov= $this->Compras_model->get_proveedor($proveedor);
+                $proveedor = $prov["razon_social"];
+            }
+            
+            if($estado == 0)
+            {
+                $estado = "Todos";
+            }
+            else
+            {
+                $this->load->model("Facturacion_model");
+                $est= $this->Facturacion_model->get_estado_factura($estado);
+                $estado= $est["estado"];
+            }
+            
+            $output["desde"]=$desde;
+            $output["hasta"]=$hasta;
+            $output["estado"]=$estado;
             $output["proveedor"]=$proveedor;
             
             $this->load->view("back/modulos/reportes/impresor-facturas-compras",$output);

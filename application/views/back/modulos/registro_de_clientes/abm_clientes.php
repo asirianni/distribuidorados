@@ -738,7 +738,7 @@
                         alert("No se ha podido agregar");
                     }
                 },
-                error: function(event){alert(event.responseText);
+                error: function(event){alert("Error: Asegurese que el cliente no haya sido agregado");
                 },
             });    
         /*}

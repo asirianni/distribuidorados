@@ -12,4 +12,10 @@ class Localidades_model extends CI_Model
         $r = $this->db->query("select localidades.*, provincias.provincia as desc_provincia from localidades INNER JOIN provincias on provincias.id = localidades.id_provincia");
         return $r->result_array();
     }
+    
+    public function get_localidad($id)
+    {
+        $r = $this->db->query("select localidades.*, provincias.provincia as desc_provincia from localidades INNER JOIN provincias on provincias.id = localidades.id_provincia where localidades.codigo = $id");
+        return $r->row_array();
+    }
 }

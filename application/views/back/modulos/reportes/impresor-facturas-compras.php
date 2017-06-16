@@ -16,7 +16,20 @@
 <body onload="window.print()">
  <div class="col-xs-offset-1 col-xs-10">
     <div class="row">
-        
+        <table class="table table-bordered">
+                    <tr>
+                        <th>DESDE</th>
+                        <th>HASTA</th>
+                        <th>ESTADO</th>
+                        <th>PROVEEDOR</th>
+                    </tr>
+                    <tr>
+                        <td><?php echo $desde?></td>
+                        <td><?php echo $hasta?></td>
+                        <td><?php echo $estado?></td>
+                        <td><?php echo $proveedor?></td>
+                    </tr>
+        </table>
         <table id="tabla_listado" class="table table-bordered">
                     <thead>
                       <tr>
@@ -24,6 +37,7 @@
                         <th>FACTURA</th>
                         <th>TIPO</th>
                         <th>IMPORTE</th>
+                        <th>PROVEEDOR</th>
                         <th>ESTADO</th>
                       </tr>
                     </thead>
@@ -56,6 +70,7 @@
                                     <td>".$value["numero"]."</td>
                                     <td>".$value["desc_tipo_factura"]."</td>
                                     <td>$".$value["total"]."</td>
+                                    <td>".$value["proveedor_razon_social"]."</td>
                                     <td>".$value["desc_estado"]."</td>     
                                        
                                 </tr>";

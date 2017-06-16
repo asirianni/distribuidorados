@@ -474,7 +474,7 @@
             if(fecha != "" && fecha_entrega != "")
             {
                 $.ajax({
-                    url: "<?php echo base_url()?>index.php/Response_Ajax/get_listado_productos_segun_usuario",
+                    url: "<?php echo base_url()?>index.php/Response_Ajax/get_listado_productos_activos_segun_usuario",
                     type: "POST",
                     data:{
                         cliente:cliente,

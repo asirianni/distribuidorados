@@ -227,6 +227,7 @@
                               <th>Cliente</th>
                               <th>Cuit-Dni-cuil cliente</th>
                               <th>Desc. gral</th>
+                              <th>Usuario</th>
                               <th>Estado</th>
                               <th></th>
                             </tr>
@@ -253,6 +254,7 @@
                                           <td>".$value["nombre"]." ".$value["apellido"]."</td>
                                           <td>".$value["dni_cuit_cuil"]."</td>
                                           <td>".$value["descuento_gral"]."%</td>
+                                          <td>".$value["desc_usuario"]."</td>
                                           <td>".$value["estado"]."</td> 
                                           <td>
                                               <a href='".base_url()."index.php/".$controller_usuario."/registro_de_pedidos_editar/".$value["numero"]."' class='btn btn-success' data-toggle='tooltip' title='' data-original-title='Editar' ><i class='fa fa-edit'></i></a>

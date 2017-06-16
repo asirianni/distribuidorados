@@ -17,6 +17,32 @@
     
 <div class="row">
     <div class="col-xs-offset-1 col-xs-10">
+        <table class='table table-striped'> 
+                <tr>
+                    <th>Fecha desde</th>
+                    <th>Fecha Hasta</th>
+                    <th>Tipo</th>
+                    <th>Cliente</th>
+                    <th>Localidad</th>
+                    <th>Usuario</th>
+                </tr>
+                <tr>
+                    <td><?php echo $desde_consultar?></td>
+                    <td><?php echo $hasta_consultar?></td>
+                    <td><?php echo $tipo_consultar?></td>
+                    <td><?php echo $cliente_consultar?></td>
+                    <td><?php echo $localidad_consultar?></td>
+                    <td><?php echo $usuario_consultar?></td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th></th>
+                </tr>
+            </table>
         <table class='table table-striped'>
                 <thead>
                      <tr>

@@ -320,6 +320,12 @@ class Facturacion_model extends CI_Model
         return $r->result_array();
     }
     
+    public function get_estado_factura($codigo)
+    {
+        $r = $this->db->query("SELECT * FROM estado_factura where codigo = $codigo");
+        return $r->row_array();
+    }
+    
     public function get_facturas_con_consultas($desde,$hasta,$cliente,$estado,$usuario)
     {
         $sql = "SELECT factura.*, punto_venta.punto as desc_punto_venta, cliente.dni_cuit_cuil as cliente_dni_cuit_cuil, cliente.nombre as cliente_nombre, cliente.apellido as cliente_apellido, cliente.ingresos_brutos as cliente_ingresos_brutos, cliente.direccion as cliente_direccion, localidades.localidad as cliente_desc_localidad, cliente.razon_social as cliente_razon_social, provincias.provincia as cliente_desc_provincia,tipo_inscripcion.inscripcion as desc_cliente_tipo_de_inscripcion, tipo_factura.tipo as desc_tipo_factura,condicion_de_venta.condicion as desc_condicion,estado_factura.estado as desc_estado, usuarios.usuario as desc_usuario FROM factura INNER JOIN punto_venta on punto_venta.codigo = factura.punto_venta INNER JOIN cliente on cliente.id = factura.cliente INNER JOIN localidades on localidades.codigo = cliente.localidad INNER JOIN provincias on provincias.id = localidades.id_provincia INNER JOIN tipo_factura on tipo_factura.codigo = factura.tipo_factura INNER JOIN condicion_de_venta on condicion_de_venta.id = factura.condicion_venta INNER JOIN estado_factura on estado_factura.codigo = factura.estado INNER JOIN tipo_inscripcion on tipo_inscripcion.id = cliente.tipo_inscripcion INNER JOIN usuarios on factura.usuario = usuarios.id where factura.fecha >= '".$desde."' and factura.fecha <= '".$hasta."'";
@@ -388,14 +394,16 @@ class Facturacion_model extends CI_Model
         $insertado= $this->db->insert("factura_compra",$datos);
         
         
+        $numero_factura = $this->get_proximo_numero_factura_compra()-1;
+        
         if($insertado){
-            $insertado = $this->get_factura(($this->get_proximo_numero_factura_compra()-1));
+            $insertado = $this->get_factura_compra($numero_factura);
         }
+        
+        
         
         if($insertado)
         {
-            
-            $numero_factura = $this->get_proximo_numero_factura_compra() -1;
             
             foreach($detalle as $value)
             {
@@ -425,6 +433,51 @@ class Facturacion_model extends CI_Model
             $empleado = $this->session->userdata("id");
             $tipo_comprobante= 8;// FACTURA DE COMPRA
             $entrada_salida= "s";
+            
+            $caja = $this->Caja_model->obtener_caja(Date("Y-m-d"));
+            
+            if($caja)
+            {
+                $entradas = $caja["entradas"];
+                $salidas = $caja["salidas"];
+                $saldo = $caja["saldo"];
+
+                if($concepto == "e")
+                {
+                   $entradas = (float)$entradas + (float)$importe;
+                   $saldo = (float)$saldo + (float)$importe;
+                }
+                else
+                {
+                   $salidas = (float)$salidas + (float)$importe;
+                   $saldo = (float)$saldo - (float)$importe;
+                }
+
+                $this->Caja_model->actualizar_caja(Date("Y-m-d"),$entradas,$salidas,$saldo,"a");
+            }
+            else 
+            {
+                $this->Caja_model->abrir_caja(Date("Y-m-d"));
+                $caja = $this->Caja_model->obtener_caja(Date("Y-m-d"));
+
+                $entradas = $caja["entradas"];
+                $salidas = $caja["salidas"];
+                $saldo = $caja["saldo"];
+
+                if($concepto == "e")
+                {
+                   $entradas = (float)$entradas + (float)$importe;
+                   $saldo = (float)$saldo + (float)$importe;
+                }
+                else
+                {
+                   $salidas = (float)$salidas + (float)$importe;
+                   $saldo = (float)$saldo - (float)$importe;
+                }
+
+                $this->Caja_model->actualizar_caja(Date("Y-m-d"),$entradas,$salidas,$saldo,"a");
+            }
+            
             $this->Caja_model->registrar_movimiento_caja($numero_factura, $fecha, $concepto, $importe, $detalle, $empleado,$tipo_comprobante,$entrada_salida);
         }
         

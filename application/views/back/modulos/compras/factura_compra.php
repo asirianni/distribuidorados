@@ -690,7 +690,6 @@
         if(continuar)
         {
             ccleaner_arreglo_detalle();
-            //$("#afecta_a_caja").is(":checked")
             var tipo_factura = parseInt($("#tipo_factura").val());
             var punto_de_venta = parseInt($("#punto_de_venta").val());
             var fecha = $("#fecha").val();
@@ -718,6 +717,7 @@
                     },
                     success: function(data)
                     {
+                        alert(data);
                         data= JSON.parse(data);
 
                         if(data)

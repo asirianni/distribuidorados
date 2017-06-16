@@ -26,6 +26,12 @@ class Stock_productos_model extends CI_Model
         return $r->result_array();
     }
     
+    public function get_listado_productos_activos()
+    {
+        $r = $this->db->query("select productos.id,productos.subrubro,productos.descripcion,productos.costo,productos.codigo_producto,productos.margen_1,productos.lista_1,productos.margen_2,productos.lista_2,productos.margen_3,productos.lista_3,productos.margen_4,productos.lista_4,productos.rubro,productos.stock,productos.punto_critico,productos.activar,productos.unidad_medida,rubros.descripcion as desc_rubro,unidad_medida.descripcion as medida_desc from productos INNER JOIN rubros on rubros.id = productos.rubro INNER JOIN unidad_medida on unidad_medida.id = productos.unidad_medida where productos.activar = 'si'");
+        return $r->result_array();
+    }
+    
     public function get_listado_reporte_productos()
     {
         $r = $this->db->query("select productos.id,productos.descripcion,productos.codigo_producto,productos.lista_1,productos.lista_2,productos.lista_3,productos.lista_4, subrubro.subrubro desc_subrubro, subrubro.rubro,rubros.descripcion desc_rubro from productos LEFT JOIN subrubro on subrubro.codigo = productos.subrubro LEFT JOIN rubros on rubros.id = subrubro.rubro ");

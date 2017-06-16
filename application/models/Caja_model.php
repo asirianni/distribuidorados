@@ -24,9 +24,9 @@ class Caja_model extends CI_Model
         return $r->row_array();
     }
     
-    public function abrir_caja()
+    public function abrir_caja($fecha)
     {
-        $fecha = Date("Y-m-d");
+        $fecha = $fecha;
         
         $datos = Array(
             "fecha"=>$fecha,
@@ -67,10 +67,8 @@ class Caja_model extends CI_Model
         return $query->result_array();
     }
     
-    public function actualizar_caja($entradas,$salidas,$saldo,$estado)
+    public function actualizar_caja($fecha,$entradas,$salidas,$saldo,$estado)
     {
-        $fecha = Date("Y-m-d");
-        
         $datos = Array(
             "entradas"=>$entradas,
             "salidas"=>$salidas,

@@ -540,6 +540,10 @@ class Response_Ajax extends CI_Controller
             $descuento_general= $this->input->post("descuento_general");
             $registrar_en_caja= $this->input->post("registrar_en_caja");
             
+            if($registrar_en_caja != "true")
+            {
+                $registrar_en_caja=false;
+            }
             $total= $this->input->post("total");
             
             $this->load->model("Facturacion_model");
@@ -549,7 +553,7 @@ class Response_Ajax extends CI_Controller
         }
     }
     
-    public function get_listado_productos_segun_usuario()
+    public function get_listado_productos_activos_segun_usuario()
     {
         if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
@@ -560,7 +564,7 @@ class Response_Ajax extends CI_Controller
             
             $lista = $cliente["lista"];
             
-            $respuesta= $this->Registro_de_pedidos_model->get_listado_productos_segun_lista($lista);
+            $respuesta= $this->Registro_de_pedidos_model->get_listado_productos_activos_segun_lista($lista);
             
             echo json_encode($respuesta);
         }
