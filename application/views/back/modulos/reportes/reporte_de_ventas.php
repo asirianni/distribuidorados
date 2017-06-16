@@ -247,8 +247,11 @@
                     </thead>
                     <tbody>
                         <?php
+                        $suma_importe =0.0;
                             foreach($listado_facturas as $value)
                             {
+                                $suma_importe+= (float)$value["total"];
+                                
                                 if((int)$value["estado"] == 1)
                                 {
                                     echo "<tr class='bg-success'>";
@@ -278,6 +281,15 @@
                             }
                         ?>  
                     </tbody>
+                    <tfoot>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>$<?php echo $suma_importe?></th>
+                        <th></th>
+                    </tfood>
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

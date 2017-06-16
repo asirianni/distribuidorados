@@ -717,7 +717,6 @@
                     },
                     success: function(data)
                     {
-                        alert(data);
                         data= JSON.parse(data);
 
                         if(data)
@@ -733,7 +732,7 @@
                             
                         }
                     },
-                    error: function(event){alert(event.responseText);
+                    error: function(event){alert("Error: No se ha podido agregar la factura");
                     },
                 }); 
             }

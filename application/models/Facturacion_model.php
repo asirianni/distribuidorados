@@ -176,7 +176,7 @@ class Facturacion_model extends CI_Model
                        $saldo = (float)$saldo - (float)$importe;
                     }
 
-                    $this->Caja_model->actualizar_caja($entradas,$salidas,$saldo,"a");
+                    $this->Caja_model->actualizar_caja(Date("Y-m-d"),$entradas,$salidas,$saldo,"a");
                 }
                 else 
                 {
@@ -198,7 +198,7 @@ class Facturacion_model extends CI_Model
                        $saldo = (float)$saldo - (float)$importe;
                     }
 
-                    $this->Caja_model->actualizar_caja($entradas,$salidas,$saldo,"a");
+                    $this->Caja_model->actualizar_caja(Date("Y-m-d"),$entradas,$salidas,$saldo,"a");
                 }
 
                 $this->Caja_model->registrar_movimiento_caja($numero, $fecha, $concepto, $importe, $detalle, $empleado,1,$concepto);

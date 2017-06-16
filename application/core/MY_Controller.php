@@ -1882,7 +1882,7 @@ class MY_Controller extends CI_Controller
                 <table>
                     <thead>
                       <tr>
-                        th>FECHA</th>
+                        <th>FECHA</th>
                         <th>ENTRADAS</th>
                         <th>SALIDAS</th>
                         <th>SALDO</th>
@@ -1998,6 +1998,39 @@ class MY_Controller extends CI_Controller
                     
             $reporte= $this->Reportes_model->reporte_cuenta_clientes($desde,$hasta,$tipo,$cliente_consultar,$localidad_consultar,$usuario_consultar);
             
+            if($cliente_consultar == 0)
+            {
+                $cliente_consultar= "Todos";
+            }
+            else
+            {
+                $this->load->model("Registro_de_clientes_model");
+                $clie = $this->Registro_de_clientes_model->get_cliente($cliente_consultar);
+                $cliente_consultar = $clie["nombre"]." ".$clie["apellido"];
+            }
+            
+            if($usuario_consultar == 0)
+            {
+                $usuario_consultar= "Todos";
+            }
+            else
+            {
+                $this->load->model("Usuario_model");
+                $user = $this->Usuario_model->get_usuario_por_id($usuario_consultar);
+                $usuario_consultar = $user["usuario"];
+            }
+            
+            if($localidad_consultar == 0)
+            {
+                $localidad_consultar= "Todas";
+            }
+            else
+            {
+                $this->load->model("Localidades_model");
+                $localidad = $this->Localidades_model->get_localidad($localidad_consultar);
+                $localidad_consultar = $localidad["localidad"];
+            }
+            
             $html=
            "<table>
                 <tr>
@@ -2100,6 +2133,41 @@ class MY_Controller extends CI_Controller
             header("Pragma: no-cache");
             header("Expires: 0");
 
+            $suma_importe = 0.0;
+            
+            if($cliente == 0)
+            {
+                $cliente= "Todos";
+            }
+            else
+            {
+                $this->load->model("Registro_de_clientes_model");
+                $clie = $this->Registro_de_clientes_model->get_cliente($cliente);
+                $cliente = $clie["nombre"]." ".$clie["apellido"];
+            }
+            
+            if($usuario == 0)
+            {
+                $usuario= "Todos";
+            }
+            else
+            {
+                $this->load->model("Usuario_model");
+                $user = $this->Usuario_model->get_usuario_por_id($usuario);
+                $usuario = $user["usuario"];
+            }
+            
+            if($estado == 0)
+            {
+                $estado = "Todos";
+            }
+            else
+            {
+                $this->load->model("Facturacion_model");
+                $est= $this->Facturacion_model->get_estado_factura($estado);
+                $estado= $est["estado"];
+            }
+            
             $html=
             "
                 <table>
@@ -2136,6 +2204,8 @@ class MY_Controller extends CI_Controller
             
                 foreach($listado_facturas as $value)
                 {
+                    $suma_importe+= (float)$value["total"];
+                    
                     $html.= "<tr>
                                 <td>".$value["fecha"]."</td>
                                 <td>".$value["cliente_dni_cuit_cuil"]." - ".$value["cliente_nombre"]." ".$value["cliente_apellido"]."</td>
@@ -2147,6 +2217,17 @@ class MY_Controller extends CI_Controller
                             </tr>";
                 }  
                     $html.= "</tbody>
+                        <tfood>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>$".$suma_importe."</th>
+                                <th></th>
+                              </tr>
+                        </tfood>
                   </table>";
             echo $html;
         }
@@ -2165,8 +2246,48 @@ class MY_Controller extends CI_Controller
             $estado=(int)$this->input->post("estado_imprimir");
             $usuario=(int)$this->input->post("usuario_imprimir");
             
+            if($cliente == 0)
+            {
+                $cliente= "Todos";
+            }
+            else
+            {
+                $this->load->model("Registro_de_clientes_model");
+                $clie = $this->Registro_de_clientes_model->get_cliente($cliente);
+                $cliente = $clie["nombre"]." ".$clie["apellido"];
+            }
+            
+            if($usuario == 0)
+            {
+                $usuario= "Todos";
+            }
+            else
+            {
+                $this->load->model("Usuario_model");
+                $user = $this->Usuario_model->get_usuario_por_id($usuario);
+                $usuario = $user["usuario"];
+            }
+            
+            if($estado == 0)
+            {
+                $estado = "Todos";
+            }
+            else
+            {
+                $this->load->model("Facturacion_model");
+                $est= $this->Facturacion_model->get_estado_factura($estado);
+                $estado= $est["estado"];
+            }
+            
             $this->load->model("Facturacion_model");
             $output["listado_facturas"]= $this->Facturacion_model->get_facturas_con_consultas($desde,$hasta,$cliente,$estado,$usuario);
+            
+            
+            $output["hasta"]=$hasta;
+            $output["desde"]=$desde;
+            $output["cliente"]=$cliente;
+            $output["estado"]=$estado;
+            $output["usuario"]=$usuario;
             
             $this->load->view("back/modulos/reportes/impresor-facturas",$output);
         }
@@ -2351,9 +2472,7 @@ class MY_Controller extends CI_Controller
                 }  
                     $html.= "</tbody>";
                     
-                if($proveedor != 0)
-                {
-                    $html.=  
+                $html.=  
                     "
                     <tfood>
                         <tr>
@@ -2366,8 +2485,6 @@ class MY_Controller extends CI_Controller
                             <th></th>
                         </tr>
                     </tfood>";
-                            
-                        }
                   $html.="</table>";
             echo $html;
         }
@@ -2486,12 +2603,12 @@ class MY_Controller extends CI_Controller
                             <tr>
                                 <td>".$value["codigo_producto"]."</td>
                                 <td>".$value["descripcion"]."</td>
-                                <td>$".$value["desc_rubro"]."</td>
-                                <td>$".$value["desc_subrubro"]."</td>
+                                <td>".$value["desc_rubro"]."</td>
+                                <td>".$value["desc_subrubro"]."</td>
                                 <td>$".$value["lista_1"]."</td>
                                 <td>$".$value["lista_2"]."</td>
                                 <td>$".$value["lista_3"]."</td>
-                                 <td>".$value["lista_4"]."</td>
+                                <td>$".$value["lista_4"]."</td>
                             </tr>";
                             }
                     $html.= "</tbody>

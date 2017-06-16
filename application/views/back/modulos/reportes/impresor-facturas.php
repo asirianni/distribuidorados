@@ -16,7 +16,22 @@
 <body onload="window.print()">
  <div class="col-xs-offset-1 col-xs-10">
     <div class="row">
-        
+        <table class="table table-bordered">
+                    <tr>
+                        <th>DESDE</th>
+                        <th>HASTA</th>
+                        <th>CLIENTE</th>
+                        <th>ESTADO</th>
+                        <th>USUARIO</th>
+                    </tr>
+                    <tr>
+                        <td><?php echo $desde;?></td>
+                        <td><?php echo $hasta;?></td>
+                        <td><?php echo $cliente;?></td>
+                        <td><?php echo $estado;?></td>
+                        <td><?php echo $usuario;?></td>
+                    </tr>
+        </table>
         <table id="tabla_listado" class="table table-bordered">
                     <thead>
                       <tr>
@@ -30,8 +45,11 @@
                     </thead>
                     <tbody>
                         <?php
+                        $suma_importe = 0.0;
                             foreach($listado_facturas as $value)
                             {
+                                $suma_importe+= (float)$value["total"];
+                                
                                 if((int)$value["estado"] == 1)
                                 {
                                     echo "<tr class='bg-success'>";
@@ -60,6 +78,16 @@
                             }
                         ?>  
                     </tbody>
+                    <tfood>
+                        <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>$<?php echo $suma_importe?></th>
+                        <th></th>
+                      </tr>
+                    </tfood>
                   </table>
         </div>
     </div>

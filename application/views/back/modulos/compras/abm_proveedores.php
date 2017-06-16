@@ -406,7 +406,7 @@
                         alert("No se ha podido agregar");
                     }
                 },
-                error: function(event){alert(event.responseText);
+                error: function(event){alert("Error: Asegurese que el proveedor no este agregado");
                 },
             }); 
         }
@@ -460,7 +460,7 @@
                         alert("No se ha podido editar");
                     }
                 },
-                error: function(event){alert(event.responseText);
+                error: function(event){alert("No se ha podido editar");
                 },
             }); 
         }
