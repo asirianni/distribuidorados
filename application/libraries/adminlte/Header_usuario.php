@@ -2,7 +2,7 @@
 
 class Header_usuario
 {
-    private static $texto_header="Distribuidores";
+    private static $texto_header="Distribuidorados";
     private static $permitir_foto_perfil= true;
     
     public static function getHeader($tipo_usuario,$nombre,$apellido,$fecha_registro,$foto_perfil)
