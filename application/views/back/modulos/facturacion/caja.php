@@ -230,7 +230,52 @@
             </div>
         </div>
     </div>
+   
     
+ <div class="modal modal-danger" id="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+               
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                                <label for="numero_ver_mov">Numero</label>
+                                <input type="text" id="numero_ver_mov" class="form-control" readonly=""/>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="fecha_ver_mov">Fecha</label>
+                                <input type="text" id="fecha_ver_mov" class="form-control" readonly=""/>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="tipo_mov_ver_mov">Tipo de movimiento</label>
+                                <input type="text" id="tipo_mov_ver_mov" class="form-control" readonly=""/>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="importe_ver_mov">Importe</label>
+                                <input type="text" id="importe_ver_mov" class="form-control" readonly=""/>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="concepto_ver_mov">Concepto</label>
+                                <input type="text" id="concepto_ver_mov" class="form-control" readonly=""/>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="empleado_ver_mov">Empleado</label>
+                                <input type="text" id="empleado_ver_mov" class="form-control" readonly=""/>
+                            </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12" style="text-align: center;">
+                                <button class="btn btn-outline" onCLick="$('#modal').modal('hide');"><i class="fa fa-check"></i> Aceptar</button>
+                            </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+ 
     <div class="modal fade" id="myModalMovimientoCaja" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -361,7 +406,7 @@
           {
               location.href="<?php echo base_url()?>index.php/<?php echo $controller_usuario?>/ver_factura_compra/"+num_comp;
           }
-          else if(tipo_comp == 5)
+          else if(tipo_comp == 7)
           {
             $.ajax({
                  type:"POST",
@@ -370,14 +415,18 @@
 
                  beforeSend: function(event){},
                  success: function(data){
-                     alert(data);
                      data = JSON.parse(data);
-
-                     $("#cuerpo-modal").html(data);
+                     
+                        $("#numero_ver_mov").val(data["numero"]);
+                        $("#fecha_ver_mov").val(data["fecha"]);
+                        $("#tipo_mov_ver_mov").val(data["tipo_mov"]);
+                        $("#importe_ver_mov").val(data["importe"]);
+                        $("#concepto_ver_mov").val(data["concepto"]);
+                        $("#empleado_ver_mov").val(data["nombre_empleado"]);
                      $("#modal").modal("show");
 
                  },
-                 error: function(event){alert("error");},
+                 error: function(event){alert(event.responseText);},
              });   
           }
         }

@@ -776,5 +776,18 @@ class Response_Ajax extends CI_Controller
             echo json_encode($respuesta);
         }
     }
+    
+    public function mostrar_datos_movimiento_caja()
+    {
+        if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
+        {
+            $this->load->model("Caja_model");
+            
+            $datos = $this->Caja_model->getDatosDeMovimiento($this->input->post("comprobante"));
+            
+            echo json_encode($datos);
+       
+        }
+    }
 }
 
