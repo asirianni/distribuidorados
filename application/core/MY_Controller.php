@@ -1065,7 +1065,7 @@ class MY_Controller extends CI_Controller
             
             if(!$caja)
             {
-                $this->Caja_model->abrir_caja();
+                $this->Caja_model->abrir_caja($fecha);
                 $caja = $this->Caja_model->obtener_caja($fecha);
             }
             

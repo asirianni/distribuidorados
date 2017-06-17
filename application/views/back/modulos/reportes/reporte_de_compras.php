@@ -246,9 +246,7 @@
                         ?>   
                     </tbody>
                     <?php
-                        if($proveedor_consultar != 0)
-                        {
-                            echo 
+                        echo 
                             "
                                 <tfood>
                                     <tr>
@@ -263,7 +261,7 @@
                                 </tfood>
                             ";
                             
-                        }
+                        
                     ?>
                   </table>
                 </div><!-- /.box-body -->
