@@ -1152,7 +1152,7 @@ class MY_Controller extends CI_Controller
             }
 
             $this->Caja_model->registrar_movimiento_caja($numero, $fecha, $concepto, $importe, $detalle, $empleado,7,$concepto);
-            redirect($this->controller_usuario."/caja");
+            redirect($this->controller_usuario."/caja/".$this->input->post("fecha"));
         }
         else
         {
