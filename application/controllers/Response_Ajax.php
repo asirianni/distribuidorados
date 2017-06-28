@@ -231,7 +231,7 @@ class Response_Ajax extends CI_Controller
         if($this->input->is_ajax_request() && $this->session->userdata("ingresado"))
         {
             
-            $id= $this->input->post("descripcion");
+            $id= $this->input->post("id");
             $descripcion= $this->input->post("descripcion");
             $cantidad= $this->input->post("cantidad");
             $medida= $this->input->post("unidad_de_medida");

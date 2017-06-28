@@ -1597,7 +1597,7 @@ class MY_Controller extends CI_Controller
             $output["condiciones_de_venta"]=$this->Facturacion_model->get_condiciones_de_venta();
             $output["puntos_de_venta"]=$this->Facturacion_model->get_puntos_de_venta();
             $output["tipos_factura"]=$this->Facturacion_model->get_tipos_factura();
-            $output["numero_proximo"]=$this->Facturacion_model->get_proximo_numero_factura();
+            $output["numero_proximo"]=$this->Facturacion_model->get_proximo_numero_factura_compra();
             $output["controller_usuario"]=$this->controller_usuario;
             
             $output["lista_productos"]=$this->Stock_productos_model->get_listado_productos();
@@ -1943,7 +1943,7 @@ class MY_Controller extends CI_Controller
                 $hasta = $this->input->post("hasta_consultar");
                 $tipo = $this->input->post("tipo_consultar");
                 $cliente_consultar = $this->input->post("cliente_consultar");
-                $localidad_consultar= $this->input->post("cliente_consultar");
+                $localidad_consultar= $this->input->post("localidad_consultar");
                 $usuario=$this->input->post("usuario_consultar");
             }
             else
@@ -2616,6 +2616,8 @@ class MY_Controller extends CI_Controller
             echo $html;
         }
     }
+    
+    
     
     // FIN MODULO REPORTES
     

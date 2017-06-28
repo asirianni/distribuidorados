@@ -377,7 +377,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="costo_editar_producto">Costo</label>
-                        <input tabindex="5" class="form-control" type="number" step="0.5" id="costo_editar_producto" name="costo_editar_producto" value=""/>
+                        <input tabindex="5" class="form-control" type="number" step="0.5" id="costo_editar_producto" name="costo_editar_producto" value="" onchange="cambio_valor_editar()"/>
                     </div>
                 </div>
                 <div class="col-md-6">

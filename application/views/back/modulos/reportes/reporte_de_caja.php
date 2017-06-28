@@ -138,6 +138,7 @@
                         <th>SALIDAS</th>
                         <th>SALDO</th>
                         <th>ESTADO</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -158,6 +159,9 @@
                                     <td>".$value["salidas"]."</td>
                                     <td>".$value["saldo"]."</td>
                                     <td>".$value["estado"]."</td>
+                                    <td>
+                                        <a href='".base_url()."index.php/".$controller_usuario."/caja/".$value["fecha"]."' class='btn btn-success'><i class='fa fa-eyes'></i> Ver Caja</a>
+                                    </td>
                                 </tr>";
                             }
                         ?>  

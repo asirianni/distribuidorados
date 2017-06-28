@@ -50,7 +50,7 @@ class Reportes_model extends CI_Model
     
     public function reporte_cuenta_clientes($desde,$hasta,$tipo,$cliente,$localidad,$usuario)
     {
-        $sql = "SELECT cliente.dni_cuit_cuil, cliente.razon_social,sum(importe_recibo) as entradas, sum(importe_factura) as salidas from cuenta_cliente INNER JOIN cliente on cliente.id = cuenta_cliente.cliente INNER JOIN localidades on cliente.localidad = localidades.codigo where cuenta_cliente.fecha >= '".$desde."' and fecha <= '".$hasta."' group by cliente";
+        $sql = "SELECT cliente.dni_cuit_cuil, cliente.razon_social,sum(importe_recibo) as entradas, sum(importe_factura) as salidas from cuenta_cliente INNER JOIN cliente on cliente.id = cuenta_cliente.cliente INNER JOIN localidades on cliente.localidad = localidades.codigo where cuenta_cliente.fecha >= '".$desde."' and fecha <= '".$hasta."'";
         
        
        if($tipo == "entrada")
@@ -67,7 +67,7 @@ class Reportes_model extends CI_Model
        {
            $sql.= " and cuenta_cliente.cliente = $cliente";
        }
-       else if($cliente != 0)
+       else if($localidad != "todos")
        {
            $sql.= " and cliente.localidad = $localidad";
        }
@@ -77,6 +77,7 @@ class Reportes_model extends CI_Model
            $sql.= " and cuenta_cliente.usuario = $usuario";
        }
         
+       $sql.=" group by cliente";
        $r= $this->db->query($sql);
         return $r->result_array();
     }
