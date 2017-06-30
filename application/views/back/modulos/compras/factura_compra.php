@@ -244,7 +244,7 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<div class="modal modal-default" id="modal_agregar_proveedor">
+<div class="modal modal-danger" id="modal_agregar_proveedor">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -276,16 +276,22 @@
                         <input class="form-control " type="text" id="direccion_agregar_proveedor"/>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="cuil_agregar_proveedor">cuil: </label>
                         <input class="form-control " type="text" id="cuil_agregar_proveedor"/>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="ingresos_brutos_agregar_proveedor">Ingresos Brutos: </label>
                         <input class="form-control" type="text" id="ingresos_brutos_agregar_proveedor"/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fecha_alta_agregar_proveedor">Fecha de alta: </label>
+                        <input class="form-control datetimepicker" type="text" id="fecha_alta_agregar_proveedor" value="<?php echo Date("Y-m-d")?>"/>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -300,10 +306,15 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="fecha_alta_agregar_proveedor">Fecha de alta: </label>
-                        <input class="form-control datetimepicker" type="text" id="fecha_alta_agregar_proveedor" value="<?php echo Date("Y-m-d")?>"/>
-                    </div>
+                    <label>Tipo de inscripcion</label>
+                    <select class="form-control" id="inscripcion_agregar_proveedor">
+                        <?php 
+                            foreach($lista_tipos_inscripciones as $value)
+                            {
+                                echo "<option value='".$value["id"]."'>".$value["inscripcion"]."</option>";
+                            }
+                        ?>
+                    </select>
                 </div>
                 
                 <div class="clearfix"></div>
@@ -1076,6 +1087,7 @@
         var fecha_alta = $("#fecha_alta_agregar_proveedor").val();
         var ingresos_brutos = $("#ingresos_brutos_agregar_proveedor").val();
         var localidad = $("#localidad_agregar_proveedor").val();
+        var tipo_inscripcion =$("#inscripcion_agregar_proveedor").val();
         
         if( razon_social != "" && telefono != "" && !isNaN(telefono) && validarEmail(correo) 
             && direccion != "" && cuil != "" && !isNaN(cuil) && fecha_alta != "")
@@ -1092,6 +1104,7 @@
                     fecha_alta:fecha_alta,
                     ingresos_brutos:ingresos_brutos,
                     localidad:localidad,
+                    tipo_inscripcion:tipo_inscripcion,
                 },
                 success: function(data)
                 {
