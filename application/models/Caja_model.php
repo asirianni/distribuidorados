@@ -135,7 +135,7 @@ class Caja_model extends CI_Model
             "fecha"=>$fecha,
             "tipo_mov"=>"$entrada_salida",
             "importe"=>$importe,
-            "concepto"=>$concepto,
+            "concepto"=>$detalle,
             "empleado"=>$empleado,
             
         );
