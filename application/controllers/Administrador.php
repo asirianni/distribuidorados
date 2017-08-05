@@ -379,5 +379,34 @@ class Administrador extends MY_Controller
         
         echo json_encode($respuesta);
     }
+    
+    public function get_api_clientes(){
+        $this->load->model("Registro_de_clientes_model");
+        $respuesta["lista_cliente"]=$this->Registro_de_clientes_model->get_clientes_no_suspendidos();
+        echo json_encode($respuesta);
+    }
+    
+    public function get_api_usuarios(){
+        $this->load->model("Usuario_model");
+        $this->load->library("Md5");
+        $respuesta["lista_usuarios"]=$this->Usuario_model->get_usuarios();
+        
+        for($i=0;$i<count($respuesta["lista_usuarios"]);$i++){
+            $respuesta["lista_usuarios"][$i]["pass"]=Md5::descifrar($respuesta["lista_usuarios"][$i]["pass"]);
+        }
+        echo json_encode($respuesta);
+    }
+    
+    public function get_api_productos(){
+        $this->load->model("Stock_productos_model");
+        $respuesta["lista_productos"]=$this->Stock_productos_model->get_listado_productos();
+        echo json_encode($respuesta);
+    }
+    
+    public function get_api_rubros(){
+        $this->load->model("Stock_productos_model");
+        $respuesta["lista_productos"]=$this->Stock_productos_model->get_rubros();
+        echo json_encode($respuesta);
+    }
 }
 
