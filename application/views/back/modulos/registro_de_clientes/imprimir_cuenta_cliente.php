@@ -15,6 +15,7 @@
 </head>
 <body onload="window.print()">
     <div class="col-xs-offset-1 col-xs-10">
+        <p><img src="<?=base_url()?>recursos/images/log_4.jpg" width="200"></p>
         <h2>Cuenta cliente N° <?php echo $cuenta_cliente["id"]?></h2>
         <table class='table table-striped'>
             <tr>

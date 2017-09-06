@@ -32,7 +32,10 @@
 <body onload="window.print()">
 <div class="col-xs-offset-1 col-xs-10"> 
     <div class="row">
-    
+        
+        <div class="col-xs-12">
+            <p><img src="<?=base_url()?>recursos/images/log_4.jpg" width="200"></p>
+        </div>
         <div class="col-xs-5">
             <img  height="100" src="<?php echo base_url()?>recursos/images/impresion-remito/<?php echo $logo?>">
             <p style="font-size: 10px;"></p>

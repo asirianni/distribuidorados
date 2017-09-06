@@ -15,7 +15,12 @@
   </style>
 </head>
 <body onload="window.print()">
-<div class="col-xs-offset-1 col-xs-10">  
+<div class="col-xs-offset-1 col-xs-10"> 
+    
+    <div class="col-xs-12">
+        <p><img src="<?=base_url()?>recursos/images/log_4.jpg" width="200"></p>
+    </div>
+    
     <div class='row'>
         <div class='col-md-offset-1 col-md-4'>
             <h3>Movimiento: 17</h3>

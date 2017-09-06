@@ -17,6 +17,7 @@
     
 <div class="row">
     <div class="col-xs-offset-1 col-xs-10">
+        <p><img src="<?=base_url()?>recursos/images/log_4.jpg" width="200"></p>
         <table class='table table-striped'> 
                 <tr>
                     <th>Fecha desde</th>

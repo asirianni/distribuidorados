@@ -14,6 +14,10 @@
   
 </head>
 <body onload="window.print()">
+    
+    <div class="col-xs-12">
+        <p><img src="<?=base_url()?>recursos/images/log_4.jpg" width="200"></p>
+    </div>
     <?php echo $contenido?>
 <!-- jQuery 2.2.3 -->
 <script src="<?php echo base_url()?>recursos/plugins/jQuery/jquery-2.1.4.min.js"></script>
