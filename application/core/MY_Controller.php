@@ -934,7 +934,7 @@ class MY_Controller extends CI_Controller
             $this->load->model("Registro_de_clientes_model");
             
             $output["pedido"]=$pedido= $this->Registro_de_pedidos_model->get_pedido($numero_pedido);
-            $output["detalle_pedido"]=$this->Registro_de_pedidos_model->get_detalle_pedido($numero_pedido);
+            $output["detalle_pedido"]=$detalle_pedido=$this->Registro_de_pedidos_model->get_detalle_pedido($numero_pedido);
             $output["cliente"]=$this->Registro_de_clientes_model->get_cliente($pedido["cliente"]);
                     
             $output["logo"]=$this->Configuracion_empresa_model->get_configuracion(3);
@@ -943,11 +943,107 @@ class MY_Controller extends CI_Controller
             $output["ingresos_brutos"]=$this->Configuracion_empresa_model->get_configuracion(2);
             $output["inicio_actividad"]=$this->Configuracion_empresa_model->get_configuracion(5);
             
-            $this->load->view("back/modulos/registro_de_pedidos/imprimir-pedido",$output);
+            if(count($detalle_pedido) < 19)
+            {
+                $this->load->view("back/modulos/registro_de_pedidos/imprimir-pedido",$output);
+            }
+            else
+            {
+                // LOGICA QUE MANDA A JS COMO TIENE QUE LLAMAR
+                
+                $cantidad_paginas = 0;
+                
+                
+                
+                for($i=0;$i <= count($detalle_pedido);$i++)
+                {
+                    $i+=18;
+                    $cantidad_paginas++;
+                }
+                
+                /*// arreglo multidimensional que contiene por pagina sus detalles
+                $contenido_detalle=Array();
+                
+                $ultima_posicion_leida=0;
+                
+                for($i=0; $i < $cantidad_paginas;$i++)
+                {
+                    $contador_iterador=0;
+                    
+                    while($contador_iterador < 18)
+                    {
+                        if($ultima_posicion_leida < count($detalle_pedido))
+                        {
+                            $contenido_detalle[$i][]=$detalle_pedido[$ultima_posicion_leida]; 
+                            $ultima_posicion_leida++;
+                        }
+                        
+                        $contador_iterador++;
+                    }
+                }
+                
+                echo $cantidad_paginas;
+                echo "PRIMERA PAGINA:<br/>";
+                var_dump($contenido_detalle[0]);
+                echo "SEGUNDA PAGINA:<br/>";
+                var_dump($contenido_detalle[1]);
+                
+                $output["contenido_detalle"]=$contenido_detalle;*/
+                
+                $numero_pagina=1;
+                $ultimo_codigo=0;
+                //$this->load->view("back/modulos/registro_de_pedidos/imprimir-pedido-largo",$output);
+                
+                $this->imprimir_pedido_paginado($numero_pedido,$numero_pagina,$ultimo_codigo,$cantidad_paginas);
+                
+            }
         }
         else
         {
             redirect($this->funciones_generales->redireccionar_usuario());
+        }
+    }
+    
+    public function imprimir_pedido_paginado($numero_pedido = null,$numero_pagina = null,$ultimo_codigo = 0,$cantidad_paginas = null)
+    {
+        $permiso= $this->funciones_generales->dar_permiso_a_modulo(4);
+        
+        if($permiso && $numero_pedido != null && $numero_pagina != null && $cantidad_paginas)
+        {
+            $this->load->model("Registro_de_pedidos_model");
+            $this->load->model("Configuracion_empresa_model");
+            $this->load->model("Registro_de_clientes_model");
+            
+            $output["pedido"]=$pedido= $this->Registro_de_pedidos_model->get_pedido($numero_pedido);
+            $output["cliente"]=$this->Registro_de_clientes_model->get_cliente($pedido["cliente"]);
+            $output["detalle_pedido"]=$detalle_pedido=$this->Registro_de_pedidos_model->get_detalle_pedido_paginado($numero_pedido,$ultimo_codigo);
+           
+            $output["numero_pedido"]=$numero_pedido;
+            $output["numero_pagina"]=$numero_pagina;
+            $output["cantidad_paginas"]=$cantidad_paginas;
+            $output["ultimo_codigo"]=$detalle_pedido[count($detalle_pedido)-1]["codigo"];
+            
+            if($numero_pagina == 1)
+            {
+                $output["logo"]=$this->Configuracion_empresa_model->get_configuracion(3);
+                $output["tipo_de_inscripcion"]=$this->Configuracion_empresa_model->get_configuracion(4);
+                $output["cuit"]=$this->Configuracion_empresa_model->get_configuracion(1);
+                $output["ingresos_brutos"]=$this->Configuracion_empresa_model->get_configuracion(2);
+                $output["inicio_actividad"]=$this->Configuracion_empresa_model->get_configuracion(5);
+                
+                $this->load->view("back/modulos/registro_de_pedidos/imprimir_pedido_pagina_1",$output);
+            }
+            else if($numero_pagina < $cantidad_paginas)
+            {
+                // IMPRIMIR DETALLE
+                $this->load->view("back/modulos/registro_de_pedidos/imprimir_pedido_pagina_mayor_1",$output);
+            }
+            else 
+            {
+                $output["detalle_pedido_todo"]=$detalle_pedido=$this->Registro_de_pedidos_model->get_detalle_pedido($numero_pedido);
+                // IMPRIMIR PIE
+                $this->load->view("back/modulos/registro_de_pedidos/imprimir_pedido_pie",$output);
+            }
         }
     }
     

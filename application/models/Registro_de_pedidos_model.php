@@ -74,6 +74,18 @@ class Registro_de_pedidos_model extends CI_Model
         return $r->result_array();
     }
     
+    public function get_detalle_pedido_paginado($numero_pedido,$ultimo_codigo)
+    {
+        $r = $this->db->query("SELECT pedido_detalle.*,productos.descripcion as desc_producto FROM pedido_detalle INNER JOIN productos on productos.id = pedido_detalle.cod_producto where num_pedido= $numero_pedido and pedido_detalle.codigo > $ultimo_codigo limit 18");
+        return $r->result_array();
+    }
+    
+    public function get_total_pedido($numero_pedido)
+    {
+        $r = $this->db->query("SELECT pedido_detalle.*,productos.descripcion as desc_producto FROM pedido_detalle INNER JOIN productos on productos.id = pedido_detalle.cod_producto where num_pedido= $numero_pedido and pedido_detalle.codigo > $ultimo_codigo limit 18");
+        return $r->result_array();
+    }
+    
     public function get_listado_productos_faltantes_en_pedido($numero_pedido)
     {
         $r = $this->db->query("select productos.id,productos.descripcion,productos.costo,productos.rubro,productos.stock,productos.punto_critico,productos.unidad_medida,rubros.descripcion as desc_rubro,unidad_medida.descripcion as medida_desc from productos INNER JOIN rubros on rubros.id = productos.rubro INNER JOIN unidad_medida on unidad_medida.id = productos.unidad_medida where productos.id not in (select pedido_detalle.cod_producto from pedido_detalle where pedido_detalle.num_pedido=$numero_pedido)");
