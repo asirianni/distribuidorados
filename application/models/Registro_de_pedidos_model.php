@@ -80,11 +80,7 @@ class Registro_de_pedidos_model extends CI_Model
         return $r->result_array();
     }
     
-    public function get_total_pedido($numero_pedido)
-    {
-        $r = $this->db->query("SELECT pedido_detalle.*,productos.descripcion as desc_producto FROM pedido_detalle INNER JOIN productos on productos.id = pedido_detalle.cod_producto where num_pedido= $numero_pedido and pedido_detalle.codigo > $ultimo_codigo limit 18");
-        return $r->result_array();
-    }
+    
     
     public function get_listado_productos_faltantes_en_pedido($numero_pedido)
     {
