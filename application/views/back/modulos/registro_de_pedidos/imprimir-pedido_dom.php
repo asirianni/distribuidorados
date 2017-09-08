@@ -70,11 +70,8 @@
         <p>Provincia: <?php echo $cliente["desc_provincia"]?> Dni-Cuit-Cuil: <?php echo $cliente["dni_cuit_cuil"]?> Ing. Brutos: <?php echo $cliente["ingresos_brutos"]?></p>
     </div>
 </div> 
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
+
+
 <!-- CREACION DE TABLAS -->
 
 <?php 
@@ -92,11 +89,6 @@
         if($contador_filas==19 || $i == ($cantidad_detalle-1))
         {
             ?>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
             
             <div style='width: 500px;display:inline-block;'>
                 <div style='font-size: 10px;'>
@@ -117,11 +109,6 @@
                     </table>
                 </div>  
             </div>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
             <div style='width: 500px;display:inline-block;'>
                 <div style='font-size: 10px;'>
                     <table > 
