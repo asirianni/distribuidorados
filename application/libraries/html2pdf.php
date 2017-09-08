@@ -140,7 +140,7 @@ class Html2pdf {
 	    $dompdf->load_html($this->html);
 	    $dompdf->set_paper($this->paper_size, $this->orientation);
 	    $dompdf->render();
-	    
+            
 	    if($mode == 'save') {
     	    $this->CI->load->helper('file');
 		    if(write_file($this->path.$this->filename, $dompdf->output())) {
@@ -150,7 +150,7 @@ class Html2pdf {
 		    }
 		} else {
 			
-			if($dompdf->stream($this->filename)) {
+			if($dompdf->stream($this->filename, array("Attachment" => false))) {
 				return TRUE;
 			} else {
 				show_error("PDF could not be streamed");
