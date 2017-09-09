@@ -180,7 +180,7 @@ class Facturacion_model extends CI_Model
                 }
                 else 
                 {
-                    $this->Caja_model->abrir_caja();
+                    $this->Caja_model->abrir_caja(Date("Y-m-d"));
                     $caja = $this->Caja_model->obtener_caja(Date("Y-m-d"));
 
                     $entradas = $caja["entradas"];
