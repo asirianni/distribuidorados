@@ -923,7 +923,7 @@ class MY_Controller extends CI_Controller
         }
     }
     
-       public function imprimir_pedido($numero_pedido = null)
+    public function imprimir_pedido($numero_pedido = null)
     {
         $permiso= $this->funciones_generales->dar_permiso_a_modulo(4);
         
@@ -943,60 +943,8 @@ class MY_Controller extends CI_Controller
             $output["ingresos_brutos"]=$this->Configuracion_empresa_model->get_configuracion(2);
             $output["inicio_actividad"]=$this->Configuracion_empresa_model->get_configuracion(5);
             
-            if(count($detalle_pedido) < 19)
-            {
-                $this->load->view("back/modulos/registro_de_pedidos/imprimir-pedido",$output);
-            }
-            else
-            {
-                // LOGICA QUE MANDA A JS COMO TIENE QUE LLAMAR
-                
-                $cantidad_paginas = 0;
-                
-                
-                
-                for($i=0;$i <= count($detalle_pedido);$i++)
-                {
-                    $i+=18;
-                    $cantidad_paginas++;
-                }
-                
-                /*// arreglo multidimensional que contiene por pagina sus detalles
-                $contenido_detalle=Array();
-                
-                $ultima_posicion_leida=0;
-                
-                for($i=0; $i < $cantidad_paginas;$i++)
-                {
-                    $contador_iterador=0;
-                    
-                    while($contador_iterador < 18)
-                    {
-                        if($ultima_posicion_leida < count($detalle_pedido))
-                        {
-                            $contenido_detalle[$i][]=$detalle_pedido[$ultima_posicion_leida]; 
-                            $ultima_posicion_leida++;
-                        }
-                        
-                        $contador_iterador++;
-                    }
-                }
-                
-                echo $cantidad_paginas;
-                echo "PRIMERA PAGINA:<br/>";
-                var_dump($contenido_detalle[0]);
-                echo "SEGUNDA PAGINA:<br/>";
-                var_dump($contenido_detalle[1]);
-                
-                $output["contenido_detalle"]=$contenido_detalle;*/
-                
-                $numero_pagina=1;
-                $ultimo_codigo=0;
-                //$this->load->view("back/modulos/registro_de_pedidos/imprimir-pedido-largo",$output);
-                
-                $this->imprimir_pedido_paginado($numero_pedido,$numero_pagina,$ultimo_codigo,$cantidad_paginas);
-                
-            }
+            $this->load->view("back/modulos/registro_de_pedidos/imprimir-pedido",$output);
+            
         }
         else
         {
