@@ -44,10 +44,10 @@
             <!--<img class="img-responsive" src="<?php echo base_url()?>recursos/images/impresion-remito/logo-remito.jpg">-->
         </div>
         <div class="col-xs-5">
+            <p style="font-size: 22px;"><strong>NO VALIDO COMO FACTURA</strong></p>
             <p><strong>PEDIDO N° <?php echo $pedido["numero"]?></strong></p>
             <p><strong>FECHA <?php $date = date_create($pedido["fecha"]);
                                 echo date_format($date, 'd-m-Y');?></strong></p>
-            <p style="font-size: 22px;">&nbsp;</p>
         </div> 
 
         
