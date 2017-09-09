@@ -34,25 +34,19 @@
     
     <!-- DETALLE -->
     <?php
-
         $suma_totales = 0;
-
         foreach ($detalle_pedido as $value)
         {
             $cantidad = (float)$value["cantidad"];
             $unitario = (float)$value["precio"];
             $descuento = (int)$value["descuento"];
-
             $descuento_en_pesos=0;
-
             if($descuento != 0)
             {
                 $descuento_en_pesos = ($unitario * ($descuento / 100));
             }
-
             $subtotal =$unitario-$descuento_en_pesos;
             $total=$subtotal*$cantidad;
-
             echo 
             "<div class='row'>
                 <div class='col-xs-12'>
@@ -76,32 +70,25 @@
                         </div>
                 </div>
             </div>";
-
             $suma_totales+=$total;
         }
     ?>
     <br/><br/>
     <!-- OBTENIENDO TOTALES -->
     <?php
-
         $suma_totales = 0;
-
         foreach ($detalle_pedido_todo as $value)
         {
             $cantidad = (float)$value["cantidad"];
             $unitario = (float)$value["precio"];
             $descuento = (int)$value["descuento"];
-
             $descuento_en_pesos=0;
-
             if($descuento != 0)
             {
                 $descuento_en_pesos = ($unitario * ($descuento / 100));
             }
-
             $subtotal =$unitario-$descuento_en_pesos;
             $total=$subtotal*$cantidad;
-
             $suma_totales+=$total;
         }
     ?>
@@ -116,14 +103,11 @@
             <?php 
                 $descuento_general = (int)$pedido["descuento_gral"];
                 $descuento_general_pesos =0;
-
                 if($descuento_general != 0)
                 {
                     $descuento_general_pesos = $suma_totales * ($descuento_general / 100);
                 }
-
                 $suma_totales-= $descuento_general_pesos;
-
                 //$impuestos = $suma_totales * 0.21;
             ?>
             <p>DESC. GRAL: <?php echo $pedido["descuento_gral"]?> - $<?php echo number_format($descuento_general_pesos,2,".",",")?></p>

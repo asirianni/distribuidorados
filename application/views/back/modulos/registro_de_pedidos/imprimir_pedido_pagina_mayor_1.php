@@ -35,25 +35,19 @@
     
     <!-- DETALLE -->
     <?php
-
         
-
         foreach ($detalle_pedido as $value)
         {
             $cantidad = (float)$value["cantidad"];
             $unitario = (float)$value["precio"];
             $descuento = (int)$value["descuento"];
-
             $descuento_en_pesos=0;
-
             if($descuento != 0)
             {
                 $descuento_en_pesos = ($unitario * ($descuento / 100));
             }
-
             $subtotal =$unitario-$descuento_en_pesos;
             $total=$subtotal*$cantidad;
-
             echo 
             "<div class='row'>
                 <div class='col-xs-12'>
@@ -77,7 +71,6 @@
                         </div>
                 </div>
             </div>";
-
             
         }
     ?>
@@ -108,7 +101,6 @@
         
         
             var url = "<?php echo base_url()?>index.php/Administrador/imprimir_pedido_paginado/"+numero_pedido+"/"+(numero_pagina+1)+"/"+ultimo_codigo+"/"+cantidad_paginas;
-
             window.open(url);
         
         
@@ -118,5 +110,3 @@
 <script src="<?php echo base_url()?>recursos/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
-
-
