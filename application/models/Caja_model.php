@@ -133,9 +133,9 @@ class Caja_model extends CI_Model
         $datos = Array(
             "numero"=>null,
             "fecha"=>$fecha,
-            "tipo_mov"=>"$entrada_salida",
+            "tipo_mov"=>$entrada_salida,
             "importe"=>$importe,
-            "concepto"=>$detalle,
+            "concepto"=>$concepto,
             "empleado"=>$empleado,
             
         );

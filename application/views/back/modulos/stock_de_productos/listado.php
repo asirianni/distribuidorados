@@ -609,15 +609,17 @@
         $("#subrubro_agregar_producto").html(select2_subrubro);
     }
     
-    function cambio_valor_editar_rubro()
+    function cambio_valor_editar_rubro(subrubro)
     {
         var rubro_selecionado = parseInt($("#rubro_editar_producto").val());
         
         var select2_subrubro= "";
         
+        var agregado=false;
+        
         if(rubro_selecionado != 0)
         {
-            var agregado =false;
+            
             
             for(var i=0; i < sub_rubros.length;i++)
             {
@@ -646,6 +648,7 @@
         }
         
         $("#subrubro_editar_producto").html(select2_subrubro);
+        $("#subrubro_editar_producto").val(subrubro);
     }
    
     function cambio_valor_agregar()
@@ -770,8 +773,8 @@
         $("#margen_4_editar").val(margen_4);
         $("#lista_4_editar").val(lista_4);
         
-        cambio_valor_editar_rubro();
-        $("#subrubro_agregar_producto").val(subrubro);
+        cambio_valor_editar_rubro(subrubro);
+        
         
         $("#modal_editar_producto").modal("show");
     }
