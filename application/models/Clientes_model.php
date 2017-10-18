@@ -9,7 +9,8 @@ class Clientes_model extends CI_Model
     
     public function get_cliente_inicio_sesion($correo,$password)
     {
-        $r= $this->db->query("SELECT cliente.* from cliente where cliente.correo = '".$correo."' and cliente.contrasenia = '".$password."'");
+        $sql= "SELECT cliente.* from cliente where cliente.correo = ? and cliente.contrasenia = ?";
+        $r= $this->db->query($sql,Array($correo,$password));
         return $r->row_array();
     }
     

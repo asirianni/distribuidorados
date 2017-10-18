@@ -15,13 +15,16 @@ class Usuario_model extends CI_Model
     
     public function get_usuario_inicio_sesion($usuario,$password)
     {
-        $r = $this->db->query("select * from usuarios where usuario = '$usuario' and pass= '$password'");
+        $sql = "select * from usuarios where usuario = ? and pass= ?";
+        $r= $this->db->query($sql, array($usuario, $password));
         return $r->row_array();
     }
     
     public function get_usuario_inicio_sesion_con_correo($correo,$password)
     {
-        $r = $this->db->query("select * from usuarios where correo = '$correo' and pass= '$password'");
+        $sql= "select * from usuarios where correo = ? and pass= ?";
+        $r = $this->db->query($sql,Array($correo,$password));
+        
         return $r->row_array();
     }
     

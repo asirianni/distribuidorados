@@ -85,8 +85,14 @@
                         <p style="color: #333;font-size: 19px;font-weight: bold;margin-bottom: 12px;">DATOS DE LA FACTURA:</p>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="numero_ver_factura">Numero: </label>
+                                <label for="numero_ver_factura">ID FACT.: </label>
                                 <input class="form-control" type="text" id="numero_ver_factura" value="<?php echo $factura["numero"]?>" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="num_factura_ingreso_ver_factura">NUMERO: </label>
+                                <input class="form-control" type="text" id="num_factura_ingreso_ver_factura" value="<?php echo $factura["num_factura_ingreso"]?>" disabled/>
                             </div>
                         </div>
                         <div class="col-md-3">

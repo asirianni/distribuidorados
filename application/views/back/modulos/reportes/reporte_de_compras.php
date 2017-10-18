@@ -233,7 +233,7 @@
                                 }
                                 echo "
                                     <td>".$value["fecha"]."</td>
-                                    <td>".$value["numero"]."</td>
+                                    <td>".$value["num_factura_ingreso"]."</td>
                                     <td>".$value["desc_tipo_factura"]."</td>
                                     <td>$".$value["total"]."</td>
                                     <td>".$value["proveedor_razon_social"]."</td>

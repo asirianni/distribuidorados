@@ -102,7 +102,7 @@
                                    ?>
                                </select>
                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>Punto</label>
                                 <select class="form-control" id="punto_de_venta" disabled>
                                     <?php
@@ -113,9 +113,13 @@
                                     ?>
                                 </select>
                             </div>
-                            <div class="col-md-3">
-                                <label>Numero</label>
+                            <div class="col-md-2">
+                                <label>ID FACT.</label>
                                 <input type="text" class="form-control" id="numero" value="<?php echo $numero_proximo?>" disabled>
+                            </div>
+                            <div class="col-md-2">
+                                <label>NUMERO</label>
+                                <input type="text" class="form-control" id="num_factura_ingreso" value="" >
                             </div>
                             <div class="col-md-3">
                                 <label>Fecha</label>
@@ -667,7 +671,7 @@
 
 <script>
     
-    $.fn.dataTable.ext.errMode = 'none';
+    //$.fn.dataTable.ext.errMode = 'none';
     
     var arreglo_detalles= new Array();
     var imprimir = false;
@@ -708,13 +712,15 @@
             var condicion_venta = $("#condicion_de_venta").val();
             var detalle = arreglo_detalles;
             var descuento_general = $("#descuento_general").val();
+            var num_factura_ingreso = $("#num_factura_ingreso").val();
             
-            if(tipo_factura != 0 && fecha != "" && proveedor != 0 && detalle)
+            if(tipo_factura != 0 && fecha != "" && proveedor != 0 && detalle && num_factura_ingreso != "")
             {
                 $.ajax({
                     url: "<?php echo base_url()?>index.php/Response_Ajax/crear_factura_compra",
                     type: "POST",
                     data:{
+                        num_factura_ingreso:num_factura_ingreso,
                         tipo_factura:tipo_factura,
                         punto_de_venta:punto_de_venta,
                         fecha:fecha,
@@ -749,6 +755,9 @@
             }
             else
             {
+                if(num_factura_ingreso == ""){activar_error("num_factura_ingreso");}
+                else{desactivar_error("num_factura_ingreso");}
+                
                 if(tipo_factura==0){activar_error("tipo_factura");}
                 else{desactivar_error("tipo_factura");}
                 
@@ -762,6 +771,9 @@
                 {
                     alert("Cargue un detalle");
                 }
+                
+                $("#modal_imprimir_factura").modal("hide");
+                $("#modal_guardar_factura").modal("hide");
             }    
         }
     }
@@ -810,8 +822,8 @@
         else
         {
             
-            $("#punto_de_venta").attr("disabled","");
-            $("#fecha").attr("disabled","");
+            $("#punto_de_venta").attr("disabled","false");
+            $("#fecha").attr("disabled","false");
             $("#btn_buscar_proveedor").addClass("disabled");
             $("#btn_nuevo_proveedor").addClass("disabled");
             
@@ -1187,7 +1199,16 @@
     
     
     
-    $('#listado_buscar_proveedor').DataTable({
+        $('#listado_buscar_proveedor').DataTable({
+          "paging": true,
+          "lengthChange": true,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": true
+        });
+        
+        $('#tabla_listado_productos').DataTable({
           "paging": true,
           "lengthChange": true,
           "searching": true,
@@ -1217,6 +1238,7 @@
 
          format:'Y-m-d'
     });
+    
 </script>
 </body>
 </html>

@@ -45,7 +45,7 @@
         <!--<img class="img-responsive" src="<?php echo base_url()?>recursos/images/impresion-remito/logo-remito.jpg">-->
     </div>
     <div class="col-xs-5">
-        <p><strong>N° <?php echo $factura["numero"]?></strong></p>
+        <p><strong>N° <?php echo $factura["num_factura_ingreso"]?></strong></p>
         <p><strong>FECHA <?php $date = date_create($factura["fecha"]);
                             echo date_format($date, 'd-m-Y');?></strong></p>
         <p style="font-size: 22px;"><strong>FACTURA <?php echo $factura["desc_tipo_factura"]?></strong></p>

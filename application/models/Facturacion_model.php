@@ -375,9 +375,10 @@ class Facturacion_model extends CI_Model
         return 1 + (int)$r["numero"];
     }
     
-    public function crear_factura_compra($punto_venta,$fecha,$proveedor,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle,$registrar_en_caja)
+    public function crear_factura_compra($punto_venta,$fecha,$proveedor,$tipo_factura,$condicion_venta,$estado,$total,$descuento_general,$detalle,$registrar_en_caja,$num_factura_ingreso)
     {
         $datos = array(
+            "num_factura_ingreso"=>$num_factura_ingreso,
             "punto_venta"=>$punto_venta,
             "fecha"=>$fecha,
             "proveedor"=>$proveedor,
