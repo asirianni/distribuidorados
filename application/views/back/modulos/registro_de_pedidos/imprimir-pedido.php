@@ -35,7 +35,7 @@
     
     <div class="row">
         <div class="col-xs-5">
-            <img src="<?=base_url()?>recursos/images/log_4.jpg" width="200">
+            <img src="<?=base_url()?>recursos/images/log_4.jpg" width="100">
             <p style="font-size: 10px;"></p>
             <p style="font-size: 10px;"></p>
             <p style="font-size: 10px;" ></p>
@@ -44,7 +44,7 @@
             <!--<img class="img-responsive" src="<?php echo base_url()?>recursos/images/impresion-remito/logo-remito.jpg">-->
         </div>
         <div class="col-xs-5">
-            <p style="font-size: 22px;"><strong>NO VALIDO COMO FACTURA</strong></p>
+            <p style="font-size: 15px;"><strong>NO VALIDO COMO FACTURA</strong></p>
             <p><strong>PEDIDO N° <?php echo $pedido["numero"]?></strong></p>
             <p><strong>FECHA <?php $date = date_create($pedido["fecha"]);
                                 echo date_format($date, 'd-m-Y');?></strong></p>
@@ -168,9 +168,9 @@
 
     <!-- FIN DETALLE -->
 
-    <div class="row">
+    <div class="row" style="font-size: 16px;">
         <div class="col-xs-offset-8 col-xs-4">
-            <p>SUBTOTAL: $<?php echo $suma_totales?></p>
+            <p><strong>SUBTOTAL:</strong> $<?php echo $suma_totales?></p>
         </div>
         <div class="col-xs-offset-8 col-xs-4">
             <?php 
@@ -186,14 +186,14 @@
 
                 //$impuestos = $suma_totales * 0.21;
             ?>
-            <p>DESC. GRAL: <?php echo $pedido["descuento_gral"]?> - $<?php echo number_format($descuento_general_pesos,2,".",",")?></p>
+            <p><strong>DESC. GRAL: </strong><?php echo $pedido["descuento_gral"]?> - $<?php echo number_format($descuento_general_pesos,2,".",",")?></p>
         </div>
 
         <!--<div class="col-xs-offset-8 col-xs-4">
             <p>IMPUESTOS: $</p>
         </div>-->
         <div class="col-xs-offset-8 col-xs-4">
-            <p>TOTAL: $<?php echo number_format($suma_totales,2,".",",");?></p>
+            <p><strong>TOTAL: </strong>$<?php echo number_format($suma_totales,2,".",",");?></p>
         </div>
     </div>
 
