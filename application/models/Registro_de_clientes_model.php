@@ -19,6 +19,12 @@ class Registro_de_clientes_model extends CI_Model
         return $r->result_array();
     }
     
+    public function get_clientes_ws()
+    {
+        $r = $this->db->query("select cliente.id,cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.razon_social,cliente.lista,cliente.descuento_gral from cliente where estado = 1");
+        return $r->result_array();
+    }
+
     public function get_cantidad_clientes()
     {
         $r = $this->db->query("SELECT count(cliente.id) as numero FROM cliente");
