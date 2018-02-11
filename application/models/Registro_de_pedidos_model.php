@@ -17,7 +17,7 @@ class Registro_de_pedidos_model extends CI_Model
     
     public function get_listado_pedidos()
     {
-        $r = $this->db->query("SELECT pedidos.*, cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.descuento_gral,usuarios.usuario as desc_usuario FROM pedidos INNER JOIN cliente on cliente.id = pedidos.cliente INNER JOIN usuarios on usuarios.id = pedidos.usuario");
+        $r = $this->db->query("SELECT pedidos.*, cliente.dni_cuit_cuil,cliente.nombre,cliente.apellido,cliente.descuento_gral,cliente.razon_social,usuarios.usuario as desc_usuario FROM pedidos INNER JOIN cliente on cliente.id = pedidos.cliente INNER JOIN usuarios on usuarios.id = pedidos.usuario");
         return $r->result_array();
     }
     

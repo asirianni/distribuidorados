@@ -28,5 +28,12 @@ class Webservice extends CI_Controller
         
         echo json_encode($respuesta);
     }
+
+    public function get_pedidos()
+    {
+        $this->load->model("Registro_de_pedidos_model");
+        $respuesta = $this->Registro_de_pedidos_model->get_listado_pedidos();
+        echo json_encode($respuesta);
+    }
 }
 
