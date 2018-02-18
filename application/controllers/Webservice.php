@@ -13,8 +13,8 @@ class Webservice extends CI_Controller
         parent::__construct();
         
     }
-    
-    public function get_inicio_sesion($usuario=null,$password=null)
+
+    private function validar_usuario($usuario,$password)
     {
         $respuesta = false;
 
@@ -33,33 +33,41 @@ class Webservice extends CI_Controller
                 $respuesta = true;
             }
         }
-        
-        echo json_encode($respuesta);
-    }
 
-    public function get_productos()
+        return $respuesta;
+    }
+    
+    public function get_inicio_sesion($usuario=null,$password=null)
     {
-        $this->load->model("Stock_productos_model");
-
-        $respuesta = $this->Stock_productos_model->get_listado_productos();
-        
+        $respuesta= $this->validar_usuario($usuario,$password);
         echo json_encode($respuesta);
     }
 
-    public function get_clientes()
+    public function get_actualizacion($usuario=null,$password=null)
     {
-        $this->load->model("Registro_de_clientes_model");
+        $respuesta = Array("validado"=>false,"productos"=>null,"pedidos"=>null,"clientes"=>null);
 
-        $respuesta = $this->Registro_de_clientes_model->get_clientes_ws();
+        $validado = $this->validar_usuario($usuario,$password);
+
+        if($validado)
+        {
+            $respuesta["validado"]= $validado;
+
+            $this->load->model("Stock_productos_model");
+
+            $respuesta["productos"] = $this->Stock_productos_model->get_listado_productos();
+
+            $this->load->model("Registro_de_clientes_model");
+
+            $respuesta["clientes"] = $this->Registro_de_clientes_model->get_clientes_ws();
         
+            $this->load->model("Registro_de_pedidos_model");
+            $respuesta["pedidos"] = $this->Registro_de_pedidos_model->get_listado_pedidos();
+        } 
+
         echo json_encode($respuesta);
     }
 
-    public function get_pedidos()
-    {
-        $this->load->model("Registro_de_pedidos_model");
-        $respuesta = $this->Registro_de_pedidos_model->get_listado_pedidos();
-        echo json_encode($respuesta);
-    }
+    
 }
 
