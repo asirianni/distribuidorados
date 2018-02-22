@@ -68,6 +68,50 @@ class Webservice extends CI_Controller
         echo json_encode($respuesta);
     }
 
-    
+
+    public function subir_pedido()
+    {
+        $usuario=$this->input->post("usuario");
+        $password=$this->input->post("password");
+
+
+        $pedido_row=$this->input->post("pedido_row");
+        $detalle_pedido=$this->input->post("detalle_pedido");
+
+        $respuesta = Array("validado"=>false,"subido"=>false);
+
+        $validado = $this->validar_usuario($usuario,$password);
+
+        if($validado)
+        {
+            $respuesta["validado"]= $validado;
+
+            if($pedido_row && $detalle_pedido)
+            {
+                $this->load->model("Webservice_model");
+
+                $fecha = $pedido_row["fecha"];
+                $fecha= DateTime::createFromFormat("d-m-Y",$fecha);
+                $fecha= $fecha->format("Y-m-d");
+
+                $fecha_entrega= $pedido_row["fecha_entrega"];
+
+                if($fecha_entrega != "")
+                {
+                    $fecha_entrega= DateTime::createFromFormat("d-m-Y",$fecha_entrega);
+                    $fecha_entrega= $fecha_entrega->format("Y-m-d");
+                }
+
+                $this->load->model("Usuario_model");
+                $usuario= $this->Usuario_model->get_usuario_con_usuario($usuario);
+
+                $cliente = $pedido_row["cliente"];
+
+                $respuesta["subido"] = $this->Webservice_model->agregar_pedido_y_detalle($fecha,$fecha_entrega,$cliente,$detalle_pedido,$usuario["id"]);
+            }
+        } 
+
+        echo json_encode($respuesta);
+    }  
 }
 
