@@ -801,8 +801,8 @@
         var codigo = $("#codigo_editar_producto").val();
         var subrubro= $("#subrubro_editar_producto").val();
         var activo= $("#activo_editar").val();
-        
-        if(descripcion != "" && stock != "" && !isNaN(stock)  && 
+
+        if(descripcion != "" && !isNaN(stock)  && 
            punto_critico != "" && !isNaN(punto_critico) 
            && !isNaN(rubro) && !isNaN(unidad_medida) 
            && costo !="" && !isNaN(costo) && costo != "")
