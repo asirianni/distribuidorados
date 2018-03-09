@@ -17,11 +17,11 @@ class Webservice_model extends CI_Model
             "usuario"=>$usuario,
         );
         
-        $respuesta=$this->db->insert("pedidos2",$datos);
+        $respuesta=$this->db->insert("pedidos",$datos);
         
         if($respuesta)
         {
-            $numero = $this->db->query("SELECT max(pedidos2.numero) as numero FROM pedidos2");
+            $numero = $this->db->query("SELECT max(pedidos.numero) as numero FROM pedidos");
             $numero= $numero->row_array();
             $numero= (int)$numero["numero"];
             
@@ -36,7 +36,7 @@ class Webservice_model extends CI_Model
                     "estado"=>"pendiente",
                 );
                 
-                $this->db->insert("pedido_detalle2",$datos);
+                $this->db->insert("pedido_detalle",$datos);
             }
         }
         
