@@ -15,7 +15,7 @@ class Facturacion_model extends CI_Model
     
     public function get_suma_totales_por_mes($mes)
     {
-        $r = $this->db->query("SELECT sum(factura.total) as total from factura where factura.fecha >= '2017/$mes/01' and fecha <= '2017/$mes/31'");
+        $r = $this->db->query("SELECT sum(factura.total) as total from factura where factura.fecha >= '".Date("Y")."/$mes/01' and fecha <= '".Date("Y")."/$mes/31'");
         $r = $r->row_array();
         return (int)$r["total"];
     }

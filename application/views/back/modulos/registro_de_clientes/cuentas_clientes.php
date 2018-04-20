@@ -232,13 +232,13 @@
                                 "<tr>
                                     <td>".$value["fecha"]."</td>
                                     <td>".$value["cliente_dni_cuit_cuil"]." - ".$value["cliente_nombre"]." ".$value["cliente_apellido"]."</td>";
-                                    if($importe_recibo != 0)
+                                    if(((int)$value["numero_factura"]) == 0)
                                     {
                                         $suma_entradas+= $importe_recibo;
                                         echo "<td>".$importe_recibo."</td>";
                                         echo "<td>0</td>";
                                     }
-                                    else if($importe_factura != 0)
+                                    else 
                                     {
                                         $suma_salidas+= $importe_factura;
                                         echo "<td>0</td>";
@@ -249,7 +249,7 @@
                               
                                     // OPERACIONES
                                     echo "<td>";
-                                        if($importe_factura != 0 && (int)$value["numero_factura"] != 0)
+                                        if(((int)$value["numero_factura"]) != 0)
                                         {
                                             echo "<a class='btn btn-danger'  data-toggle='tooltip' title='' data-original-title='Ver factura' href='".base_url()."index.php/".$controller_usuario."/ver_factura/".$value["numero_factura"]."'>Ver Factura</a>";
                                         }
